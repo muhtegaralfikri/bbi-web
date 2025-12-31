@@ -33,13 +33,40 @@ if (themeToggle) {
 // Mobile menu toggle
 const menuToggle = document.getElementById('menuToggle');
 const navMenu = document.getElementById('navMenu');
+const navClose = document.getElementById('navClose');
+const navOverlay = document.getElementById('navOverlay');
 
-if (menuToggle && navMenu) {
+// Function to close mobile menu
+function closeMobileMenu() {
+  if (navMenu && menuToggle && navOverlay) {
+    navMenu.classList.remove('active');
+    menuToggle.classList.remove('active');
+    navOverlay.classList.remove('active');
+  }
+}
+
+// Toggle menu on burger click
+if (menuToggle && navMenu && navOverlay) {
   menuToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
     menuToggle.classList.toggle('active');
+    navOverlay.classList.toggle('active');
   });
 }
+
+// Close menu on X button click
+if (navClose) {
+  navClose.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+}
+
+// Close menu when clicking a nav link (for mobile)
+document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+});
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -55,15 +82,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-  if (navMenu && menuToggle && !themeToggle.contains(e.target)) {
-    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-      navMenu.classList.remove('active');
-      menuToggle.classList.remove('active');
-    }
-  }
-});
+// Close mobile menu when clicking on overlay
+if (navOverlay) {
+  navOverlay.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+}
 
 // Add scroll effect to header
 const header = document.querySelector('.header');

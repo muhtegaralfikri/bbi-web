@@ -129,6 +129,11 @@ body.dark .header {
   position: relative;
 }
 
+/* Hide close button on desktop */
+.nav-close-wrapper {
+  display: none;
+}
+
 .nav-menu .nav-link {
   display: flex;
   align-items: center;
@@ -757,38 +762,85 @@ body.dark .theme-toggle .fa-moon {
   .nav-menu {
     position: fixed;
     top: 0;
-    right: -280px;
+    right: -300px;
     width: 280px;
     height: 100vh;
-    background: var(--bg);
+    background: #ffffff;
     flex-direction: column;
-    padding: 5rem 1.5rem 2rem;
+    padding: 1.5rem;
     gap: 0.5rem;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     overflow-y: auto;
     transition: right 0.3s ease;
+    transform: translateZ(0);
   }
   
   body.dark .nav-menu {
-    background: var(--bg);
+    background: #1e293b;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4);
   }
 
   .nav-menu.active {
     right: 0;
+    position: fixed;
+    z-index: 1000;
+    display: flex;
   }
-  
+
   /* Overlay when menu is open */
-  .nav-menu.active::before {
-    content: '';
+  .nav-overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Close button wrapper */
+  .nav-close-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-close:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+  }
+  
+  .nav-close i {
+    font-size: 1.25rem;
+    color: var(--text);
+  }
+  
+  .nav-close:hover i {
+    color: #ef4444;
   }
 
   .nav-menu li {
@@ -803,10 +855,12 @@ body.dark .theme-toggle .fa-moon {
     border-radius: 0.75rem;
     justify-content: space-between;
     border-bottom: 1px solid var(--border);
+    color: var(--text);
   }
   
   .nav-menu .nav-link:hover {
     background: rgba(30, 64, 175, 0.1);
+    color: var(--primary);
   }
   
   .nav-arrow {
