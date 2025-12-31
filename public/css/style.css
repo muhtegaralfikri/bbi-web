@@ -1343,6 +1343,16 @@ body.dark .mitra-item:hover img {
 .vision-card, .mission-card {
   padding: 2.5rem;
   height: 100%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease;
+}
+
+.vision-card:hover, .mission-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
 .card-icon {
@@ -1401,6 +1411,15 @@ body.dark .about-text h2 {
   color: #60a5fa;
 }
 
+body.dark .vision-card, body.dark .mission-card {
+  background: var(--bg-secondary); /* #1e293b */
+  border-color: var(--border);
+}
+
+body.dark .vision-card h3, body.dark .mission-card h3 {
+  color: white;
+}
+
 /* Theme Toggle Utilities */
 .show-light {
   display: block;
@@ -1423,8 +1442,131 @@ body.dark .filter-white {
   filter: brightness(0) invert(1);
 }
 
+/* Utilities */
+.mb-5 { margin-bottom: 3rem !important; }
+.mt-5 { margin-top: 3rem !important; }
+.py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+.gap-4 { gap: 1.5rem !important; }
+
+.text-prima {
+  color: #dc2626; /* Red color for PRIMA */
+  font-weight: 800;
+}
+
+/* Company Values (PRIME) */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.value-card {
+  background: white;
+  padding: 2.5rem 2rem; /* More padding */
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-top: 5px solid #dc2626; /* Red Accent Border */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  height: 100%; /* Equal height */
+  display: flex;
+  flex-direction: column;
+}
+
+.value-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.value-card h3 {
+  color: #1E468C; /* Bosowa Blue */
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.5rem; /* Larger Title */
+  position: relative;
+}
+
+.value-card h3::first-letter {
+  color: #dc2626;
+  font-size: 1.25em; /* Slightly larger first letter */
+  margin-right: 1px;
+}
+
+.value-card p {
+  color: #334155; /* Darker Slate for better readability */
+  font-size: 1rem; /* Increased from 0.95rem */
+  line-height: 1.6;
+  flex-grow: 1;
+  margin-bottom: 0;
+}
+
+body.dark .value-card {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+  border-top-color: #ef4444;
+}
+
+body.dark .value-card p {
+  color: #e2e8f0; /* Much lighter text (Slate 200) for dark mode contrast */
+}
+
+.value-letter {
+  display: none; /* Hide big letter as we use first-letter styling now */
+}
+
+.value-card h3 {
+  color: #1E468C; /* Bosowa Blue */
+  margin-bottom: 0.5rem;
+  font-weight: 700; /* font-semibold equivalent */
+  font-size: 1.25rem; /* text-xl equivalent */
+  position: relative;
+}
+
+.value-card h3::first-letter {
+  color: #dc2626; /* red-600 */
+}
+
+.value-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  position: relative;
+}
+
+body.dark .value-card {
+  background: var(--bg-secondary);
+}
+
+body.dark .value-card h3 {
+  color: white; /* Dark mode override */
+}
+
 body.dark .service-icon {
   background-color: rgba(255, 255, 255, 0.05); /* Subtle dark mode bg */
+}
+
+/* Page Header Styles */
+.page-header {
+  background: #f8fafc;
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+body.dark .page-header {
+  background: var(--bg);
+}
+
+body.dark .page-header h1 {
+  color: white;
 }
 
 body.dark .service-icon i {

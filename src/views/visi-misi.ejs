@@ -1,0 +1,95 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visi & Misi - Bosowa Bandar Group</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Visi & Misi</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- Intro Section -->
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <p class="lead text-muted" style="max-width: 800px; margin: 0 auto;">
+              Sebagai bagian dari Bosowa Group, Bosowa Bandar Group berkomitmen untuk menjadi perusahaan pengelola pelabuhan dan logistik 
+              yang modern, efisien, dan berdaya saing tinggi. Visi dan misi kami menjadi dasar dalam setiap langkah pengembangan bisnis 
+              untuk mendukung pembangunan ekonomi nasional.
+            </p>
+          </div>
+        </div>
+
+        <!-- Visi & Misi Grid -->
+        <div class="grid grid-2 gap-4 mb-5">
+          <div class="card vision-card">
+            <div class="card-icon"><i class="fas fa-eye"></i></div>
+            <h3>Visi</h3>
+            <p>Menjadi perusahaan pengelola pelabuhan yang profesional dan berstandar internasional.</p>
+          </div>
+          <div class="card mission-card">
+            <div class="card-icon"><i class="fas fa-rocket"></i></div>
+            <h3>Misi</h3>
+            <ul class="mission-list">
+              <li>Bekerja dengan konsep pelayanan prima.</li>
+              <li>Menjalankan operasional secara profesional dan efisien.</li>
+              <li>Memaksimalkan manfaat bagi seluruh pemangku kepentingan.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Nilai Perusahaan (PRIMA) -->
+        <div class="company-values mt-5">
+          <div class="section-header text-center mb-5">
+            <h2 class="section-title">Filosofi <span class="text-prima">PRIMA</span></h2>
+            <p class="section-desc">Kami menjunjung tinggi nilai-nilai <span class="text-prima">PRIMA</span> dalam setiap aspek pekerjaan</p>
+          </div>
+          
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-letter">P</div>
+              <h3>Profesional</h3>
+              <p>Menjalankan tugas dengan kompetensi tinggi, integritas, dan tanggung jawab demi menjaga reputasi Bosowa sebagai mitra terpercaya di industri maritim.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-letter">R</div>
+              <h3>Responsif</h3>
+              <p>Cepat dan tanggap dalam memenuhi kebutuhan pelanggan serta perubahan situasi di lingkungan pelabuhan dan industri maritim.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-letter">I</div>
+              <h3>Inovatif</h3>
+              <p>Terus beradaptasi dan mengembangkan solusi baru guna meningkatkan efisiensi, layanan, dan daya saing perusahaan.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-letter">M</div>
+              <h3>Melayani</h3>
+              <p>Mengutamakan kepuasan pelanggan dengan memberikan pelayanan yang ramah, cepat, dan tepat sasaran.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-letter">A</div>
+              <h3>Amanah & Terpercaya</h3>
+              <p>Menjaga kepercayaan mitra dan stakeholder dengan bekerja jujur, konsisten, serta menjunjung nilai-nilai moral dan tanggung jawab sosial.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

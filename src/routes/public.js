@@ -32,6 +32,12 @@ router.get('/about', (req, res) => {
   });
 });
 
+router.get('/visi-misi', (req, res) => {
+  res.render('visi-misi', {
+    title: 'Visi & Misi'
+  });
+});
+
 router.post('/contact', (req, res) => {
   const { name, email, subject, message } = req.body;
 
