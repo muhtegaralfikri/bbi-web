@@ -25,7 +25,7 @@
             <span><i class="far fa-calendar"></i> <%= new Date(berita.created_at).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>
           </div>
           <div class="article-body">
-            <%= berita.content.replace(/\n/g, '<br>') %>
+            <%- berita.content %>
           </div>
           <div class="article-footer">
             <a href="/berita" class="btn btn-outline">&larr; Kembali ke Berita</a>

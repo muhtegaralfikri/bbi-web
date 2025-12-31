@@ -2,6 +2,39 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { db } = require('../config/database');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Configure upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, '../../public/uploads/berita');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    // secure filename
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'berita-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+  },
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+});
 
 // Middleware to check if user is authenticated
 const isAuthenticated = (req, res, next) => {
@@ -99,13 +132,15 @@ router.get('/', isAuthenticated, (req, res) => {
 
 // ========== BERITA CRUD ==========
 // Create berita
-router.post('/berita/create', isAuthenticated, (req, res) => {
-  const { title, content, category, published } = req.body;
+router.post('/berita/create', isAuthenticated, upload.single('image'), (req, res) => {
+  const { title, summary, content, status } = req.body;
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const image = req.file ? '/uploads/berita/' + req.file.filename : null;
+  const published = status === 'published' ? 1 : 0;
   
   db.run(
-    'INSERT INTO berita (title, slug, content, category, published) VALUES (?, ?, ?, ?, ?)',
-    [title, slug, content, category || 'umum', published ? 1 : 0],
+    'INSERT INTO berita (title, slug, summary, content, image, category, published) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [title, slug, summary, content, image, 'umum', published],
     (err) => {
       if (err) console.error('Error creating berita:', err);
       res.redirect('/admin?tab=berita');
@@ -114,18 +149,27 @@ router.post('/berita/create', isAuthenticated, (req, res) => {
 });
 
 // Update berita
-router.post('/berita/:id/update', isAuthenticated, (req, res) => {
-  const { title, content, category, published } = req.body;
+router.post('/berita/:id/update', isAuthenticated, upload.single('image'), (req, res) => {
+  const { title, summary, content, status } = req.body;
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const published = status === 'published' ? 1 : 0;
   
-  db.run(
-    'UPDATE berita SET title = ?, slug = ?, content = ?, category = ?, published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-    [title, slug, content, category || 'umum', published ? 1 : 0, req.params.id],
-    (err) => {
-      if (err) console.error('Error updating berita:', err);
-      res.redirect('/admin?tab=berita');
-    }
-  );
+  // Dynamic query construction based on whether image is uploaded
+  let query = 'UPDATE berita SET title = ?, slug = ?, summary = ?, content = ?, published = ?, updated_at = CURRENT_TIMESTAMP';
+  let params = [title, slug, summary, content, published];
+  
+  if (req.file) {
+    query += ', image = ?';
+    params.push('/uploads/berita/' + req.file.filename);
+  }
+  
+  query += ' WHERE id = ?';
+  params.push(req.params.id);
+  
+  db.run(query, params, (err) => {
+    if (err) console.error('Error updating berita:', err);
+    res.redirect('/admin?tab=berita');
+  });
 });
 
 // Delete berita

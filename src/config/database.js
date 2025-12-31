@@ -32,6 +32,7 @@ const initDatabase = () => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         slug TEXT UNIQUE NOT NULL,
+        summary TEXT,
         content TEXT NOT NULL,
         image TEXT,
         category TEXT DEFAULT 'umum',
