@@ -23,13 +23,61 @@
   <% } %>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <h1>Bosowa Bandar Group</h1>
-          <p>Membangun Masa Depan Bersama</p>
-          <a href="/about" class="btn btn-primary">Pelajari Lebih Lanjut</a>
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel">
+      <div class="carousel-container">
+        <!-- Slide 1 -->
+        <div class="carousel-slide active" data-slide="0">
+          <img src="/images/hero/slide1.jpg" alt="Bosowa Bandar Group" class="slide-bg">
+          <div class="slide-overlay"></div>
+          <div class="container">
+            <div class="hero-content">
+              <h1 class="slide-title">Bosowa Bandar Group</h1>
+              <p class="slide-subtitle">Membangun Masa Depan Bersama</p>
+              <a href="/about" class="btn btn-primary">Pelajari Lebih Lanjut</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide" data-slide="1">
+          <img src="/images/hero/slide2.jpg" alt="Layanan Kepelabuhanan" class="slide-bg">
+          <div class="slide-overlay"></div>
+          <div class="container">
+            <div class="hero-content">
+              <h1 class="slide-title">Layanan Kepelabuhanan Terpadu</h1>
+              <p class="slide-subtitle">Solusi logistik maritim terpercaya untuk bisnis Anda</p>
+              <a href="/unit-bisnis" class="btn btn-primary">Lihat Unit Bisnis</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide" data-slide="2">
+          <img src="/images/hero/slide3.jpg" alt="Profesional & Terpercaya" class="slide-bg">
+          <div class="slide-overlay"></div>
+          <div class="container">
+            <div class="hero-content">
+              <h1 class="slide-title">Profesional & Terpercaya</h1>
+              <p class="slide-subtitle">Melayani dengan standar internasional sejak 1999</p>
+              <a href="/contact" class="btn btn-primary">Hubungi Kami</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="carousel-nav carousel-prev" id="carouselPrev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-nav carousel-next" id="carouselNext">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Dots Indicator -->
+        <div class="carousel-dots" id="carouselDots">
+          <button class="carousel-dot active" data-slide="0"></button>
+          <button class="carousel-dot" data-slide="1"></button>
+          <button class="carousel-dot" data-slide="2"></button>
         </div>
       </div>
     </section>
