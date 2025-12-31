@@ -1132,6 +1132,127 @@ body.dark .menu-toggle:hover {
   font-size: 1rem;
 }
 
+/* FunFact Section */
+.funfact-section {
+  padding-top: 2rem;
+  padding-bottom: 5rem;
+}
+
+.funfact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.funfact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.funfact-title {
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+}
+
+.funfact-value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+body.dark .funfact-value {
+  color: var(--text);
+}
+
+body.dark .funfact-title {
+  color: #60a5fa;
+}
+@media (max-width: 768px) {
+  .funfact-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Mitra Section */
+.mitra-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background: white; /* Clean white background for section */
+}
+
+/* Wrapper for logos - the "gray background" container */
+.mitra-wrapper {
+  background: #f8fafc; /* Very light gray (slate-50) */
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  margin-top: 3rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); /* Subtle inset shadow */
+}
+
+.mitra-grid {
+  display: flex;
+  flex-wrap: wrap; /* Keeps wrapping for mobile */
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; /* Reduced gap to fit 5 items in one row */
+  margin-top: 3rem;
+}
+
+.mitra-item {
+  width: 180px; /* Increased size */
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Removed individual card background/shadow */
+  transition: transform 0.3s ease;
+}
+
+.mitra-item:hover {
+  transform: scale(1.05); /* Slight zoom instead of lift */
+}
+
+.mitra-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* Removed grayscale filter */
+  filter: grayscale(0%);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.mitra-item:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* Dark mode overrides for mitra */
+body.dark .mitra-section {
+  background: var(--bg-primary);
+}
+
+body.dark .mitra-wrapper {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.dark .mitra-item img {
+  filter: grayscale(0%) brightness(1.2); /* Keep colored but slightly brighter for contrast */
+}
+
+body.dark .mitra-item:hover img {
+  filter: grayscale(0%) brightness(1.2);
+}
+
 body.dark .service-icon {
   background-color: rgba(255, 255, 255, 0.05); /* Subtle dark mode bg */
 }
