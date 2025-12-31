@@ -1,0 +1,102 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Bosowa Bandar Group</title>
+  <meta name="description" content="<%= description %>">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <section class="page-header" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
+      <div class="container">
+        <h1 style="color: white;">PT Bosowa Bandar Agensi</h1>
+        <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.9;">Professional Shipping Agency Services</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div style="max-width: 900px; margin: 0 auto;">
+          <div class="card" style="padding: 2rem; box-shadow: none; border: 1px solid var(--border);">
+            <div style="text-align: center; margin-bottom: 2rem;">
+              <i class="fas fa-users-cog" style="font-size: 4rem; color: var(--primary);"></i>
+            </div>
+
+            <h2 style="color: var(--text); margin-bottom: 1.5rem; text-align: center;">Tentang Perusahaan</h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 2rem;">
+              PT Bosowa Bandar Agensi adalah perusahaan agensi kapal yang menyediakan layanan profesional sebagai perantara
+              antara pemilik kapal, operator kapal, dan berbagai pihak terkait di pelabuhan. Kami berkomitmen untuk
+              memberikan layanan terbaik dengan standar internasional.
+            </p>
+
+            <h3 style="color: var(--text); margin-bottom: 1rem; margin-top: 2rem;">Layanan Kami</h3>
+            <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 2rem;">
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-ship" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Ship Agency</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Layanan agensi kapal lengkap untuk kedatangan dan keberangkatan kapal.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-file-signature" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Documentation</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Pengurusan dokumen kapal dan kargo sesuai regulasi.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-handshake" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Port Clearance</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Pengurusan izin masuk dan keluar pelabuhan untuk kapal.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-concierge-bell" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Crew Services</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Layanan untuk awak kapal termasuk sign on/off dan kebutuhan lainnya.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-gas-pump" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Bunkering</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Koordinasi pengisian bahan bakar dan suplai untuk kapal.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-tools" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Ship Repair</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Koordinasi jasa perbaikan dan maintenance kapal.</p>
+              </div>
+            </div>
+
+            <h3 style="color: var(--text); margin-bottom: 1rem; margin-top: 2rem;">Keunggulan Kami</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-clock"></i> Respons Cepat</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  Tim kami siap melayani 24/7 dengan respon time yang cepat untuk setiap kebutuhan klien.
+                </p>
+              </div>
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-certificate"></i> Profesional</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  Didukung oleh tenaga ahli bersertifikat dengan pengalaman bertahun-tahun di industri maritim.
+                </p>
+              </div>
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-network-wired"></i> Jaringan Luas</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  Koneksi dengan berbagai pelabuhan dan otoritas maritim di seluruh Indonesia.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

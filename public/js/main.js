@@ -62,7 +62,46 @@ if (navClose) {
 }
 
 // Close menu when clicking a nav link (for mobile)
-document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
+document.querySelectorAll('.nav-menu > li > .nav-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    // Don't close if it's a dropdown toggle
+    if (!link.parentElement.classList.contains('nav-dropdown')) {
+      closeMobileMenu();
+    }
+  });
+});
+
+// Dropdown toggle for mobile
+document.querySelectorAll('.nav-dropdown > .nav-link').forEach(dropdownToggle => {
+  dropdownToggle.addEventListener('click', (e) => {
+    // Only toggle on mobile
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      const dropdown = dropdownToggle.parentElement;
+      const submenu = dropdown.querySelector('.nav-dropdown-menu');
+
+      // Close other dropdowns
+      document.querySelectorAll('.nav-dropdown').forEach(other => {
+        if (other !== dropdown) {
+          other.classList.remove('active');
+          const otherSubmenu = other.querySelector('.nav-dropdown-menu');
+          if (otherSubmenu) {
+            otherSubmenu.style.display = '';
+          }
+        }
+      });
+
+      // Toggle current dropdown
+      dropdown.classList.toggle('active');
+      if (submenu) {
+        submenu.style.display = dropdown.classList.contains('active') ? 'block' : '';
+      }
+    }
+  });
+});
+
+// Dropdown menu links should close the mobile menu
+document.querySelectorAll('.nav-dropdown-menu .nav-link').forEach(link => {
   link.addEventListener('click', () => {
     closeMobileMenu();
   });

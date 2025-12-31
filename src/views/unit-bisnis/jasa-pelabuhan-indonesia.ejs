@@ -1,0 +1,118 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Bosowa Bandar Group</title>
+  <meta name="description" content="<%= description %>">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <section class="page-header" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
+      <div class="container">
+        <h1 style="color: white;">PT Jasa Pelabuhan Indonesia</h1>
+        <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.9;">Comprehensive Port Management Services</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div style="max-width: 900px; margin: 0 auto;">
+          <div class="card" style="padding: 2rem; box-shadow: none; border: 1px solid var(--border);">
+            <div style="text-align: center; margin-bottom: 2rem;">
+              <i class="fas fa-water" style="font-size: 4rem; color: var(--primary);"></i>
+            </div>
+
+            <h2 style="color: var(--text); margin-bottom: 1.5rem; text-align: center;">Tentang Perusahaan</h2>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 2rem;">
+              PT Jasa Pelabuhan Indonesia adalah perusahaan pengelola jasa kepelabuhanan yang menyediakan layanan
+              komprehensif untuk mendukung kelancaran operasional pelabuhan. Kami berkomitmen untuk meningkatkan
+              efisiensi dan produktivitas kegiatan pelabuhan melalui layanan berkualitas tinggi.
+            </p>
+
+            <h3 style="color: var(--text); margin-bottom: 1rem; margin-top: 2rem;">Layanan Kami</h3>
+            <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 2rem;">
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-dolly" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Stevedoring</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Layanan bongkar muat barang dengan peralatan modern dan tenaga terampil.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-warehouse" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Warehousing</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Fasilitas pergudangan dengan sistem manajemen stok yang efisien.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-truck" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Transportasi</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Layanan angkutan barang dari dan ke pelabuhan dengan armada terpercaya.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Security Services</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Sistem keamanan 24 jam untuk melindungi barang dan aset klien.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-clipboard-list" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Cargo Inspection</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Jasa pemeriksaan kargo untuk memastikan kondisi dan kuantitas.</p>
+              </div>
+              <div style="padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.5rem;">
+                <i class="fas fa-tasks" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">Yard Management</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Pengelolaan area penumpukan konten dan barang secara efisien.</p>
+              </div>
+            </div>
+
+            <h3 style="color: var(--text); margin-bottom: 1rem; margin-top: 2rem;">Mengapa Memilih Kami?</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-medal"></i> Standar Internasional</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  Operasional dengan standar ISO dan best practice industri pelabuhan internasional.
+                </p>
+              </div>
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-cogs"></i> Teknologi Modern</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  Sistem IT terintegrasi untuk tracking cargo dan manajemen operasional real-time.
+                </p>
+              </div>
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-user-tie"></i> Tim Ahli</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  SDM profesional tersertifikasi dengan pengalaman puluhan tahun di industri.
+                </p>
+              </div>
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.75rem;"><i class="fas fa-leaf"></i> Ramah Lingkungan</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                  Komitmen terhadap praktik operasional yang berkelanjutan dan ramah lingkungan.
+                </p>
+              </div>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%); border-radius: 0.75rem; text-align: center;">
+              <h3 style="color: white; margin-bottom: 1rem;">Siap Melayani Kebutuhan Anda</h3>
+              <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Hubungi kami untuk informasi lebih lanjut mengenai layanan jasa pelabuhan yang Anda butuhkan.
+              </p>
+              <a href="#footer" class="btn" style="background: white; color: var(--primary); padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+                <i class="fas fa-envelope"></i> Hubungi Kami
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>
