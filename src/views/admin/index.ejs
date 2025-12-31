@@ -56,7 +56,7 @@
             
             <div class="form-group">
               <label for="berita_content">Isi Konten</label>
-              <input type="hidden" name="content" id="hidden_content">
+              <input type="hidden" name="content" id="hidden_content" value="<%= editData && editType === 'berita' ? editData.content : '' %>">
               <div id="editor-container" style="height: 300px;"></div>
             </div>
             
@@ -436,7 +436,7 @@
     });
 
     // Populate editor if editing
-    var existingContent = <%- JSON.stringify(editData && editType === 'berita' ? editData.content : '') %>;
+    var existingContent = document.getElementById('hidden_content').value;
     if (existingContent) {
       quill.clipboard.dangerouslyPasteHTML(existingContent);
     }

@@ -2468,6 +2468,13 @@ body.dark .btn-link:hover {
   margin-top: 2rem !important;
 }
 
+
+.grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
 .text-center {
   text-align: center;
 }
