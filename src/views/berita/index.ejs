@@ -28,7 +28,7 @@
                   <img src="<%= item.image %>" alt="<%= item.title %>" class="card-image">
                 <% } %>
                 <div class="card-content">
-                  <span class="badge"><%= item.category || 'Umum' %></span>
+
                   <h3><%= item.title %></h3>
                   <p class="card-excerpt"><%= item.summary || item.content.replace(/<[^>]*>?/gm, '').substring(0, 120) %>...</p>
                   <div class="card-meta">

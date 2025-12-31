@@ -19,7 +19,7 @@
           <img src="<%= berita.image %>" alt="<%= berita.title %>" class="article-image">
         <% } %>
         <div class="article-content">
-          <span class="badge"><%= berita.category || 'Umum' %></span>
+
           <h1><%= berita.title %></h1>
           <div class="article-meta">
             <span><i class="far fa-calendar"></i> <%= new Date(berita.created_at).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>

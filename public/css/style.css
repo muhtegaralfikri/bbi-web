@@ -2462,3 +2462,12 @@ body.dark .btn-link:hover {
   color: #93c5fd;
 }
 
+
+/* Utility */
+.mt-4 {
+  margin-top: 2rem !important;
+}
+
+.text-center {
+  text-align: center;
+}

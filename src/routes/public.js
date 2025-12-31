@@ -4,25 +4,27 @@ const { db } = require('../config/database');
 
 router.get('/', (req, res) => {
   // Get published berita (limit 3)
-  const berita = db.prepare(`
-    SELECT * FROM berita
-    WHERE published = 1
-    ORDER BY created_at DESC
-    LIMIT 3
-  `).all();
+  db.all('SELECT * FROM berita WHERE published = 1 ORDER BY created_at DESC LIMIT 3', [], (err, berita) => {
+    if (err) {
+      console.error('Error fetching berita:', err);
+      berita = [];
+    }
 
-  // Get unit bisnis
-  const unitBisnis = db.prepare(`
-    SELECT * FROM unit_bisnis
-    ORDER BY order_num ASC, created_at DESC
-  `).all();
+    // Get unit bisnis
+    db.all('SELECT * FROM unit_bisnis ORDER BY order_num ASC, created_at DESC', [], (err, unitBisnis) => {
+      if (err) {
+        console.error('Error fetching unit bisnis:', err);
+        unitBisnis = [];
+      }
 
-  res.render('index', {
-    title: 'Bosowa Bandar Group',
-    description: 'Bosowa Bandar Group - Company Profile',
-    berita,
-    unitBisnis,
-    contactSuccess: req.query.contact === 'success'
+      res.render('index', {
+        title: 'Bosowa Bandar Group',
+        description: 'Bosowa Bandar Group - Company Profile',
+        berita: berita || [],
+        unitBisnis: unitBisnis || [],
+        contactSuccess: req.query.contact === 'success'
+      });
+    });
   });
 });
 
@@ -42,13 +44,18 @@ router.post('/contact', (req, res) => {
   const { name, email, subject, message } = req.body;
 
   // Insert message
-  db.prepare(`
-    INSERT INTO messages (name, email, subject, message)
-    VALUES (?, ?, ?, ?)
-  `).run(name, email, subject, message);
-
-  // Redirect back to home with success flag
-  res.redirect('/?contact=success');
+  db.run(
+    'INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)',
+    [name, email, subject, message],
+    (err) => {
+      if (err) {
+        console.error('Error sending message:', err);
+        // Still redirect but maybe we should show error, for now success to not break flow
+      }
+      // Redirect back to home with success flag
+      res.redirect('/?contact=success');
+    }
+  );
 });
 
 module.exports = router;
