@@ -1,27 +1,75 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const fs = require('fs');
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
 
-// Ensure data directory exists
-const dataDir = path.join(__dirname, '../../data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
+// Load environment variables
+dotenv.config();
 
-const dbPath = path.join(dataDir, 'bbi.db');
-const db = new sqlite3.Database(dbPath);
+const dbConfig = {
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'root',
+  database: process.env.DB_NAME || 'bbi_db',
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+};
 
-// Initialize tables
+// Create Connection Pool
+const pool = mysql.createPool(dbConfig);
+
+// Wrapper to mimic SQLite3 callback API
+const db = {
+  run: function(sql, params = [], callback) {
+    // Replace ? with ? but MySQL uses ? too, so standard params work.
+    // However, SQLite AUTOINCREMENT is different syntax in CREATE TABLE.
+    pool.query(sql, params, function(err, results, fields) {
+      if (callback) {
+        // SQLite 'this' context in callback has lastID and changes
+        const context = {
+          lastID: results ? results.insertId : null,
+          changes: results ? results.affectedRows : 0
+        };
+        callback.call(context, err);
+      }
+    });
+  },
+  
+  get: function(sql, params = [], callback) {
+    pool.query(sql, params, function(err, results) {
+      if (err) {
+        if (callback) callback(err, null);
+      } else {
+        // SQLite get returns single row or undefined
+        if (callback) callback(null, results[0]);
+      }
+    });
+  },
+  
+  all: function(sql, params = [], callback) {
+    pool.query(sql, params, function(err, results) {
+      if (callback) callback(err, results);
+    });
+  },
+
+  serialize: function(callback) {
+    // MySQL is async by default, we can just execute callback
+    if (callback) callback();
+  }
+};
+
+// Initialize tables with MySQL syntax
 const initDatabase = () => {
-  db.serialize(() => {
-    // Users table (for admin)
+    console.log('Initializing MySQL Database...');
+    
+    // Users table
     db.run(`
       CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        name TEXT,
-        role TEXT DEFAULT 'admin',
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        name VARCHAR(255),
+        role VARCHAR(50) DEFAULT 'admin',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -29,30 +77,30 @@ const initDatabase = () => {
     // Berita table
     db.run(`
       CREATE TABLE IF NOT EXISTS berita (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        slug TEXT UNIQUE NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        slug VARCHAR(255) UNIQUE NOT NULL,
         summary TEXT,
-        content TEXT NOT NULL,
-        image TEXT,
-        category TEXT DEFAULT 'umum',
+        content LONGTEXT NOT NULL,
+        image VARCHAR(255),
+        category VARCHAR(50) DEFAULT 'umum',
         published BOOLEAN DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
 
     // Cabang table
     db.run(`
       CREATE TABLE IF NOT EXISTS cabang (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
         address TEXT,
-        phone TEXT,
-        email TEXT,
+        phone VARCHAR(50),
+        email VARCHAR(100),
         map_link TEXT,
         map_embed TEXT,
-        image TEXT,
+        image VARCHAR(255),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -60,46 +108,46 @@ const initDatabase = () => {
     // Unit Bisnis table
     db.run(`
       CREATE TABLE IF NOT EXISTS unit_bisnis (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
         description TEXT,
-        icon TEXT,
-        image TEXT,
-        link TEXT,
-        order_num INTEGER DEFAULT 0,
+        icon VARCHAR(255),
+        image VARCHAR(255),
+        link VARCHAR(255),
+        order_num INT DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
-    // Settings table (for dynamic content)
+    // Settings table
     db.run(`
       CREATE TABLE IF NOT EXISTS settings (
-        key TEXT PRIMARY KEY,
+        \`key\` VARCHAR(100) PRIMARY KEY,
         value TEXT,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
 
-    // Messages table (contact form)
+    // Messages table
     db.run(`
       CREATE TABLE IF NOT EXISTS messages (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL,
-        subject TEXT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        subject VARCHAR(255),
         message TEXT NOT NULL,
-        read BOOLEAN DEFAULT 0,
+        \`read\` BOOLEAN DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
-    // Comments table (for berita comments)
+    // Comments table
     db.run(`
       CREATE TABLE IF NOT EXISTS comments (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        berita_id INTEGER,
-        name TEXT NOT NULL,
-        email TEXT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        berita_id INT,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255),
         content TEXT NOT NULL,
         approved BOOLEAN DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -107,22 +155,24 @@ const initDatabase = () => {
       )
     `);
 
-    // Create default admin if not exists
+    // Create default admin
+    const bcrypt = require('bcryptjs');
+    const hashedPassword = bcrypt.hashSync('admin123', 10);
+    
+    // Check if admin exists first
     db.get('SELECT * FROM users WHERE email = ?', ['admin@bbi.com'], (err, admin) => {
-      if (!admin) {
-        const bcrypt = require('bcryptjs');
-        const hashedPassword = bcrypt.hashSync('admin123', 10);
+      if (!err && !admin) {
         db.run('INSERT INTO users (email, password, name, role) VALUES (?, ?, ?, ?)',
           ['admin@bbi.com', hashedPassword, 'Administrator', 'admin'],
           (err) => {
             if (!err) console.log('Default admin created: admin@bbi.com / admin123');
+            else console.error('Error creating admin:', err);
           }
         );
       }
     });
 
-    console.log('Database initialized successfully');
-  });
+    console.log('MySQL Database initialization commands sent.');
 };
 
 module.exports = { db, initDatabase };
