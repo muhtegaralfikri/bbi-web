@@ -106,26 +106,59 @@
     <!-- Unit Bisnis Section -->
     <section class="section unit-bisnis-section">
       <div class="container">
-        <h2 class="section-title">Unit Bisnis Kami</h2>
-        <div class="grid grid-3">
-          <% if (unitBisnis && unitBisnis.length > 0) { %>
-            <% unitBisnis.forEach(unit => { %>
-              <div class="card">
-                <% if (unit.icon) { %>
-                  <div class="card-icon"><i class="<%= unit.icon %>"></i></div>
-                <% } else if (unit.image) { %>
-                  <img src="<%= unit.image %>" alt="<%= unit.name %>" class="card-image">
-                <% } %>
-                <h3><%= unit.name %></h3>
-                <p><%= unit.description %></p>
-                <% if (unit.link) { %>
-                  <a href="<%= unit.link %>" class="btn-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                <% } %>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p>Belum ada data unit bisnis.</p>
-          <% } %>
+        <!-- Services Grid (Replicated Design) -->
+        <div class="section-header text-center mb-5">
+          <h2 class="section-title">Unit Bisnis</h2>
+          <p class="section-desc">Melalui berbagai unit bisnis, Bosowa Bandar terus memperkuat perannya sebagai penggerak utama sektor logistik dan pelabuhan di kawasan timur Indonesia.</p>
+        </div>
+        <div class="grid grid-3 services-grid">
+          <!-- Item 1: Keagenan Kapal -->
+          <div class="service-card">
+            <div class="service-icon">
+              <!-- Ship Icon -->
+              <i class="fas fa-ship"></i>
+            </div>
+            <h3>Keagenan Kapal</h3>
+            <p>Menyediakan layanan agensi perkapalan terbaik untuk kebutuhan reguler maupun sistem pelayaran bebas. Kami telah melayani dibeberapa pelabuhan di Indonesia, diantaranya Pelabuhan Makassar, Jeneponto, Barru, Konawe dan Banyuwangi.</p>
+          </div>
+
+          <!-- Item 2: PBM -->
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-dolly-flatbed"></i>
+            </div>
+            <h3>Jasa Bongkar Muat (PBM)</h3>
+            <p>Melayani kegiatan pembongkaran barang dari kapal ke dermaga dan pemuatan barang dari dermaga ke kapal.</p>
+          </div>
+
+          <!-- Item 3: Tug Assist -->
+          <div class="service-card">
+            <div class="service-icon">
+               <i class="fas fa-anchor"></i>
+            </div>
+            <h3>Layanan Kapal Tunda</h3>
+            <p>Layanan kapal tunda (tug assist) untuk membantu kapal lain, baik dalam mendorong, menarik, maupun menggandeng kapal, khususnya saat akan merapat atau meninggalkan dermaga di pelabuhan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="section video-section">
+      <div class="container">
+        <div class="section-header text-center mb-5">
+          <h2 class="section-title">Bosowa Bandar Group</h2>
+          <p class="section-desc">
+            Perusahaan swasta nasional berdiri membawa sejarah lokal Indonesia Timur. Bosowa Bandar Group merupakan Badan Usaha Pelabuhan (BUP) yang merupakan bagian dari Bosowa Corporindo.
+          </p>
+        </div>
+        <div class="video-wrapper" id="videoWrapper" data-video-id="z4hiz113Ej0">
+          <div class="video-thumbnail">
+            <img src="/images/video/image.png" alt="Video Thumbnail" class="video-cover">
+            <button class="play-btn" aria-label="Play Video">
+              <i class="fas fa-play"></i>
+            </button>
+          </div>
         </div>
       </div>
     </section>

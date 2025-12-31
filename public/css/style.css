@@ -712,8 +712,17 @@ body.dark .menu-toggle:hover {
 .section-title {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: var(--text);
+  font-weight: 700;
+}
+
+.section-desc {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .bg-light {
@@ -999,6 +1008,144 @@ body.dark .menu-toggle:hover {
 .error-content h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
+}
+
+/* Services Section (Replicated) */
+.services-grid {
+  margin-top: 3rem;
+  gap: 3rem;
+}
+
+.service-card {
+  text-align: left;
+}
+
+.service-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background-color: #f1f5f9; /* slate-100 */
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.service-icon i {
+  font-size: 1.75rem;
+  color: #1e40af; /* blue-800 */
+}
+
+.service-card:hover .service-icon {
+  background-color: var(--primary);
+  transform: translateY(-5px);
+}
+
+.service-card:hover .service-icon i {
+  color: white;
+}
+
+.service-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* Video Section */
+.video-section {
+  padding-top: 0;
+  padding-bottom: 5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.video-thumbnail {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  background: #000;
+}
+
+.video-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.video-wrapper:hover .video-cover {
+  opacity: 0.6;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 2rem;
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.3);
+  background: var(--primary);
+  color: white;
+}
+
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.3);
+  background: var(--primary);
+  color: white;
+}
+
+.service-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+body.dark .service-icon {
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle dark mode bg */
+}
+
+body.dark .service-icon i {
+  color: #60a5fa; /* Lighter blue for contrast */
+}
+
+body.dark .service-card:hover .service-icon {
+  background-color: var(--primary);
+}
+
+body.dark .service-card:hover .service-icon i {
+  color: white;
 }
 
 /* Footer */
