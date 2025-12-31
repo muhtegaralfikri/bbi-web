@@ -1,0 +1,41 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= berita.title %> - Bosowa Bandar Group</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta name="description" content="<%= berita.content.substring(0, 160) %>">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <article class="article-detail">
+      <div class="container">
+        <% if (berita.image) { %>
+          <img src="<%= berita.image %>" alt="<%= berita.title %>" class="article-image">
+        <% } %>
+        <div class="article-content">
+          <span class="badge"><%= berita.category || 'Umum' %></span>
+          <h1><%= berita.title %></h1>
+          <div class="article-meta">
+            <span><i class="far fa-calendar"></i> <%= new Date(berita.created_at).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+          </div>
+          <div class="article-body">
+            <%= berita.content.replace(/\n/g, '<br>') %>
+          </div>
+          <div class="article-footer">
+            <a href="/berita" class="btn btn-outline">&larr; Kembali ke Berita</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

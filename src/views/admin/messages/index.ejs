@@ -1,0 +1,62 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesan - Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <%- include('partials/admin-sidebar', { active: 'messages' }) %>
+
+    <main class="admin-content">
+      <header class="admin-header">
+        <h1>Pesan Masuk</h1>
+      </header>
+
+      <div class="admin-body">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Dari</th>
+                <th>Email</th>
+                <th>Subjek</th>
+                <th>Tanggal</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% messages.forEach(m => { %>
+                <tr class="<%= m.read ? '' : 'unread' %>">
+                  <td><%= m.name %></td>
+                  <td><%= m.email %></td>
+                  <td><%= m.subject || '-' %></td>
+                  <td><%= new Date(m.created_at).toLocaleDateString('id-ID') %></td>
+                  <td>
+                    <% if (m.read) { %>
+                      <span class="badge badge-success">Dibaca</span>
+                    <% } else { %>
+                      <span class="badge badge-warning">Baru</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <a href="/admin/messages/<%= m.id %>" class="btn btn-sm"><i class="fas fa-eye"></i></a>
+                    <form action="/admin/messages/<%= m.id %>/delete" method="POST" onsubmit="return confirm('Hapus pesan ini?')" style="display:inline">
+                      <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

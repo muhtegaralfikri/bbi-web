@@ -1,0 +1,62 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= cabang ? 'Edit Cabang' : 'Tambah Cabang' %> - Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <%- include('partials/admin-sidebar', { active: 'cabang' }) %>
+
+    <main class="admin-content">
+      <header class="admin-header">
+        <h1><%= cabang ? 'Edit Cabang' : 'Tambah Cabang' %></h1>
+        <a href="/admin/cabang" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Kembali</a>
+      </header>
+
+      <div class="admin-body">
+        <form action="<%= cabang ? '/admin/cabang/' + cabang.id : '/admin/cabang' %>" method="POST" enctype="multipart/form-data" class="form">
+          <div class="form-group">
+            <label for="name">Nama Cabang</label>
+            <input type="text" id="name" name="name" value="<%= cabang ? cabang.name : '' %>" required>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Alamat</label>
+            <textarea id="address" name="address" rows="3"><%= cabang ? cabang.address || '' : '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Telepon</label>
+            <input type="text" id="phone" name="phone" value="<%= cabang ? cabang.phone || '' : '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="<%= cabang ? cabang.email || '' : '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="map_link">Link Google Maps</label>
+            <input type="url" id="map_link" name="map_link" value="<%= cabang ? cabang.map_link || '' : '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="image">Gambar</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            <% if (cabang && cabang.image) { %>
+              <img src="<%= cabang.image %>" alt="" class="preview-image" style="margin-top:10px;max-width:200px;">
+            <% } %>
+          </div>
+
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berita - Bosowa Bandar Group</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Berita & Artikel</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3">
+          <% if (berita && berita.length > 0) { %>
+            <% berita.forEach(item => { %>
+              <article class="card card-news">
+                <% if (item.image) { %>
+                  <img src="<%= item.image %>" alt="<%= item.title %>" class="card-image">
+                <% } %>
+                <div class="card-content">
+                  <span class="badge"><%= item.category || 'Umum' %></span>
+                  <h3><%= item.title %></h3>
+                  <p class="card-excerpt"><%= item.content.substring(0, 120) %>...</p>
+                  <div class="card-meta">
+                    <span><i class="far fa-calendar"></i> <%= new Date(item.created_at).toLocaleDateString('id-ID') %></span>
+                  </div>
+                  <a href="/berita/<%= item.slug %>" class="btn-link">Baca Selengkapnya</a>
+                </div>
+              </article>
+            <% }) %>
+          <% } else { %>
+            <p>Belum ada berita yang dipublikasikan.</p>
+          <% } %>
+        </div>
+
+        <% if (pagination && pagination.totalPages > 1) { %>
+          <div class="pagination">
+            <% if (pagination.page > 1) { %>
+              <a href="?page=<%= pagination.page - 1 %>" class="btn btn-outline">&laquo; Prev</a>
+            <% } %>
+            <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+              <a href="?page=<%= i %>" class="btn <%= i === pagination.page ? 'btn-primary' : 'btn-outline' %>"><%= i %></a>
+            <% } %>
+            <% if (pagination.page < pagination.totalPages) { %>
+              <a href="?page=<%= pagination.page + 1 %>" class="btn btn-outline">Next &raquo;</a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

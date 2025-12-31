@@ -1,0 +1,58 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Info Cabang - Bosowa Bandar Group</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Info Cabang</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3">
+          <% if (cabang && cabang.length > 0) { %>
+            <% cabang.forEach(cab => { %>
+              <div class="card">
+                <% if (cab.image) { %>
+                  <img src="<%= cab.image %>" alt="<%= cab.name %>" class="card-image">
+                <% } %>
+                <div class="card-content">
+                  <h3><%= cab.name %></h3>
+                  <p><%= cab.address %></p>
+                  <% if (cab.phone) { %>
+                    <p><i class="fas fa-phone"></i> <%= cab.phone %></p>
+                  <% } %>
+                  <% if (cab.email) { %>
+                    <p><i class="fas fa-envelope"></i> <%= cab.email %></p>
+                  <% } %>
+                  <% if (cab.map_link) { %>
+                    <a href="<%= cab.map_link %>" target="_blank" class="btn-link">
+                      <i class="fas fa-map-marker-alt"></i> Lihat Peta
+                    </a>
+                  <% } %>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>Belum ada data cabang.</p>
+          <% } %>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaturan - Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <%- include('partials/admin-sidebar', { active: 'settings' }) %>
+
+    <main class="admin-content">
+      <header class="admin-header">
+        <h1>Pengaturan</h1>
+      </header>
+
+      <div class="admin-body">
+        <form action="/admin/settings" method="POST" class="form">
+          <h2>Informasi Perusahaan</h2>
+          <div class="form-group">
+            <label for="company_name">Nama Perusahaan</label>
+            <input type="text" id="company_name" name="company_name" value="<%= settings.company_name || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="company_address">Alamat</label>
+            <textarea id="company_address" name="company_address" rows="3"><%= settings.company_address || '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="company_phone">Telepon</label>
+            <input type="text" id="company_phone" name="company_phone" value="<%= settings.company_phone || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="company_email">Email</label>
+            <input type="email" id="company_email" name="company_email" value="<%= settings.company_email || '' %>">
+          </div>
+
+          <h2>Sosial Media</h2>
+          <div class="form-group">
+            <label for="social_facebook">Facebook</label>
+            <input type="url" id="social_facebook" name="social_facebook" value="<%= settings.social_facebook || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="social_instagram">Instagram</label>
+            <input type="url" id="social_instagram" name="social_instagram" value="<%= settings.social_instagram || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label for="social_linkedin">LinkedIn</label>
+            <input type="url" id="social_linkedin" name="social_linkedin" value="<%= settings.social_linkedin || '' %>">
+          </div>
+
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

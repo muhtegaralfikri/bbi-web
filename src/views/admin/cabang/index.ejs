@@ -1,0 +1,55 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cabang - Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <%- include('partials/admin-sidebar', { active: 'cabang' }) %>
+
+    <main class="admin-content">
+      <header class="admin-header">
+        <h1>Kelola Cabang</h1>
+        <a href="/admin/cabang/create" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Cabang</a>
+      </header>
+
+      <div class="admin-body">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Telepon</th>
+                <th>Email</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% cabang.forEach(c => { %>
+                <tr>
+                  <td><%= c.name %></td>
+                  <td><%= c.address || '-' %></td>
+                  <td><%= c.phone || '-' %></td>
+                  <td><%= c.email || '-' %></td>
+                  <td>
+                    <a href="/admin/cabang/<%= c.id %>/edit" class="btn btn-sm"><i class="fas fa-edit"></i></a>
+                    <form action="/admin/cabang/<%= c.id %>/delete" method="POST" onsubmit="return confirm('Hapus cabang ini?')" style="display:inline">
+                      <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

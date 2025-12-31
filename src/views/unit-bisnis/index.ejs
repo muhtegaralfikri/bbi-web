@@ -1,0 +1,52 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Bisnis - Bosowa Bandar Group</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Unit Bisnis</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3">
+          <% if (unitBisnis && unitBisnis.length > 0) { %>
+            <% unitBisnis.forEach(unit => { %>
+              <div class="card">
+                <% if (unit.icon) { %>
+                  <div class="card-icon"><i class="<%= unit.icon %>"></i></div>
+                <% } else if (unit.image) { %>
+                  <img src="<%= unit.image %>" alt="<%= unit.name %>" class="card-image">
+                <% } %>
+                <div class="card-content">
+                  <h3><%= unit.name %></h3>
+                  <p><%= unit.description %></p>
+                  <% if (unit.link) { %>
+                    <a href="<%= unit.link %>" class="btn-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                  <% } %>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>Belum ada data unit bisnis.</p>
+          <% } %>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bosowa Bandar Group - Home</title>
+  <meta name="description" content="Bosowa Bandar Group - Company Profile">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <% if (contactSuccess) { %>
+    <div class="alert-banner alert-success">
+      <div class="container">
+        <i class="fas fa-check-circle"></i>
+        <span>Pesan Anda telah terkirim. Terima kasih!</span>
+        <button onclick="this.parentElement.parentElement.remove()" class="alert-close">&times;</button>
+      </div>
+    </div>
+  <% } %>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Bosowa Bandar Group</h1>
+          <p>Membangun Masa Depan Bersama</p>
+          <a href="/about" class="btn btn-primary">Pelajari Lebih Lanjut</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Unit Bisnis Section -->
+    <section class="section unit-bisnis-section">
+      <div class="container">
+        <h2 class="section-title">Unit Bisnis Kami</h2>
+        <div class="grid grid-3">
+          <% if (unitBisnis && unitBisnis.length > 0) { %>
+            <% unitBisnis.forEach(unit => { %>
+              <div class="card">
+                <% if (unit.icon) { %>
+                  <div class="card-icon"><i class="<%= unit.icon %>"></i></div>
+                <% } else if (unit.image) { %>
+                  <img src="<%= unit.image %>" alt="<%= unit.name %>" class="card-image">
+                <% } %>
+                <h3><%= unit.name %></h3>
+                <p><%= unit.description %></p>
+                <% if (unit.link) { %>
+                  <a href="<%= unit.link %>" class="btn-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                <% } %>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>Belum ada data unit bisnis.</p>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <!-- Berita Terbaru -->
+    <section class="section bg-light">
+      <div class="container">
+        <h2 class="section-title">Berita Terbaru</h2>
+        <div class="grid grid-3">
+          <% if (berita && berita.length > 0) { %>
+            <% berita.forEach(item => { %>
+              <article class="card card-news">
+                <% if (item.image) { %>
+                  <img src="<%= item.image %>" alt="<%= item.title %>" class="card-image">
+                <% } %>
+                <div class="card-content">
+                  <span class="badge"><%= item.category || 'Umum' %></span>
+                  <h3><%= item.title %></h3>
+                  <p class="card-excerpt"><%= item.content.substring(0, 100) %>...</p>
+                  <div class="card-meta">
+                    <span><i class="far fa-calendar"></i> <%= new Date(item.created_at).toLocaleDateString('id-ID') %></span>
+                  </div>
+                  <a href="/berita/<%= item.slug %>" class="btn-link">Baca Selengkapnya</a>
+                </div>
+              </article>
+            <% }) %>
+          <% } else { %>
+            <p>Belum ada berita.</p>
+          <% } %>
+        </div>
+        <div class="text-center mt-4">
+          <a href="/berita" class="btn btn-outline">Lihat Semua Berita</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

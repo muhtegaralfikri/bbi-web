@@ -1,0 +1,43 @@
+<% layout = false %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Pesan - Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <%- include('partials/admin-sidebar', { active: 'messages' }) %>
+
+    <main class="admin-content">
+      <header class="admin-header">
+        <h1>Detail Pesan</h1>
+        <a href="/admin/messages" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Kembali</a>
+      </header>
+
+      <div class="admin-body">
+        <div class="message-detail">
+          <div class="message-header">
+            <h2><%= message.subject || '(Tanpa Subjek)' %></h2>
+            <div class="message-meta">
+              <p><strong>Dari:</strong> <%= message.name %> (<%= message.email %>)</p>
+              <p><strong>Tanggal:</strong> <%= new Date(message.created_at).toLocaleString('id-ID') %></p>
+            </div>
+          </div>
+          <div class="message-body">
+            <%= message.message.replace(/\n/g, '<br>') %>
+          </div>
+          <div class="message-actions">
+            <form action="/admin/messages/<%= message.id %>/delete" method="POST" onsubmit="return confirm('Hapus pesan ini?')">
+              <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus Pesan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
