@@ -50,25 +50,48 @@ router.get('/', (req, res) => {
   });
 });
 
+// Detail Berita (Public) using sqlite3
 router.get('/:slug', (req, res) => {
-  db.get('SELECT * FROM berita WHERE slug = ? AND published = 1', [req.params.slug], (err, berita) => {
+  const slug = req.params.slug;
+  db.get('SELECT * FROM berita WHERE slug = ? AND published = 1', [slug], (err, berita) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Internal Server Error');
+      return res.status(500).send('Database Error');
     }
-
     if (!berita) {
-      return res.status(404).render('error', {
-        title: '404 - Berita Tidak Ditemukan',
-        message: 'Berita yang Anda cari tidak ditemukan.'
-      });
+      return res.status(404).render('404', { title: 'Berita Tidak Ditemukan' });
     }
-
-    res.render('berita/detail', {
-      title: berita.title,
-      berita
+    
+    // Fetch approved comments
+    db.all('SELECT * FROM comments WHERE berita_id = ? AND approved = 1 ORDER BY created_at DESC', [berita.id], (err, comments) => {
+       if (err) comments = [];
+       res.render('berita/detail', { 
+         title: berita.title, 
+         berita,
+         comments: comments
+       });
     });
   });
+});
+
+// Post Comment Route
+router.post('/:id/comment', (req, res) => {
+  const beritaId = req.params.id;
+  const { name, email, content } = req.body;
+  
+  // Simple validation
+  if (!name || !email || !content) {
+     return res.redirect('back');
+  }
+
+  db.run('INSERT INTO comments (berita_id, name, email, content, approved) VALUES (?, ?, ?, ?, 0)', 
+    [beritaId, name, email, content], 
+    (err) => {
+      if (err) console.error(err);
+      // Redirect back with query param for success message
+      res.redirect(req.get('referer') + '?comment_submitted=true');
+    }
+  );
 });
 
 module.exports = router;

@@ -216,9 +216,19 @@ router.post('/cabang/:id/delete', isAuthenticated, (req, res) => {
 });
 
 // ========== COMMENTS ==========
-// Delete comment
+// Comment Routes
+router.post('/comments/:id/approve', isAuthenticated, (req, res) => {
+  const id = req.params.id;
+  db.run('UPDATE comments SET approved = 1 WHERE id = ?', [id], (err) => {
+    if (err) console.error(err);
+    res.redirect('/admin?tab=comments');
+  });
+});
+
 router.post('/comments/:id/delete', isAuthenticated, (req, res) => {
-  db.run('DELETE FROM comments WHERE id = ?', [req.params.id], (err) => {
+  const id = req.params.id;
+  db.run('DELETE FROM comments WHERE id = ?', [id], (err) => {
+    if (err) console.error(err);
     res.redirect('/admin?tab=comments');
   });
 });
