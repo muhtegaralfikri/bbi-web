@@ -15,15 +15,31 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Settings middleware
+app.use(require('./middleware/settings'));
+
+const SQLiteStore = require('connect-sqlite3')(session);
+
 // Session middleware
 app.use(session({
+  store: new SQLiteStore({
+    db: 'sessions.db',
+    dir: path.join(__dirname, '../data'),
+    table: 'sessions'
+  }),
   secret: process.env.SESSION_SECRET || 'secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
   }
 }));
+
+// Make user data available to all views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
 
 // View engine
 app.set('view engine', 'ejs');

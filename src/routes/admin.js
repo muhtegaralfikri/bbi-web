@@ -23,21 +23,29 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
 
-  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+  db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.render('admin/login', {
+        title: 'Login - Admin',
+        message: { type: 'error', text: 'Terjadi kesalahan sistem' }
+      });
+    }
 
-  if (user && bcrypt.compareSync(password, user.password)) {
-    req.session.user = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role
-    };
-    return res.redirect('/admin');
-  }
+    if (user && user.password && bcrypt.compareSync(password, user.password)) {
+      req.session.user = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role
+      };
+      return res.redirect('/admin');
+    }
 
-  res.render('admin/login', {
-    title: 'Login - Admin',
-    message: { type: 'error', text: 'Email atau password salah' }
+    res.render('admin/login', {
+      title: 'Login - Admin',
+      message: { type: 'error', text: 'Email atau password salah' }
+    });
   });
 });
 
@@ -47,20 +55,153 @@ router.get('/logout', (req, res) => {
   res.redirect('/admin/login');
 });
 
-// Dashboard
+// Admin Panel - Unified view
 router.get('/', isAuthenticated, (req, res) => {
-  const stats = {
-    berita: db.prepare('SELECT COUNT(*) as count FROM berita').get().count,
-    cabang: db.prepare('SELECT COUNT(*) as count FROM cabang').get().count,
-    unitBisnis: db.prepare('SELECT COUNT(*) as count FROM unit_bisnis').get().count,
-    messages: db.prepare('SELECT COUNT(*) as count FROM messages WHERE read = 0').get().count
-  };
-
-  res.render('admin/dashboard', {
-    user: req.session.user,
-    stats,
-    active: 'dashboard'
+  const editId = req.query.edit;
+  const editType = req.query.type;
+  
+  // Fetch all data for admin panel
+  db.all('SELECT * FROM berita ORDER BY created_at DESC', [], (err, berita) => {
+    if (err) berita = [];
+    
+    db.all('SELECT * FROM cabang ORDER BY name ASC', [], (err, cabang) => {
+      if (err) cabang = [];
+      
+      db.all(`SELECT c.*, b.title as berita_title 
+              FROM comments c 
+              LEFT JOIN berita b ON c.berita_id = b.id 
+              ORDER BY c.created_at DESC`, [], (err, comments) => {
+        if (err) comments = [];
+        
+        // Get edit data if editing
+        let editData = null;
+        if (editId && editType === 'berita') {
+          editData = berita.find(b => b.id == editId);
+        } else if (editId && editType === 'cabang') {
+          editData = cabang.find(c => c.id == editId);
+        }
+        
+        res.render('admin/index', {
+          user: req.session.user,
+          berita: berita || [],
+          cabang: cabang || [],
+          comments: comments || [],
+          settings: res.locals.settings || {},
+          activeTab: req.query.tab || 'berita',
+          editData,
+          editType,
+          editId
+        });
+      });
+    });
   });
+});
+
+// ========== BERITA CRUD ==========
+// Create berita
+router.post('/berita/create', isAuthenticated, (req, res) => {
+  const { title, content, category, published } = req.body;
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  
+  db.run(
+    'INSERT INTO berita (title, slug, content, category, published) VALUES (?, ?, ?, ?, ?)',
+    [title, slug, content, category || 'umum', published ? 1 : 0],
+    (err) => {
+      if (err) console.error('Error creating berita:', err);
+      res.redirect('/admin?tab=berita');
+    }
+  );
+});
+
+// Update berita
+router.post('/berita/:id/update', isAuthenticated, (req, res) => {
+  const { title, content, category, published } = req.body;
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  
+  db.run(
+    'UPDATE berita SET title = ?, slug = ?, content = ?, category = ?, published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+    [title, slug, content, category || 'umum', published ? 1 : 0, req.params.id],
+    (err) => {
+      if (err) console.error('Error updating berita:', err);
+      res.redirect('/admin?tab=berita');
+    }
+  );
+});
+
+// Delete berita
+router.post('/berita/:id/delete', isAuthenticated, (req, res) => {
+  db.run('DELETE FROM berita WHERE id = ?', [req.params.id], (err) => {
+    res.redirect('/admin?tab=berita');
+  });
+});
+
+// ========== CABANG CRUD ==========
+// Create cabang
+router.post('/cabang/create', isAuthenticated, (req, res) => {
+  const { name, address, phone, email, map_embed } = req.body;
+  
+  db.run(
+    'INSERT INTO cabang (name, address, phone, email, map_embed) VALUES (?, ?, ?, ?, ?)',
+    [name, address, phone, email, map_embed],
+    (err) => {
+      if (err) console.error('Error creating cabang:', err);
+      res.redirect('/admin?tab=cabang');
+    }
+  );
+});
+
+// Update cabang
+router.post('/cabang/:id/update', isAuthenticated, (req, res) => {
+  const { name, address, phone, email, map_embed } = req.body;
+  
+  db.run(
+    'UPDATE cabang SET name = ?, address = ?, phone = ?, email = ?, map_embed = ? WHERE id = ?',
+    [name, address, phone, email, map_embed, req.params.id],
+    (err) => {
+      if (err) console.error('Error updating cabang:', err);
+      res.redirect('/admin?tab=cabang');
+    }
+  );
+});
+
+// Delete cabang
+router.post('/cabang/:id/delete', isAuthenticated, (req, res) => {
+  db.run('DELETE FROM cabang WHERE id = ?', [req.params.id], (err) => {
+    res.redirect('/admin?tab=cabang');
+  });
+});
+
+// ========== COMMENTS ==========
+// Delete comment
+router.post('/comments/:id/delete', isAuthenticated, (req, res) => {
+  db.run('DELETE FROM comments WHERE id = ?', [req.params.id], (err) => {
+    res.redirect('/admin?tab=comments');
+  });
+});
+
+// ========== SETTINGS ==========
+// Update settings
+router.post('/settings', isAuthenticated, (req, res) => {
+  const settings = req.body;
+  const keys = Object.keys(settings);
+  
+  let completed = 0;
+  keys.forEach(key => {
+    db.run(
+      'INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)',
+      [key, settings[key]],
+      (err) => {
+        completed++;
+        if (completed === keys.length) {
+          res.redirect('/admin?tab=settings');
+        }
+      }
+    );
+  });
+  
+  if (keys.length === 0) {
+    res.redirect('/admin?tab=settings');
+  }
 });
 
 module.exports = { router, isAuthenticated };

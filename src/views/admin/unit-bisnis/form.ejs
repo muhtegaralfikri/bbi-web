@@ -1,62 +1,54 @@
-<% layout = false %>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= unit ? 'Edit Unit Bisnis' : 'Tambah Unit Bisnis' %> - Admin</title>
-  <link rel="stylesheet" href="/css/admin.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-  <div class="admin-layout">
-    <%- include('partials/admin-sidebar', { active: 'unit-bisnis' }) %>
+<%- include('../partials/admin-head', { pageTitle: unit ? 'Edit Unit Bisnis' : 'Tambah Unit Bisnis' }) %>
+<%- include('../../partials/header') %>
+<%- include('../partials/admin-nav', { active: 'unit-bisnis' }) %>
 
-    <main class="admin-content">
-      <header class="admin-header">
-        <h1><%= unit ? 'Edit Unit Bisnis' : 'Tambah Unit Bisnis' %></h1>
-        <a href="/admin/unit-bisnis" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Kembali</a>
-      </header>
+<main class="admin-layout">
+  <div class="container">
+    <header class="admin-header">
+      <h1><%= unit ? 'Edit Unit Bisnis' : 'Tambah Unit Bisnis' %></h1>
+      <a href="/admin/unit-bisnis" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Kembali</a>
+    </header>
 
-      <div class="admin-body">
-        <form action="<%= unit ? '/admin/unit-bisnis/' + unit.id : '/admin/unit-bisnis' %>" method="POST" enctype="multipart/form-data" class="form">
-          <div class="form-group">
-            <label for="name">Nama Unit Bisnis</label>
-            <input type="text" id="name" name="name" value="<%= unit ? unit.name : '' %>" required>
-          </div>
+    <div class="admin-body">
+      <form action="<%= unit ? '/admin/unit-bisnis/' + unit.id : '/admin/unit-bisnis' %>" method="POST" enctype="multipart/form-data" class="form">
+        <div class="form-group">
+          <label for="name">Nama Unit Bisnis</label>
+          <input type="text" id="name" name="name" value="<%= unit ? unit.name : '' %>" required>
+        </div>
 
-          <div class="form-group">
-            <label for="description">Deskripsi</label>
-            <textarea id="description" name="description" rows="3"><%= unit ? unit.description || '' : '' %></textarea>
-          </div>
+        <div class="form-group">
+          <label for="description">Deskripsi</label>
+          <textarea id="description" name="description" rows="3"><%= unit ? unit.description || '' : '' %></textarea>
+        </div>
 
-          <div class="form-group">
-            <label for="icon">Icon Font Awesome (contoh: fas fa-building)</label>
-            <input type="text" id="icon" name="icon" value="<%= unit ? unit.icon || '' : '' %>" placeholder="fas fa-building">
-          </div>
+        <div class="form-group">
+          <label for="icon">Icon Font Awesome (contoh: fas fa-building)</label>
+          <input type="text" id="icon" name="icon" value="<%= unit ? unit.icon || '' : '' %>" placeholder="fas fa-building">
+        </div>
 
-          <div class="form-group">
-            <label for="link">Link (opsional)</label>
-            <input type="url" id="link" name="link" value="<%= unit ? unit.link || '' : '' %>">
-          </div>
+        <div class="form-group">
+          <label for="link">Link (opsional)</label>
+          <input type="url" id="link" name="link" value="<%= unit ? unit.link || '' : '' %>">
+        </div>
 
-          <div class="form-group">
-            <label for="order_num">Urutan Tampil</label>
-            <input type="number" id="order_num" name="order_num" value="<%= unit ? unit.order_num : 0 %>">
-          </div>
+        <div class="form-group">
+          <label for="order_num">Urutan Tampil</label>
+          <input type="number" id="order_num" name="order_num" value="<%= unit ? unit.order_num : 0 %>">
+        </div>
 
-          <div class="form-group">
-            <label for="image">Gambar</label>
-            <input type="file" id="image" name="image" accept="image/*">
-            <% if (unit && unit.image) { %>
-              <img src="<%= unit.image %>" alt="" class="preview-image" style="margin-top:10px;max-width:200px;">
-            <% } %>
-          </div>
+        <div class="form-group">
+          <label for="image">Gambar</label>
+          <input type="file" id="image" name="image" accept="image/*">
+          <% if (unit && unit.image) { %>
+            <img src="<%= unit.image %>" alt="" class="preview-image" style="margin-top:10px;max-width:200px;">
+          <% } %>
+        </div>
 
-          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-        </form>
-      </div>
-    </main>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+      </form>
+    </div>
   </div>
-</body>
-</html>
+</main>
+
+<%- include('../../partials/footer') %>
+<%- include('../partials/admin-foot') %>

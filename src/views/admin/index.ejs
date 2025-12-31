@@ -1,0 +1,403 @@
+<%- include('partials/admin-head', { pageTitle: 'Admin Panel' }) %>
+<%- include('../partials/header') %>
+
+<main class="admin-layout">
+  <div class="container">
+    <!-- Admin Header -->
+    <header class="admin-header">
+      <h1>Admin Panel</h1>
+      <div class="admin-user">
+        <%= user.name %>
+      </div>
+    </header>
+
+    <!-- Admin Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab <%= activeTab === 'berita' ? 'active' : '' %>" data-tab="berita">
+        <i class="fas fa-newspaper"></i> Berita
+      </button>
+      <button class="admin-tab <%= activeTab === 'cabang' ? 'active' : '' %>" data-tab="cabang">
+        <i class="fas fa-building"></i> Cabang
+      </button>
+      <button class="admin-tab <%= activeTab === 'comments' ? 'active' : '' %>" data-tab="comments">
+        <i class="fas fa-comments"></i> Komentar
+      </button>
+      <button class="admin-tab <%= activeTab === 'settings' ? 'active' : '' %>" data-tab="settings">
+        <i class="fas fa-cog"></i> Pengaturan
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="admin-body">
+      
+      <!-- ========== BERITA TAB ========== -->
+      <div class="tab-content <%= activeTab === 'berita' ? 'active' : '' %>" id="tab-berita">
+        <div class="tab-header">
+          <h2><i class="fas fa-newspaper" style="color: var(--admin-primary); margin-right: 0.5rem;"></i> Manajemen Berita</h2>
+          <button class="btn btn-primary" onclick="toggleForm('berita')">
+            <i class="fas fa-plus"></i> Tambah Berita
+          </button>
+        </div>
+        
+        <!-- Form Tambah/Edit Berita -->
+        <div class="form-section <%= (editType === 'berita') ? 'form-visible' : '' %>" id="form-berita">
+          <form action="<%= editData && editType === 'berita' ? '/admin/berita/' + editData.id + '/update' : '/admin/berita/create' %>" method="POST" class="inline-form">
+            <h3><%= editData && editType === 'berita' ? 'Edit Berita' : 'Tambah Berita Baru' %></h3>
+            <div class="form-row">
+              <div class="form-group" style="flex: 2;">
+                <label for="berita_title">Judul Berita</label>
+                <input type="text" id="berita_title" name="title" value="<%= editData && editType === 'berita' ? editData.title : '' %>" required placeholder="Masukkan judul berita">
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="berita_category">Kategori</label>
+                <select id="berita_category" name="category">
+                  <option value="umum" <%= editData && editData.category === 'umum' ? 'selected' : '' %>>Umum</option>
+                  <option value="berita" <%= editData && editData.category === 'berita' ? 'selected' : '' %>>Berita</option>
+                  <option value="kegiatan" <%= editData && editData.category === 'kegiatan' ? 'selected' : '' %>>Kegiatan</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="berita_content">Konten</label>
+              <textarea id="berita_content" name="content" rows="5" required placeholder="Tulis konten berita..."><%= editData && editType === 'berita' ? editData.content : '' %></textarea>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="published" value="1" <%= editData && editData.published ? 'checked' : '' %>> Publish berita ini
+              </label>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+              <button type="button" class="btn btn-outline" onclick="toggleForm('berita')">Batal</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Judul</th>
+                <th style="width: 100px;">Kategori</th>
+                <th style="width: 100px;">Status</th>
+                <th style="width: 120px;">Tanggal</th>
+                <th style="width: 120px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (berita.length > 0) { %>
+                <% berita.forEach(item => { %>
+                  <tr>
+                    <td><strong><%= item.title %></strong></td>
+                    <td><span class="badge badge-info"><%= item.category || 'umum' %></span></td>
+                    <td>
+                      <% if (item.published) { %>
+                        <span class="badge badge-success">Published</span>
+                      <% } else { %>
+                        <span class="badge badge-warning">Draft</span>
+                      <% } %>
+                    </td>
+                    <td><%= new Date(item.created_at).toLocaleDateString('id-ID') %></td>
+                    <td>
+                      <a href="/admin?tab=berita&edit=<%= item.id %>&type=berita" class="btn btn-sm btn-outline" title="Edit">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <form action="/admin/berita/<%= item.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Hapus berita ini?')">
+                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="5" class="text-center">
+                    <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 0.5rem; display: block; opacity: 0.5;"></i>
+                    Belum ada berita
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========== CABANG TAB ========== -->
+      <div class="tab-content <%= activeTab === 'cabang' ? 'active' : '' %>" id="tab-cabang">
+        <div class="tab-header">
+          <div>
+            <h2><i class="fas fa-building" style="color: var(--admin-primary); margin-right: 0.5rem;"></i> Info Kantor Cabang</h2>
+            <p class="tab-description">Perbarui data alamat, kontak, dan embed Google Maps semua kantor cabang.</p>
+          </div>
+          <button class="btn btn-primary" onclick="toggleForm('cabang')">
+            <i class="fas fa-plus"></i> Tambah Cabang
+          </button>
+        </div>
+
+        <!-- Form Tambah/Edit Cabang -->
+        <div class="form-section <%= (editType === 'cabang') ? 'form-visible' : '' %>" id="form-cabang">
+          <form action="<%= editData && editType === 'cabang' ? '/admin/cabang/' + editData.id + '/update' : '/admin/cabang/create' %>" method="POST" class="inline-form">
+            <h3><%= editData && editType === 'cabang' ? 'Edit Informasi Cabang' : 'Tambah Cabang Baru' %></h3>
+            
+            <div class="form-group">
+              <label for="cabang_name">Nama Kantor Cabang</label>
+              <input type="text" id="cabang_name" name="name" value="<%= editData && editType === 'cabang' ? editData.name : '' %>" required placeholder="Contoh: Kantor Pusat Makassar">
+            </div>
+            
+            <div class="form-group">
+              <label for="cabang_address">Alamat Kantor Cabang</label>
+              <textarea id="cabang_address" name="address" rows="3" placeholder="Alamat lengkap kantor cabang..."><%= editData && editType === 'cabang' ? editData.address : '' %></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label for="cabang_phone">No. Telepon / HP</label>
+                <input type="text" id="cabang_phone" name="phone" value="<%= editData && editType === 'cabang' ? editData.phone : '' %>" placeholder="(0411) xxx-xxxx atau 08xx-xxxx-xxxx">
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="cabang_email">Email</label>
+                <input type="email" id="cabang_email" name="email" value="<%= editData && editType === 'cabang' ? editData.email : '' %>" placeholder="cabang@bbi.co.id">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="cabang_map">Google Maps Embed (iframe)</label>
+              <textarea id="cabang_map" name="map_embed" rows="3" placeholder="Paste kode iframe dari Google Maps di sini..."><%= editData && editType === 'cabang' ? (editData.map_embed || '') : '' %></textarea>
+              <small style="color: var(--admin-text-light); font-size: 0.8rem;">
+                Cara mendapatkan: Buka Google Maps > Pilih lokasi > Share > Embed a map > Copy HTML
+              </small>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+              <button type="button" class="btn btn-outline" onclick="toggleForm('cabang')">Batal</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Daftar Cabang dengan Card -->
+        <% if (cabang.length > 0) { %>
+          <div class="cabang-grid">
+            <% cabang.forEach(c => { %>
+              <div class="cabang-card">
+                <div class="cabang-card-header">
+                  <h3><i class="fas fa-building"></i> <%= c.name %></h3>
+                  <div class="cabang-actions">
+                    <a href="/admin?tab=cabang&edit=<%= c.id %>&type=cabang" class="btn btn-sm btn-outline" title="Edit">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <form action="/admin/cabang/<%= c.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Hapus cabang ini?')">
+                      <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+                
+                <div class="cabang-card-body">
+                  <div class="cabang-info">
+                    <div class="cabang-info-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span><%= c.address || 'Alamat belum diisi' %></span>
+                    </div>
+                    <div class="cabang-info-item">
+                      <i class="fas fa-phone"></i>
+                      <span><%= c.phone || 'Telepon belum diisi' %></span>
+                    </div>
+                    <% if (c.email) { %>
+                      <div class="cabang-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><%= c.email %></span>
+                      </div>
+                    <% } %>
+                  </div>
+                  
+                  <% if (c.map_embed) { %>
+                    <div class="cabang-map">
+                      <%- c.map_embed %>
+                    </div>
+                  <% } else { %>
+                    <div class="cabang-map-placeholder">
+                      <i class="fas fa-map"></i>
+                      <span>Peta belum ditambahkan</span>
+                    </div>
+                  <% } %>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <div class="empty-state">
+            <i class="fas fa-building"></i>
+            <h3>Belum ada data cabang</h3>
+            <p>Klik tombol "Tambah Cabang" untuk menambahkan informasi kantor cabang</p>
+          </div>
+        <% } %>
+      </div>
+
+      <!-- ========== COMMENTS TAB ========== -->
+      <div class="tab-content <%= activeTab === 'comments' ? 'active' : '' %>" id="tab-comments">
+        <div class="tab-header">
+          <h2><i class="fas fa-comments" style="color: var(--admin-primary); margin-right: 0.5rem;"></i> Komentar Berita</h2>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Berita</th>
+                <th>Komentar</th>
+                <th style="width: 120px;">Tanggal</th>
+                <th style="width: 80px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (comments.length > 0) { %>
+                <% comments.forEach(c => { %>
+                  <tr>
+                    <td><strong><%= c.name %></strong></td>
+                    <td><%= c.berita_title || '-' %></td>
+                    <td><%= (c.content || '').substring(0, 60) %><%= (c.content || '').length > 60 ? '...' : '' %></td>
+                    <td><%= new Date(c.created_at).toLocaleDateString('id-ID') %></td>
+                    <td>
+                      <form action="/admin/comments/<%= c.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Hapus komentar ini?')">
+                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="5" class="text-center">
+                    <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 0.5rem; display: block; opacity: 0.5;"></i>
+                    Belum ada komentar
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========== SETTINGS TAB ========== -->
+      <div class="tab-content <%= activeTab === 'settings' ? 'active' : '' %>" id="tab-settings">
+        <div class="tab-header">
+          <h2><i class="fas fa-cog" style="color: var(--admin-primary); margin-right: 0.5rem;"></i> Pengaturan Website</h2>
+        </div>
+        <form action="/admin/settings" method="POST" class="form">
+          <h3><i class="fas fa-building" style="margin-right: 0.5rem;"></i> Informasi Perusahaan</h3>
+          
+          <div class="form-group">
+            <label for="company_name">Nama Perusahaan</label>
+            <input type="text" id="company_name" name="company_name" value="<%= settings.company_name || '' %>" placeholder="PT. Bosowa Bandar Group">
+          </div>
+          
+          <div class="form-group">
+            <label for="company_desc">Deskripsi Perusahaan</label>
+            <textarea id="company_desc" name="company_desc" rows="3" placeholder="Deskripsi singkat tentang perusahaan..."><%= settings.company_desc || '' %></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="company_address">Alamat Kantor</label>
+            <textarea id="company_address" name="company_address" rows="2" placeholder="Alamat lengkap perusahaan..."><%= settings.company_address || '' %></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label for="company_phone">Telepon</label>
+              <input type="text" id="company_phone" name="company_phone" value="<%= settings.company_phone || '' %>" placeholder="(021) xxx-xxxx">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="company_email">Email</label>
+              <input type="email" id="company_email" name="company_email" value="<%= settings.company_email || '' %>" placeholder="info@company.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="company_whatsapp">WhatsApp (format: 628xxx)</label>
+            <input type="text" id="company_whatsapp" name="company_whatsapp" value="<%= settings.company_whatsapp || '' %>" placeholder="6281234567890">
+          </div>
+          
+          <h3><i class="fas fa-share-alt" style="margin-right: 0.5rem;"></i> Sosial Media</h3>
+          
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label for="social_instagram">Instagram URL</label>
+              <input type="url" id="social_instagram" name="social_instagram" value="<%= settings.social_instagram || '' %>" placeholder="https://instagram.com/...">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="social_youtube">YouTube URL</label>
+              <input type="url" id="social_youtube" name="social_youtube" value="<%= settings.social_youtube || '' %>" placeholder="https://youtube.com/...">
+            </div>
+          </div>
+          
+          <h3><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i> Lokasi Kantor Pusat</h3>
+          
+          <div class="form-group">
+            <label for="company_maps">Google Maps Embed (iframe)</label>
+            <textarea id="company_maps" name="company_maps" rows="3" placeholder="Paste kode iframe dari Google Maps di sini..."><%= settings.company_maps || '' %></textarea>
+            <small style="color: var(--admin-text-light); font-size: 0.8rem;">
+              Cara mendapatkan: Buka Google Maps > Pilih lokasi > Share > Embed a map > Copy HTML
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label for="company_maps_link">Link Google Maps (untuk tombol "Lihat peta lebih besar")</label>
+            <input type="url" id="company_maps_link" name="company_maps_link" value="<%= settings.company_maps_link || '' %>" placeholder="https://maps.google.com/?q=...">
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Simpan Pengaturan
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+  // Toggle form visibility
+  function toggleForm(type) {
+    const form = document.getElementById('form-' + type);
+    if (form.classList.contains('form-visible')) {
+      form.classList.remove('form-visible');
+      history.pushState({}, '', '/admin?tab=' + type);
+    } else {
+      form.classList.add('form-visible');
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Tab switching
+  document.querySelectorAll('.admin-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabId = tab.dataset.tab;
+      
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      
+      // Hide all forms when switching tabs
+      document.querySelectorAll('.form-section').forEach(f => f.classList.remove('form-visible'));
+      
+      history.pushState({}, '', '/admin?tab=' + tabId);
+    });
+  });
+
+  // Auto-show form if editing
+  var editType = '<%= editType || "" %>';
+  if (editType && document.getElementById('form-' + editType)) {
+    document.getElementById('form-' + editType).classList.add('form-visible');
+  }
+</script>
+
+<%- include('../partials/footer') %>
+<%- include('partials/admin-foot') %>

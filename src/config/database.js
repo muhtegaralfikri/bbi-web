@@ -50,6 +50,7 @@ const initDatabase = () => {
         phone TEXT,
         email TEXT,
         map_link TEXT,
+        map_embed TEXT,
         image TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
@@ -88,6 +89,20 @@ const initDatabase = () => {
         message TEXT NOT NULL,
         read BOOLEAN DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Comments table (for berita comments)
+    db.run(`
+      CREATE TABLE IF NOT EXISTS comments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        berita_id INTEGER,
+        name TEXT NOT NULL,
+        email TEXT,
+        content TEXT NOT NULL,
+        approved BOOLEAN DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (berita_id) REFERENCES berita(id) ON DELETE CASCADE
       )
     `);
 

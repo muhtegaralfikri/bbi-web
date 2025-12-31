@@ -1896,6 +1896,13 @@ body.dark .social-links a:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+.map-container iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+  display: block;
+}
+
 body.dark .map-container {
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
@@ -2326,4 +2333,102 @@ body.dark .copyright-content {
   }
 }
 
+
+/* Cabang Public Page */
+.cabang-public-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.cabang-public-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cabang-public-card .card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.cabang-public-card .card-content h3 {
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.cabang-public-card .card-content p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.cabang-public-card .card-content p i {
+  width: 20px;
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+/* Dark mode specific for cabang */
+body.dark .cabang-public-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark .cabang-public-card .card-content h3 {
+  color: #60a5fa;
+}
+
+body.dark .cabang-public-card .card-content p {
+  color: #94a3b8;
+}
+
+body.dark .cabang-public-card .card-content p i {
+  color: #60a5fa;
+}
+
+.cabang-map-embed {
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.cabang-map-embed iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+  display: block;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.btn-link:hover {
+  color: var(--primary-dark);
+}
+
+body.dark .btn-link {
+  color: #60a5fa;
+}
+
+body.dark .btn-link:hover {
+  color: #93c5fd;
+}
 

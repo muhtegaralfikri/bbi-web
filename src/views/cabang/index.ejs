@@ -23,20 +23,24 @@
         <div class="grid grid-3">
           <% if (cabang && cabang.length > 0) { %>
             <% cabang.forEach(cab => { %>
-              <div class="card">
+              <div class="card cabang-public-card">
                 <% if (cab.image) { %>
                   <img src="<%= cab.image %>" alt="<%= cab.name %>" class="card-image">
                 <% } %>
                 <div class="card-content">
                   <h3><%= cab.name %></h3>
-                  <p><%= cab.address %></p>
+                  <p><i class="fas fa-map-marker-alt"></i> <%= cab.address || 'Alamat belum tersedia' %></p>
                   <% if (cab.phone) { %>
                     <p><i class="fas fa-phone"></i> <%= cab.phone %></p>
                   <% } %>
                   <% if (cab.email) { %>
                     <p><i class="fas fa-envelope"></i> <%= cab.email %></p>
                   <% } %>
-                  <% if (cab.map_link) { %>
+                  <% if (cab.map_embed) { %>
+                    <div class="cabang-map-embed">
+                      <%- cab.map_embed %>
+                    </div>
+                  <% } else if (cab.map_link) { %>
                     <a href="<%= cab.map_link %>" target="_blank" class="btn-link">
                       <i class="fas fa-map-marker-alt"></i> Lihat Peta
                     </a>

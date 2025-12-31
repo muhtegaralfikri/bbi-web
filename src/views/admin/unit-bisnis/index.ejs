@@ -1,55 +1,47 @@
-<% layout = false %>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit Bisnis - Admin</title>
-  <link rel="stylesheet" href="/css/admin.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-  <div class="admin-layout">
-    <%- include('partials/admin-sidebar', { active: 'unit-bisnis' }) %>
+<%- include('../partials/admin-head', { pageTitle: 'Kelola Unit Bisnis' }) %>
+<%- include('../../partials/header') %>
+<%- include('../partials/admin-nav', { active: 'unit-bisnis' }) %>
 
-    <main class="admin-content">
-      <header class="admin-header">
-        <h1>Kelola Unit Bisnis</h1>
-        <a href="/admin/unit-bisnis/create" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Unit</a>
-      </header>
+<main class="admin-layout">
+  <div class="container">
+    <header class="admin-header">
+      <h1>Kelola Unit Bisnis</h1>
+      <a href="/admin/unit-bisnis/create" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Unit</a>
+    </header>
 
-      <div class="admin-body">
-        <div class="table-container">
-          <table class="table">
-            <thead>
+    <div class="admin-body">
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Deskripsi</th>
+              <th>Icon</th>
+              <th>Urutan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unitBisnis.forEach(u => { %>
               <tr>
-                <th>Nama</th>
-                <th>Deskripsi</th>
-                <th>Icon</th>
-                <th>Urutan</th>
-                <th>Aksi</th>
+                <td><%= u.name %></td>
+                <td><%= (u.description || '').substring(0, 50) %>...</td>
+                <td><%= u.icon || '-' %></td>
+                <td><%= u.order_num %></td>
+                <td>
+                  <a href="/admin/unit-bisnis/<%= u.id %>/edit" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i></a>
+                  <form action="/admin/unit-bisnis/<%= u.id %>/delete" method="POST" onsubmit="return confirm('Hapus unit bisnis ini?')" style="display:inline">
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                  </form>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <% unitBisnis.forEach(u => { %>
-                <tr>
-                  <td><%= u.name %></td>
-                  <td><%= (u.description || '').substring(0, 50) %>...</td>
-                  <td><%= u.icon || '-' %></td>
-                  <td><%= u.order_num %></td>
-                  <td>
-                    <a href="/admin/unit-bisnis/<%= u.id %>/edit" class="btn btn-sm"><i class="fas fa-edit"></i></a>
-                    <form action="/admin/unit-bisnis/<%= u.id %>/delete" method="POST" onsubmit="return confirm('Hapus unit bisnis ini?')" style="display:inline">
-                      <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                    </form>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
-    </main>
+    </div>
   </div>
-</body>
-</html>
+</main>
+
+<%- include('../../partials/footer') %>
+<%- include('../partials/admin-foot') %>

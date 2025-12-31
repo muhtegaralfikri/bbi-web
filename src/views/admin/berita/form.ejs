@@ -1,64 +1,56 @@
-<% layout = false %>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= berita ? 'Edit Berita' : 'Tambah Berita' %> - Admin</title>
-  <link rel="stylesheet" href="/css/admin.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-  <div class="admin-layout">
-    <%- include('partials/admin-sidebar', { active: 'berita' }) %>
+<%- include('../partials/admin-head', { pageTitle: berita ? 'Edit Berita' : 'Tambah Berita' }) %>
+<%- include('../../partials/header') %>
+<%- include('../partials/admin-nav', { active: 'berita' }) %>
 
-    <main class="admin-content">
-      <header class="admin-header">
-        <h1><%= berita ? 'Edit Berita' : 'Tambah Berita' %></h1>
-        <a href="/admin/berita" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Kembali</a>
-      </header>
+<main class="admin-layout">
+  <div class="container">
+    <header class="admin-header">
+      <h1><%= berita ? 'Edit Berita' : 'Tambah Berita' %></h1>
+      <a href="/admin/berita" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Kembali</a>
+    </header>
 
-      <div class="admin-body">
-        <form action="<%= berita ? '/admin/berita/' + berita.id : '/admin/berita' %>" method="POST" enctype="multipart/form-data" class="form">
-          <div class="form-group">
-            <label for="title">Judul</label>
-            <input type="text" id="title" name="title" value="<%= berita ? berita.title : '' %>" required>
-          </div>
+    <div class="admin-body">
+      <form action="/admin/berita<%= berita ? '/' + berita.id : '' %>" method="POST" enctype="multipart/form-data" class="form">
+        <div class="form-group">
+          <label for="title">Judul Berita</label>
+          <input type="text" id="title" name="title" value="<%= berita ? berita.title : '' %>" required>
+        </div>
 
-          <div class="form-group">
-            <label for="category">Kategori</label>
-            <select id="category" name="category">
-              <option value="umum" <%= berita && berita.category === 'umum' ? 'selected' : '' %>>Umum</option>
-              <option value="berita" <%= berita && berita.category === 'berita' ? 'selected' : '' %>>Berita</option>
-              <option value="artikel" <%= berita && berita.category === 'artikel' ? 'selected' : '' %>>Artikel</option>
-              <option value="pengumuman" <%= berita && berita.category === 'pengumuman' ? 'selected' : '' %>>Pengumuman</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label for="category">Kategori</label>
+          <select id="category" name="category">
+            <option value="umum" <%= (berita && berita.category === 'umum') ? 'selected' : '' %>>Umum</option>
+            <option value="bisnis" <%= (berita && berita.category === 'bisnis') ? 'selected' : '' %>>Bisnis</option>
+            <option value="press-release" <%= (berita && berita.category === 'press-release') ? 'selected' : '' %>>Press Release</option>
+          </select>
+        </div>
 
-          <div class="form-group">
-            <label for="content">Konten</label>
-            <textarea id="content" name="content" rows="10" required><%= berita ? berita.content : '' %></textarea>
-          </div>
+        <div class="form-group">
+          <label for="content">Konten</label>
+          <textarea id="content" name="content" rows="10" required><%= berita ? berita.content : '' %></textarea>
+        </div>
 
-          <div class="form-group">
-            <label for="image">Gambar</label>
-            <input type="file" id="image" name="image" accept="image/*">
-            <% if (berita && berita.image) { %>
-              <img src="<%= berita.image %>" alt="" class="preview-image" style="margin-top:10px;max-width:200px;">
-            <% } %>
-          </div>
+        <div class="form-group">
+          <label for="image">Gambar Utama</label>
+          <% if (berita && berita.image) { %>
+            <div style="margin-bottom: 10px;">
+              <img src="<%= berita.image %>" alt="Current Image" class="preview-image" style="max-height: 200px;">
+            </div>
+          <% } %>
+          <input type="file" id="image" name="image" accept="image/*">
+        </div>
 
-          <div class="form-group">
-            <label>
-              <input type="checkbox" name="published" value="1" <%= berita && berita.published ? 'checked' : '' %>>
-              Publish sekarang
-            </label>
-          </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="published" <%= (berita && berita.published) ? 'checked' : '' %>> Publish sekarang
+          </label>
+        </div>
 
-          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-        </form>
-      </div>
-    </main>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Berita</button>
+      </form>
+    </div>
   </div>
-</body>
-</html>
+</main>
+
+<%- include('../../partials/footer') %>
+<%- include('../partials/admin-foot') %>

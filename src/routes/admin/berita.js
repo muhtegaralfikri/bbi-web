@@ -39,11 +39,16 @@ const generateSlug = (text) => {
 
 // List all berita
 router.get('/', isAuthenticated, (req, res) => {
-  const berita = db.prepare('SELECT * FROM berita ORDER BY created_at DESC').all();
-  res.render('admin/berita/index', {
-    user: req.session.user,
-    berita,
-    active: 'berita'
+  db.all('SELECT * FROM berita ORDER BY created_at DESC', (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.render('error', { message: 'Database Error' });
+    }
+    res.render('admin/berita/index', {
+      user: req.session.user,
+      berita: rows,
+      active: 'berita'
+    });
   });
 });
 
@@ -51,6 +56,7 @@ router.get('/', isAuthenticated, (req, res) => {
 router.get('/create', isAuthenticated, (req, res) => {
   res.render('admin/berita/form', {
     user: req.session.user,
+    berita: null,
     active: 'berita'
   });
 });
@@ -60,21 +66,26 @@ router.post('/', isAuthenticated, upload.single('image'), (req, res) => {
   const { title, content, category, published } = req.body;
   const slug = generateSlug(title);
 
-  db.prepare(`
+  db.run(`
     INSERT INTO berita (title, slug, content, image, category, published)
     VALUES (?, ?, ?, ?, ?, ?)
-  `).run(title, slug, content, req.file ? '/uploads/' + req.file.filename : null, category, published ? 1 : 0);
-
-  res.redirect('/admin/berita');
+  `, [title, slug, content, req.file ? '/uploads/' + req.file.filename : null, category, published ? 1 : 0], (err) => {
+    if (err) console.error(err);
+    res.redirect('/admin/berita');
+  });
 });
 
 // Edit form
 router.get('/:id/edit', isAuthenticated, (req, res) => {
-  const berita = db.prepare('SELECT * FROM berita WHERE id = ?').get(req.params.id);
-  res.render('admin/berita/form', {
-    user: req.session.user,
-    berita,
-    active: 'berita'
+  db.get('SELECT * FROM berita WHERE id = ?', [req.params.id], (err, row) => {
+    if (err || !row) {
+      return res.redirect('/admin/berita');
+    }
+    res.render('admin/berita/form', {
+      user: req.session.user,
+      berita: row,
+      active: 'berita'
+    });
   });
 });
 
@@ -94,14 +105,18 @@ router.post('/:id', isAuthenticated, upload.single('image'), (req, res) => {
   query += ' WHERE id = ?';
   params.push(req.params.id);
 
-  db.prepare(query).run(...params);
-  res.redirect('/admin/berita');
+  db.run(query, params, (err) => {
+    if (err) console.error(err);
+    res.redirect('/admin/berita');
+  });
 });
 
 // Delete berita
 router.post('/:id/delete', isAuthenticated, (req, res) => {
-  db.prepare('DELETE FROM berita WHERE id = ?').run(req.params.id);
-  res.redirect('/admin/berita');
+  db.run('DELETE FROM berita WHERE id = ?', [req.params.id], (err) => {
+    if (err) console.error(err);
+    res.redirect('/admin/berita');
+  });
 });
 
 module.exports = router;

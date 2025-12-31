@@ -4,31 +4,441 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Admin</title>
-  <link rel="stylesheet" href="/css/admin.css">
+  <title>Login - Bosowa Bandar Group Admin</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628 0%, #0f172a 50%, #1a2744 100%);
+    }
+
+    .login-container {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    /* Left Side - Branding */
+    .login-branding {
+      flex: 1;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .brand-logo {
+      margin-bottom: 3rem;
+    }
+
+    .brand-logo img {
+      height: 50px;
+    }
+
+    .brand-title {
+      margin-bottom: 1rem;
+    }
+
+    .brand-title h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1.1;
+    }
+
+    .brand-title .highlight {
+      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-description {
+      color: #94a3b8;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 400px;
+    }
+
+    .brand-features {
+      list-style: none;
+    }
+
+    .brand-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .brand-features li i {
+      color: #22c55e;
+      font-size: 1rem;
+    }
+
+    .brand-accent {
+      width: 60px;
+      height: 4px;
+      background: #dc2626;
+      border-radius: 2px;
+      margin-top: 2rem;
+    }
+
+    /* Right Side - Login Form */
+    .login-form-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-card {
+      background: #1e293b;
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #334155;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-header h2 {
+      color: white;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-header p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .login-alert {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .login-alert.error {
+      background: rgba(220, 38, 38, 0.15);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      color: #fca5a5;
+    }
+
+    .login-alert.success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: #e2e8f0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i.input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 2.75rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.75rem;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-input::placeholder {
+      color: #64748b;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+    }
+
+    .password-toggle:hover {
+      color: #94a3b8;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .forgot-password a {
+      color: #60a5fa;
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #334155;
+    }
+
+    .login-footer p {
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .login-container {
+        flex-direction: column;
+        padding: 0 1.5rem;
+      }
+
+      .login-branding {
+        padding: 2rem 1rem;
+        text-align: center;
+        align-items: center;
+      }
+
+      .brand-title h1 {
+        font-size: 2rem;
+      }
+
+      .brand-description {
+        text-align: center;
+      }
+
+      .brand-features {
+        display: inline-block;
+        text-align: left;
+      }
+
+      .brand-accent {
+        margin: 1.5rem auto 0;
+      }
+
+      .login-form-wrapper {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 0 1rem;
+      }
+
+      .login-branding {
+        padding: 1.5rem 0.5rem;
+      }
+
+      .brand-logo img {
+        height: 40px;
+      }
+
+      .brand-title h1 {
+        font-size: 1.5rem;
+      }
+
+      .brand-description {
+        font-size: 0.9rem;
+      }
+
+      .brand-features li {
+        font-size: 0.85rem;
+      }
+
+      .login-card {
+        padding: 1.5rem;
+        border-radius: 1rem;
+      }
+
+      .login-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .form-input {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+      }
+
+      .login-btn {
+        padding: 0.875rem;
+      }
+    }
+  </style>
 </head>
-<body class="login-page">
+<body>
   <div class="login-container">
-    <div class="login-box">
-      <h1><i class="fas fa-lock"></i> Admin Login</h1>
-      <% if (message) { %>
-        <div class="alert alert-<%= message.type %>">
-          <%= message.text %>
+    <!-- Left Side - Branding -->
+    <div class="login-branding">
+      <div class="brand-logo">
+        <img src="/images/logo/logo-signin.png" alt="Bosowa Logo">
+      </div>
+      
+      <div class="brand-title">
+        <h1>Admin Website</h1>
+        <h1 class="highlight">Bosowa Bandar</h1>
+      </div>
+      
+      <p class="brand-description">
+        Silakan masuk untuk mengelola website Bosowa Bandar Indonesia
+      </p>
+      
+      <ul class="brand-features">
+        <li><i class="fas fa-check-circle"></i> Kelola konten website dengan mudah</li>
+        <li><i class="fas fa-check-circle"></i> Dashboard admin yang intuitif</li>
+        <li><i class="fas fa-check-circle"></i> Akses penuh ke semua fitur</li>
+      </ul>
+      
+      <div class="brand-accent"></div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="login-form-wrapper">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>Selamat Datang</h2>
+          <p>Masuk ke akun admin Anda</p>
         </div>
-      <% } %>
-      <form action="/admin/login" method="POST">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required autofocus>
+
+        <% if (message) { %>
+          <div class="login-alert <%= message.type %>">
+            <i class="fas fa-<%= message.type === 'error' ? 'exclamation-circle' : 'check-circle' %>"></i>
+            <%= message.text %>
+          </div>
+        <% } %>
+
+        <form action="/admin/login" method="POST">
+          <div class="form-group">
+            <label for="email">Username / Email</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user input-icon"></i>
+              <input type="email" id="email" name="email" class="form-input" placeholder="Masukkan email Anda" required autofocus>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" id="password" name="password" class="form-input" placeholder="Masukkan password Anda" required>
+              <button type="button" class="password-toggle" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="forgot-password">
+            <a href="#">Lupa Password?</a>
+          </div>
+
+          <button type="submit" class="login-btn">
+            <span>Masuk</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <div class="login-footer">
+          <p>© 2025 Bosowa Bandar Indonesia. All rights reserved.</p>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-      </form>
+      </div>
     </div>
   </div>
+
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      const icon = this.querySelector('i');
+      icon.classList.toggle('fa-eye');
+      icon.classList.toggle('fa-eye-slash');
+    });
+  </script>
 </body>
 </html>
