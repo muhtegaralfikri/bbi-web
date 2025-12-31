@@ -1,30 +1,74 @@
 <footer id="footer" class="footer">
   <div class="container">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>Tentang Kami</h3>
-        <p>Bosowa Bandar Group adalah perusahaan yang bergerak di berbagai sektor bisnis.</p>
+    <div class="footer-top">
+      <!-- Left Column: Logo & Description -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <img src="/images/logo/logo-dark.png" alt="Bosowa Bandar Group" class="footer-logo-light">
+          <img src="/images/logo/logo-signin.png" alt="Bosowa Bandar Group" class="footer-logo-dark" style="display:none;">
+        </a>
+        <p class="footer-desc">
+          Perusahaan swasta nasional berdiri membawa sejarah lokal Indonesia Timur. Bosowa Bandar Indonesia merupakan Badan Usaha Pelabuhan (BUP) yang merupakan bagian dari Bosowa Corporindo. Kami memberikan pelayanan pengelolaan pelabuhan, keagenan kapal, jasa bongkar muat (PBM) dan layanan kapal tunda.
+        </p>
       </div>
-      <div class="footer-section">
-        <h3>Link Cepat</h3>
-        <ul>
-          <li><a href="/about">Tentang Kami</a></li>
-          <li><a href="/unit-bisnis">Unit Bisnis</a></li>
-          <li><a href="/berita">Berita</a></li>
-          <li><a href="/cabang">Info Cabang</a></li>
+
+      <!-- Middle Column: Contact Info -->
+      <div class="footer-contact">
+        <h3>Hubungi Kami</h3>
+        <ul class="contact-list">
+          <li class="contact-address">
+            <strong>Alamat:</strong> Menara Bosowa Lt. 8 Unit J Jl. Jend. Sudirman No.5 Kel. Pisang Utara, Kec. Ujung Pandang Kota Makassar, Sulawesi Selatan Indonesia 90115
+          </li>
+          <li>
+            <strong>Email:</strong> <a href="mailto:bosowa.bandar@bosowa.co.id">bosowa.bandar@bosowa.co.id</a>
+          </li>
+          <li>
+            <strong>WhatsApp:</strong> <a href="https://wa.me/628988821777" target="_blank">+62 898 8821 777</a>
+          </li>
+          <li>
+            <strong>Website:</strong> <a href="https://bosowabandar.com/" target="_blank" rel="noopener noreferrer">https://bosowabandar.com/</a>
+          </li>
         </ul>
+        <div class="footer-social">
+          <h3>Sosial Media</h3>
+          <div class="social-links">
+            <a href="https://www.instagram.com/bosowabandarindonesia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com/@bosowabandarindonesia?si=1LbAtQYfa1minsb8" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="footer-section">
-        <h3>Kontak</h3>
-        <ul>
-          <li><i class="fas fa-map-marker-alt"></i> Makassar, Indonesia</li>
-          <li><i class="fas fa-phone"></i> (0411) xxxxxx</li>
-          <li><i class="fas fa-envelope"></i> info@bbi.co.id</li>
-        </ul>
+
+      <!-- Right Column: Location Map -->
+      <div class="footer-location">
+        <h3>Lokasi Kami</h3>
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.744473723363!2d119.40822107406834!3d-5.144983694832168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf02ae55555555%3A0x1234567890abcdef!2sMenara%20Bosowa!5e0!3m2!1sid!2sid!4v1709190000000!5m2!1sid!2sid" 
+            width="100%" 
+            height="200" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div class="map-overlay-info">
+            <strong>PT. Bosowa Bandar Indonesia</strong>
+            <a href="https://maps.google.com/?q=Menara+Bosowa" target="_blank">Lihat peta lebih besar</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; <%= new Date().getFullYear() %> Bosowa Bandar Group. All rights reserved.</p>
+  </div>
+  
+  <div class="footer-copyright">
+    <div class="container">
+      <div class="copyright-content">
+        <p>&copy; <%= new Date().getFullYear() %> Bosowa Bandar Indonesia. All rights reserved.</p>
+      </div>
     </div>
   </div>
 </footer>

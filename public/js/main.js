@@ -3,6 +3,8 @@ const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 const logoLight = document.querySelector('.logo-light');
 const logoDark = document.querySelector('.logo-dark');
+const footerLogoLight = document.querySelector('.footer-logo-light');
+const footerLogoDark = document.querySelector('.footer-logo-dark');
 
 // Load saved theme or default to light
 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -10,6 +12,8 @@ if (savedTheme === 'dark') {
   body.classList.add('dark');
   if (logoLight) logoLight.style.display = 'none';
   if (logoDark) logoDark.style.display = 'block';
+  if (footerLogoLight) footerLogoLight.style.display = 'none';
+  if (footerLogoDark) footerLogoDark.style.display = 'inline-block';
 }
 
 // Toggle theme
@@ -21,10 +25,14 @@ if (themeToggle) {
     if (body.classList.contains('dark')) {
       if (logoLight) logoLight.style.display = 'none';
       if (logoDark) logoDark.style.display = 'block';
+      if (footerLogoLight) footerLogoLight.style.display = 'none';
+      if (footerLogoDark) footerLogoDark.style.display = 'inline-block';
       localStorage.setItem('theme', 'dark');
     } else {
       if (logoLight) logoLight.style.display = 'block';
       if (logoDark) logoDark.style.display = 'none';
+      if (footerLogoLight) footerLogoLight.style.display = 'inline-block';
+      if (footerLogoDark) footerLogoDark.style.display = 'none';
       localStorage.setItem('theme', 'light');
     }
   });
