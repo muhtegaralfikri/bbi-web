@@ -252,6 +252,45 @@ body.dark .nav-dropdown-menu .nav-link:hover {
   flex-shrink: 0;
 }
 
+/* Signin Button */
+.btn-signin {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-signin:hover {
+  background: var(--primary-dark);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+
+.btn-signin i {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .btn-signin span {
+    display: none;
+  }
+  
+  .btn-signin {
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+  }
+}
+
 /* Theme Toggle */
 .theme-toggle {
   display: flex;
