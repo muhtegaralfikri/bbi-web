@@ -1518,6 +1518,100 @@ body.dark .value-card p {
   display: none; /* Hide big letter as we use first-letter styling now */
 }
 
+/* Unit Bisnis Detail Page */
+.unit-bisnis-detail {
+  padding: 4rem 0;
+}
+
+.ub-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .ub-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ub-main {
+  max-width: 100%;
+}
+
+.ub-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1E468C;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.ub-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2rem;
+}
+
+.ub-subtitle strong {
+  color: #1E468C;
+}
+
+.ub-content p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.ub-sidebar-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.ub-sidebar-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1E468C;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #1E468C;
+}
+
+.ub-area h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.ub-area ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.ub-area ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+body.dark .ub-title,
+body.dark .ub-sidebar-card h3,
+body.dark .ub-subtitle strong {
+  color: #60a5fa;
+}
+
+body.dark .ub-sidebar-card {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
 .value-card h3 {
   color: #1E468C; /* Bosowa Blue */
   margin-bottom: 0.5rem;
