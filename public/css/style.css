@@ -1511,7 +1511,7 @@ body.dark .value-card {
 }
 
 body.dark .value-card p {
-  color: #e2e8f0; /* Much lighter text (Slate 200) for dark mode contrast */
+  color: var(--text-secondary); /* Match Visi Misi brightness */
 }
 
 .value-letter {
