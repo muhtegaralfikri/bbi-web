@@ -36,6 +36,11 @@ body.dark {
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.3);
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
