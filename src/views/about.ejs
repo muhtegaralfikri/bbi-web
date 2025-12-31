@@ -12,34 +12,83 @@
   <%- include('partials/header') %>
 
   <main>
-    <section class="page-header">
-      <div class="container">
-        <h1>Tentang Kami</h1>
-      </div>
-    </section>
 
+
+    <!-- History / Intro Section -->
     <section class="section">
       <div class="container">
-        <div class="content">
-          <h2>Visi & Misi</h2>
-          <div class="grid grid-2">
-            <div class="card">
-              <h3>Visi</h3>
-              <p>Menjadi perusahaan terkemuka yang dapat memberikan kontribusi positif bagi masyarakat dan bangsa.</p>
-            </div>
-            <div class="card">
-              <h3>Misi</h3>
-              <ul>
-                <li>Menyediakan produk dan jasa berkualitas tinggi</li>
-                <li>Mengembangkan sumber daya manusia yang kompeten</li>
-                <li>Memberikan kepuasan kepada pelanggan</li>
-                <li>Berkontribusi bagi pembangunan nasional</li>
-              </ul>
-            </div>
+        <div class="about-intro">
+          <div class="about-image">
+            <img src="/images/about/bosowa-group.png" alt="Bosowa Group" class="img-fluid rounded-lg shadow-lg show-light">
+            <img src="/images/about/bosowa-group-white.png" alt="Bosowa Group" class="img-fluid rounded-lg shadow-lg show-dark">
+          </div>
+          <div class="about-text">
+            <h2>Tentang Grup Bosowa</h2>
+            <p>
+              Didirikan pada tahun 1973 oleh Dr. H. Aksa Mahmud, Grup Bosowa (PT Bosowa Corporindo) merupakan salah satu konglomerasi terbesar di Indonesia Timur. 
+              Berawal dari perdagangan semen, Bosowa telah berkembang menjadi grup usaha multinasional dengan lebih dari 30 anak perusahaan yang bergerak di 
+              berbagai sektor strategis, termasuk otomotif, semen, keuangan, infrastruktur, energi, dan pendidikan.
+            </p>
+            <p>
+              Sebagai pionir pembangunan di Kawasan Timur Indonesia, Bosowa memiliki komitmen kuat terhadap kemandirian ekonomi bangsa. 
+              Dengan semangat “Membangun dari Timur untuk Indonesia”, Bosowa terus berinovasi menghadirkan solusi dan layanan yang memberi nilai tambah 
+              bagi masyarakat serta mendukung pertumbuhan ekonomi nasional.
+            </p>
+            <p>
+              Di bawah payung PT Bosowa Corporindo, seluruh unit bisnis dikelola dengan prinsip profesionalisme, keberlanjutan, dan tanggung jawab sosial.
+            </p>
+
+            <h2 class="mt-4">Bosowa Bandar Group</h2>
+            <p>
+              Bosowa Bandar Group adalah salah satu unit bisnis strategis di bawah Bosowa Group yang berfokus pada pengelolaan pelabuhan, jasa bongkar muat, 
+              dan logistik terpadu. Didirikan untuk mendukung kegiatan distribusi dan perdagangan nasional, Bosowa Bandar Group menjadi penghubung penting 
+              antara sektor industri, perdagangan, dan transportasi laut.
+            </p>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Subsidiaries Section -->
+    <section class="section bg-light">
+      <div class="container">
+        <div class="section-header text-center mb-5">
+          <h2 class="section-title">Unit Bisnis di Bawah Bosowa Bandar Group</h2>
+          <p class="section-desc">Sebagai bagian dari Grup Bosowa yang terus berkembang, Bosowa Bandar Group menaungi beberapa unit usaha pendukung yang berperan dalam memperkuat ekosistem pelabuhan dan logistik nasional.</p>
+        </div>
+        <div class="subsidiaries-grid">
+          <!-- Item 1 -->
+          <div class="subsidiary-card">
+            <div class="subsidiary-logo">
+              <img src="/images/logo/logo-dark.png" alt="PT Bosowa Bandar Indonesia" class="show-light">
+              <img src="/images/logo/logo-signin.png" alt="PT Bosowa Bandar Indonesia" class="show-dark">
+            </div>
+            <h3>PT Bosowa Bandar Indonesia</h3>
+            <p>Entitas utama yang mengelola pelabuhan, bongkar muat, dan layanan logistik terpadu dengan standar profesional dan berorientasi pada efisiensi.</p>
+          </div>
+          <!-- Item 2 -->
+          <div class="subsidiary-card">
+            <div class="subsidiary-logo">
+              <img src="/images/about/bosowa-agensi.png" alt="PT Bosowa Bandar Agensi" class="show-light">
+              <img src="/images/about/bosowa-agensi-white.png" alt="PT Bosowa Bandar Agensi" class="show-dark">
+            </div>
+            <h3>PT Bosowa Bandar Agensi</h3>
+            <p>Bergerak di bidang keagenan kapal, menyediakan layanan profesional untuk memastikan kelancaran aktivitas pelayaran di pelabuhan Bosowa dan kawasan sekitarnya.</p>
+          </div>
+          <!-- Item 3 -->
+          <div class="subsidiary-card">
+            <div class="subsidiary-logo">
+              <img src="/images/about/jasa-pelabuhan.png" alt="PT Jasa Pelabuhan Indonesia" class="show-light">
+              <img src="/images/about/jasa-pelabuhan-white.png" alt="PT Jasa Pelabuhan Indonesia" class="show-dark">
+            </div>
+            <h3>PT Jasa Pelabuhan Indonesia</h3>
+            <p>Befokus pada pengelolaan operasional pelabuhan serta penyediaan layanan teknis pendukung seperti bongkar muat, terminal, dan operasional maritim terpadu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
   </main>
 
   <%- include('partials/footer') %>
