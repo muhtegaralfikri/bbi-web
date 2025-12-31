@@ -1617,6 +1617,18 @@ body.dark .ub-sidebar-card {
   border-color: var(--border);
 }
 
+.ub-area-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 500px) {
+  .ub-area-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .value-card h3 {
   color: #1E468C; /* Bosowa Blue */
   margin-bottom: 0.5rem;
