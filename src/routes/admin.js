@@ -236,15 +236,20 @@ router.post('/comments/:id/delete', isAuthenticated, (req, res) => {
 // ========== SETTINGS ==========
 // Update settings
 router.post('/settings', isAuthenticated, (req, res) => {
+  console.log('=== ADMIN.JS SETTINGS POST ===');
+  console.log('Request body:', req.body);
+  
   const settings = req.body;
   const keys = Object.keys(settings);
   
   let completed = 0;
   keys.forEach(key => {
     db.run(
-      'INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)',
-      [key, settings[key]],
+      'INSERT INTO settings (`key`, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = ?, updated_at = CURRENT_TIMESTAMP',
+      [key, settings[key], settings[key]],
       (err) => {
+        if (err) console.error('Error saving setting:', key, err);
+        else console.log('Saved setting:', key, '=', settings[key]);
         completed++;
         if (completed === keys.length) {
           res.redirect('/admin?tab=settings');

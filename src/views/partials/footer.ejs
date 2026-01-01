@@ -5,11 +5,11 @@
       <!-- Left Column: Logo & Description -->
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          <img src="/images/logo/logo-dark.png" alt="<%= settings.company_name || 'Bosowa Bandar Group' %>" class="footer-logo-light">
-          <img src="/images/logo/logo-signin.png" alt="<%= settings.company_name || 'Bosowa Bandar Group' %>" class="footer-logo-dark" style="display:none;">
+          <img src="/images/logo/logo-dark.png" alt="Bosowa Bandar Group" class="footer-logo-light">
+          <img src="/images/logo/logo-signin.png" alt="Bosowa Bandar Group" class="footer-logo-dark" style="display:none;">
         </a>
         <p class="footer-desc">
-          <%= settings.company_desc || 'Perusahaan swasta nasional berdiri membawa sejarah lokal Indonesia Timur. Bosowa Bandar Indonesia merupakan Badan Usaha Pelabuhan (BUP) yang merupakan bagian dari Bosowa Corporindo. Kami memberikan pelayanan pengelolaan pelabuhan, keagenan kapal, jasa bongkar muat (PBM) dan layanan kapal tunda.' %>
+          Perusahaan swasta nasional berdiri membawa sejarah lokal Indonesia Timur. Bosowa Bandar Indonesia merupakan Badan Usaha Pelabuhan (BUP) yang merupakan bagian dari Bosowa Corporindo. Kami memberikan pelayanan pengelolaan pelabuhan, keagenan kapal, jasa bongkar muat (PBM) dan layanan kapal tunda.
         </p>
       </div>
 
@@ -21,28 +21,24 @@
             <strong>Alamat:</strong> <%= settings.company_address || 'Menara Bosowa Lt. 8 Unit J Jl. Jend. Sudirman No.5 Kel. Pisang Utara, Kec. Ujung Pandang Kota Makassar, Sulawesi Selatan Indonesia 90115' %>
           </li>
           <li>
-            <strong>Email:</strong> <a href="mailto:<%= settings.company_email %>"><%= settings.company_email || 'bosowa.bandar@bosowa.co.id' %></a>
+            <strong>Email:</strong> <a href="mailto:<%= settings.company_email || 'bosowa.bandar@bosowa.co.id' %>"><%= settings.company_email || 'bosowa.bandar@bosowa.co.id' %></a>
           </li>
           <li>
-            <strong>WhatsApp:</strong> <a href="https://wa.me/<%= settings.company_whatsapp %>" target="_blank">+<%= settings.company_phone || '62 898 8821 777' %></a>
+            <strong>WhatsApp:</strong> <a href="https://wa.me/<%= settings.company_whatsapp || '628988821777' %>" target="_blank">+<%= settings.company_whatsapp || '628988821777' %></a>
           </li>
           <li>
-            <strong>Website:</strong> <a href="<%= settings.company_website %>" target="_blank" rel="noopener noreferrer"><%= settings.company_website || 'https://bosowabandar.com/' %></a>
+            <strong>Website:</strong> <a href="<%= settings.company_website || 'https://bosowabandar.com/' %>" target="_blank" rel="noopener noreferrer"><%= settings.company_website || 'https://bosowabandar.com/' %></a>
           </li>
         </ul>
         <div class="footer-social">
           <h3>Sosial Media</h3>
           <div class="social-links">
-            <% if (settings.social_instagram) { %>
-            <a href="<%= settings.social_instagram %>" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/bosowabandarindonesia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <i class="fab fa-instagram"></i>
             </a>
-            <% } %>
-            <% if (settings.social_youtube) { %>
-            <a href="<%= settings.social_youtube %>" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <a href="https://youtube.com/@bosowabandarindonesia?si=1LbAtQYfa1minsb8" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
               <i class="fab fa-youtube"></i>
             </a>
-            <% } %>
           </div>
         </div>
       </div>
@@ -54,19 +50,19 @@
           <% if (settings.company_maps) { %>
             <%- settings.company_maps %>
           <% } else { %>
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.744473723363!2d119.40822107406834!3d-5.144983694832168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf02ae55555555%3A0x1234567890abcdef!2sMenara%20Bosowa!5e0!3m2!1sid!2sid!4v1709190000000!5m2!1sid!2sid" 
-              width="100%" 
-              height="200" 
-              style="border:0;" 
-              allowfullscreen="" 
-              loading="lazy" 
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.8071451177057!2d119.41418780000001!3d-5.1347348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf030020151c7f%3A0x91f6cbbf1acbc877!2sPT.%20Bosowa%20Bandar%20Indonesia!5e0!3m2!1sid!2sid!4v1762738404067!5m2!1sid!2sid"
+              width="100%"
+              height="200"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
           <% } %>
           <div class="map-overlay-info">
-            <strong><%= settings.company_name || 'PT. Bosowa Bandar Indonesia' %></strong>
-            <a href="<%= settings.company_maps_link || 'https://maps.google.com/?q=Menara+Bosowa' %>" target="_blank">Lihat peta lebih besar</a>
+            <strong>PT. Bosowa Bandar Indonesia</strong>
+            <a href="https://maps.google.com/?q=PT.+Bosowa+Bandar+Indonesia" target="_blank">Lihat peta lebih besar</a>
           </div>
         </div>
       </div>

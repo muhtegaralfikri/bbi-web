@@ -322,47 +322,24 @@
           <h3><i class="fas fa-building" style="margin-right: 0.5rem;"></i> Informasi Perusahaan</h3>
           
           <div class="form-group">
-            <label for="company_name">Nama Perusahaan</label>
-            <input type="text" id="company_name" name="company_name" value="<%= settings.company_name || '' %>" placeholder="PT. Bosowa Bandar Group">
-          </div>
-          
-          <div class="form-group">
-            <label for="company_desc">Deskripsi Perusahaan</label>
-            <textarea id="company_desc" name="company_desc" rows="3" placeholder="Deskripsi singkat tentang perusahaan..."><%= settings.company_desc || '' %></textarea>
-          </div>
-          
-          <div class="form-group">
             <label for="company_address">Alamat Kantor</label>
             <textarea id="company_address" name="company_address" rows="2" placeholder="Alamat lengkap perusahaan..."><%= settings.company_address || '' %></textarea>
           </div>
 
           <div class="form-row">
             <div class="form-group" style="flex: 1;">
-              <label for="company_phone">Telepon</label>
-              <input type="text" id="company_phone" name="company_phone" value="<%= settings.company_phone || '' %>" placeholder="(021) xxx-xxxx">
-            </div>
-            <div class="form-group" style="flex: 1;">
               <label for="company_email">Email</label>
               <input type="email" id="company_email" name="company_email" value="<%= settings.company_email || '' %>" placeholder="info@company.com">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="company_whatsapp">WhatsApp (format: 628xxx)</label>
+              <input type="text" id="company_whatsapp" name="company_whatsapp" value="<%= settings.company_whatsapp || '' %>" placeholder="6281234567890">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="company_whatsapp">WhatsApp (format: 628xxx)</label>
-            <input type="text" id="company_whatsapp" name="company_whatsapp" value="<%= settings.company_whatsapp || '' %>" placeholder="6281234567890">
-          </div>
-          
-          <h3><i class="fas fa-share-alt" style="margin-right: 0.5rem;"></i> Sosial Media</h3>
-          
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label for="social_instagram">Instagram URL</label>
-              <input type="url" id="social_instagram" name="social_instagram" value="<%= settings.social_instagram || '' %>" placeholder="https://instagram.com/...">
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label for="social_youtube">YouTube URL</label>
-              <input type="url" id="social_youtube" name="social_youtube" value="<%= settings.social_youtube || '' %>" placeholder="https://youtube.com/...">
-            </div>
+            <label for="company_website">Website URL</label>
+            <input type="url" id="company_website" name="company_website" value="<%= settings.company_website || '' %>" placeholder="https://example.com">
           </div>
           
           <h3><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i> Lokasi Kantor Pusat</h3>
@@ -373,11 +350,6 @@
             <small style="color: var(--admin-text-light); font-size: 0.8rem;">
               Cara mendapatkan: Buka Google Maps > Pilih lokasi > Share > Embed a map > Copy HTML
             </small>
-          </div>
-          
-          <div class="form-group">
-            <label for="company_maps_link">Link Google Maps (untuk tombol "Lihat peta lebih besar")</label>
-            <input type="url" id="company_maps_link" name="company_maps_link" value="<%= settings.company_maps_link || '' %>" placeholder="https://maps.google.com/?q=...">
           </div>
           
           <div class="form-actions">
