@@ -254,6 +254,40 @@ class HeroCarousel {
         this.startAutoSlide();
       }
     });
+
+    // Add Swipe Support
+    this.addSwipeSupport();
+  }
+
+  addSwipeSupport() {
+    const carousel = document.querySelector('.hero-carousel');
+    if (!carousel) return;
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      this.stopAutoSlide(); // Stop auto slide on interaction
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      this.handleSwipe();
+      this.startAutoSlide(); // Resume auto slide
+    }, { passive: true });
+
+    this.handleSwipe = () => {
+      const SWIPE_THRESHOLD = 50;
+      if (touchEndX < touchStartX - SWIPE_THRESHOLD) {
+        // Swipe Left -> Next Slide
+        this.nextSlide();
+      }
+      if (touchEndX > touchStartX + SWIPE_THRESHOLD) {
+        // Swipe Right -> Prev Slide
+        this.prevSlide();
+      }
+    };
   }
 
   goToSlide(index) {

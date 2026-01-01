@@ -782,6 +782,12 @@ body.dark .menu-toggle:hover {
   right: 2rem;
 }
 
+@media (max-width: 768px) {
+  .carousel-nav {
+    display: none;
+  }
+}
+
 /* Carousel Dots */
 .carousel-dots {
   position: absolute;
@@ -2754,4 +2760,145 @@ body.dark .comment-form .form-group textarea {
   background: #0f172a;
   border-color: #334155;
   color: white;
+}
+
+/* Mobile Sidebar Custom Actions */
+.nav-mobile-actions {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Hide top bar items to declutter */
+  .nav-actions .lang-switcher,
+  .nav-actions .btn-signin {
+    display: none;
+  }
+
+  /* Show sidebar items */
+  .nav-mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+
+  /* Language Switcher */
+  .mobile-lang-group {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.5rem; /* Match visual alignment */
+  }
+
+  .mobile-action-label {
+    display: none; /* Hide label for cleaner look */
+  }
+
+  .mobile-lang-switcher {
+    display: flex;
+    background: var(--bg-secondary);
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .mobile-lang-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: transparent;
+    border: none;
+  }
+  
+  .mobile-lang-btn img {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .mobile-lang-btn.active {
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+  }
+  
+  .mobile-lang-btn.active img {
+    opacity: 1;
+  }
+
+  body.dark .mobile-lang-switcher {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  body.dark .mobile-lang-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  /* Auth Button - Link Style for Professionalism */
+  .mobile-auth-group {
+    padding: 0 0.5rem;
+  }
+
+  .mobile-btn-auth {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Left align like menu items */
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-btn-auth i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+  }
+
+  .mobile-btn-auth:hover {
+      background: rgba(0, 0, 0, 0.03);
+      color: var(--text);
+  }
+  
+  /* Signout specific style */
+  .mobile-btn-auth.btn-signout {
+    color: var(--danger);
+  }
+  
+  .mobile-btn-auth.btn-signout:hover {
+    background: rgba(239, 68, 68, 0.08); /* Subtle red bg on hover */
+    color: var(--danger);
+  }
+  
+  body.dark .mobile-btn-auth.btn-signout {
+    color: #f87171;
+  }
+  
+  body.dark .mobile-btn-auth.btn-signout:hover {
+    background: rgba(248, 113, 113, 0.1);
+  }
 }
