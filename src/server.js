@@ -33,12 +33,13 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://www.youtube.com", "https://www.google.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://cdn.quilljs.com", "https://www.youtube.com", "https://www.google.com", "https://maps.googleapis.com"],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://cdn.quilljs.com", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
       fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"],
-      frameSrc: ["'self'", "https://www.youtube.com", "https://www.google.com"],
-      connectSrc: ["'self'"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://www.google.com", "https://www.google.com/maps/"],
+      connectSrc: ["'self'", "https://maps.googleapis.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },
