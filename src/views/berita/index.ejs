@@ -1,10 +1,10 @@
 <% layout = false %>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= typeof t !== 'undefined' ? t.lang : 'id' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berita - Bosowa Bandar Group</title>
+  <title><%= typeof t !== 'undefined' ? t.news.title : 'Berita & Artikel' %> - Bosowa Bandar Group</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -14,7 +14,7 @@
   <main>
     <section class="page-header">
       <div class="container">
-        <h1>Berita & Artikel</h1>
+        <h1><%= typeof t !== 'undefined' ? t.news.title : 'Berita & Artikel' %></h1>
       </div>
     </section>
 
@@ -32,27 +32,27 @@
                   <h3><%= item.title %></h3>
                   <p class="card-excerpt"><%= item.summary || item.content.replace(/<[^>]*>?/gm, '').substring(0, 120) %>...</p>
                   <div class="card-meta">
-                    <span><i class="far fa-calendar"></i> <%= new Date(item.created_at).toLocaleDateString('id-ID') %></span>
+                    <span><i class="far fa-calendar"></i> <%= new Date(item.created_at).toLocaleDateString(typeof t !== 'undefined' && t.lang === 'en' ? 'en-US' : 'id-ID') %></span>
                   </div>
-                  <a href="/berita/<%= item.slug %>" class="btn-link">Baca Selengkapnya</a>
+                  <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>/<%= item.slug %>" class="btn-link"><%= typeof t !== 'undefined' ? t.home.readMore : 'Baca Selengkapnya' %></a>
                 </div>
               </article>
             <% }) %>
           <% } else { %>
-            <p>Belum ada berita yang dipublikasikan.</p>
+            <p><%= typeof t !== 'undefined' ? t.news.noNews : 'Belum ada berita yang dipublikasikan.' %></p>
           <% } %>
         </div>
 
         <% if (pagination && pagination.totalPages > 1) { %>
           <div class="pagination">
             <% if (pagination.page > 1) { %>
-              <a href="?page=<%= pagination.page - 1 %>" class="btn btn-outline">&laquo; Prev</a>
+              <a href="?page=<%= pagination.page - 1 %>" class="btn btn-outline">&laquo; <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Prev' : 'Sebelumnya' %></a>
             <% } %>
             <% for (let i = 1; i <= pagination.totalPages; i++) { %>
               <a href="?page=<%= i %>" class="btn <%= i === pagination.page ? 'btn-primary' : 'btn-outline' %>"><%= i %></a>
             <% } %>
             <% if (pagination.page < pagination.totalPages) { %>
-              <a href="?page=<%= pagination.page + 1 %>" class="btn btn-outline">Next &raquo;</a>
+              <a href="?page=<%= pagination.page + 1 %>" class="btn btn-outline"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Next' : 'Selanjutnya' %> &raquo;</a>
             <% } %>
           </div>
         <% } %>

@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="container">
       <!-- Logo Section -->
-      <a href="/" class="logo">
+      <a href="<%= typeof t !== 'undefined' ? t.urls.home : '/' %>" class="logo">
         <img src="/images/logo/logo-dark.png" alt="Bosowa Bandar Group" class="logo-light">
         <img src="/images/logo/logo-signin.png" alt="Bosowa Bandar Group" class="logo-dark" style="display:none;">
       </a>
@@ -11,7 +11,7 @@
       <ul class="nav-menu" id="navMenu">
         <!-- Mobile Sidebar Header -->
         <li class="nav-sidebar-header">
-          <a href="/" class="sidebar-logo">
+          <a href="<%= typeof t !== 'undefined' ? t.urls.home : '/' %>" class="sidebar-logo">
             <img src="/images/logo/logo-dark.png" alt="Bosowa Bandar Group" class="sidebar-logo-light">
             <img src="/images/logo/logo-signin.png" alt="Bosowa Bandar Group" class="sidebar-logo-dark">
           </a>
@@ -20,36 +20,52 @@
           </button>
         </li>
         <li class="nav-sidebar-divider"></li>
-        <li><a href="/" class="nav-link">Beranda</a></li>
-        <li><a href="/about" class="nav-link">Tentang Kami</a></li>
-        <li><a href="/visi-misi" class="nav-link">Visi Misi</a></li>
+        <li><a href="<%= typeof t !== 'undefined' ? t.urls.home : '/' %>" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.home : 'Beranda' %></a></li>
+        <li><a href="<%= typeof t !== 'undefined' ? t.urls.about : '/about' %>" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.about : 'Tentang Kami' %></a></li>
+        <li><a href="<%= typeof t !== 'undefined' ? t.urls.visionMission : '/visi-misi' %>" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.visionMission : 'Visi Misi' %></a></li>
         <li class="nav-dropdown">
-          <a href="#" class="nav-link dropdown-toggle">Unit Bisnis <i class="fas fa-chevron-down nav-arrow"></i></a>
+          <a href="#" class="nav-link dropdown-toggle"><%= typeof t !== 'undefined' ? t.nav.businessUnits : 'Unit Bisnis' %> <i class="fas fa-chevron-down nav-arrow"></i></a>
           <ul class="nav-dropdown-menu">
-            <li><a href="/unit-bisnis/bosowa-bandar-indonesia" class="nav-link">PT Bosowa Bandar Indonesia</a></li>
-            <li><a href="/unit-bisnis/bosowa-bandar-agensi" class="nav-link">PT Bosowa Bandar Agensi</a></li>
-            <li><a href="/unit-bisnis/jasa-pelabuhan-indonesia" class="nav-link">PT Jasa Pelabuhan Indonesia</a></li>
+            <li><a href="<%= typeof t !== 'undefined' ? t.businessUnitUrls.bosowabandarindonesia : '/unit-bisnis/bosowa-bandar-indonesia' %>" class="nav-link">PT Bosowa Bandar Indonesia</a></li>
+            <li><a href="<%= typeof t !== 'undefined' ? t.businessUnitUrls.bosowabandaragensi : '/unit-bisnis/bosowa-bandar-agensi' %>" class="nav-link">PT Bosowa Bandar Agensi</a></li>
+            <li><a href="<%= typeof t !== 'undefined' ? t.businessUnitUrls.jasapelabuhanindonesia : '/unit-bisnis/jasa-pelabuhan-indonesia' %>" class="nav-link">PT Jasa Pelabuhan Indonesia</a></li>
           </ul>
         </li>
-        <li><a href="/cabang" class="nav-link">Info Cabang</a></li>
-        <li><a href="/berita" class="nav-link">Berita</a></li>
-        <li><a href="#footer" class="nav-link">Kontak</a></li>
+        <li><a href="<%= typeof t !== 'undefined' ? t.urls.branches : '/cabang' %>" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.branches : 'Info Cabang' %></a></li>
+        <li><a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.news : 'Berita' %></a></li>
+        <li><a href="#footer" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.contact : 'Kontak' %></a></li>
         <% if (user) { %>
-          <li><a href="/admin" class="nav-link">Admin</a></li>
+          <li><a href="/admin" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.admin : 'Admin' %></a></li>
         <% } %>
       </ul>
 
-      <!-- Right Section: Theme Toggle & Signin -->
+      <!-- Right Section: Language Switcher, Theme Toggle & Signin -->
       <div class="nav-actions">
+        <!-- Language Switcher -->
+        <% if (typeof lang !== 'undefined') { %>
+        <div class="lang-switcher">
+          <a href="/id<%= typeof currentPath !== 'undefined' ? currentPath : '' %>" 
+             class="lang-btn <%= lang === 'id' ? 'active' : '' %>" 
+             title="Bahasa Indonesia">
+            <img src="/images/flags/id.svg" alt="ID" class="flag-icon">
+          </a>
+          <a href="<%= typeof getAltLangUrl === 'function' && lang === 'id' ? getAltLangUrl() : '/en' + (typeof currentPath !== 'undefined' ? currentPath : '') %>" 
+             class="lang-btn <%= lang === 'en' ? 'active' : '' %>" 
+             title="English">
+            <img src="/images/flags/en.svg" alt="EN" class="flag-icon">
+          </a>
+        </div>
+        <% } %>
+        
         <% if (user) { %>
           <a href="/admin/logout" class="btn-signin btn-signout">
             <i class="fas fa-sign-out-alt"></i>
-            <span>Keluar</span>
+            <span><%= typeof t !== 'undefined' ? t.nav.logout : 'Keluar' %></span>
           </a>
         <% } else { %>
           <a href="/admin/login" class="btn-signin">
             <i class="fas fa-sign-in-alt"></i>
-            <span>Masuk</span>
+            <span><%= typeof t !== 'undefined' ? t.nav.login : 'Masuk' %></span>
           </a>
         <% } %>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">

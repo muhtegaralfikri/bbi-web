@@ -1,10 +1,10 @@
 <% layout = false %>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= typeof t !== 'undefined' ? t.lang : 'id' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Info Cabang - Bosowa Bandar Group</title>
+  <title><%= typeof t !== 'undefined' ? t.branches.title : 'Info Cabang' %> - Bosowa Bandar Group</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -14,7 +14,7 @@
   <main>
     <section class="page-header">
       <div class="container">
-        <h1>Info Cabang</h1>
+        <h1><%= typeof t !== 'undefined' ? t.branches.title : 'Info Cabang' %></h1>
       </div>
     </section>
 
@@ -29,7 +29,7 @@
                 <% } %>
                 <div class="card-content">
                   <h3><%= cab.name %></h3>
-                  <p><i class="fas fa-map-marker-alt"></i> <%= cab.address || 'Alamat belum tersedia' %></p>
+                  <p><i class="fas fa-map-marker-alt"></i> <%= cab.address || (typeof t !== 'undefined' && t.lang === 'en' ? 'Address not available' : 'Alamat belum tersedia') %></p>
                   <% if (cab.phone) { %>
                     <p><i class="fas fa-phone"></i> <%= cab.phone %></p>
                   <% } %>
@@ -42,14 +42,14 @@
                     </div>
                   <% } else if (cab.map_link) { %>
                     <a href="<%= cab.map_link %>" target="_blank" class="btn-link">
-                      <i class="fas fa-map-marker-alt"></i> Lihat Peta
+                      <i class="fas fa-map-marker-alt"></i> <%= typeof t !== 'undefined' ? t.branches.viewMap : 'Lihat Peta' %>
                     </a>
                   <% } %>
                 </div>
               </div>
             <% }) %>
           <% } else { %>
-            <p>Belum ada data cabang.</p>
+            <p><%= typeof t !== 'undefined' && t.lang === 'en' ? 'No branch data available.' : 'Belum ada data cabang.' %></p>
           <% } %>
         </div>
       </div>

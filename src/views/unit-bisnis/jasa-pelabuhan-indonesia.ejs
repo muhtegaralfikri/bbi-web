@@ -1,6 +1,6 @@
 <% layout = false %>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= typeof t !== 'undefined' ? t.lang : 'id' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,16 +20,12 @@
           <div class="ub-main">
             <h1 class="ub-title">PT Jasa Pelabuhan Indonesia</h1>
             <p class="ub-subtitle">
-              PT Jasa Pelabuhan Indonesia merupakan entitas bisnis yang fokus pada pengelolaan 
-              operasional pelabuhan dan menyediakan layanan teknis pendukung kegiatan bongkar muat, 
-              terminal, dan operasional maritim.
+              <%= typeof t !== 'undefined' && t.lang === 'en' ? 'PT Jasa Pelabuhan Indonesia is a business entity focused on port operational management and providing technical support services for cargo handling, terminal, and maritime operations.' : 'PT Jasa Pelabuhan Indonesia merupakan entitas bisnis yang fokus pada pengelolaan operasional pelabuhan dan menyediakan layanan teknis pendukung kegiatan bongkar muat, terminal, dan operasional maritim.' %>
             </p>
 
             <div class="ub-content">
               <p>
-                Dengan pengalaman dan sumber daya profesional, Jasa Pelabuhan Indonesia lancar 
-                menjalankan kegiatan ekspor-impor, penyimpanan barang, hingga pengelolaan 
-                infrastruktur pelabuhan yang efisien.
+                <%= typeof t !== 'undefined' && t.lang === 'en' ? 'With experience and professional resources, Jasa Pelabuhan Indonesia smoothly carries out export-import activities, goods storage, to efficient port infrastructure management.' : 'Dengan pengalaman dan sumber daya profesional, Jasa Pelabuhan Indonesia lancar menjalankan kegiatan ekspor-impor, penyimpanan barang, hingga pengelolaan infrastruktur pelabuhan yang efisien.' %>
               </p>
             </div>
           </div>
@@ -37,19 +33,19 @@
           <!-- Sidebar -->
           <aside class="ub-sidebar">
             <div class="ub-sidebar-card">
-              <h3>Area Operasional</h3>
+              <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Operational Area' : 'Area Operasional' %></h3>
               
               <div class="ub-area-grid">
                 <div class="ub-area">
-                  <h4>Daerah Banyuwangi</h4>
+                  <h4><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Banyuwangi Area' : 'Daerah Banyuwangi' %></h4>
                   <ul>
-                    <li>Dermaga Semen Bosowa Banyuwangi</li>
-                    <li>Dermaga Misi Mulia Pertronusa</li>
+                    <li><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Semen Bosowa Banyuwangi Dock' : 'Dermaga Semen Bosowa Banyuwangi' %></li>
+                    <li><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Misi Mulia Pertronusa Dock' : 'Dermaga Misi Mulia Pertronusa' %></li>
                   </ul>
                 </div>
 
                 <div class="ub-area">
-                  <h4>Daerah Jeneponto</h4>
+                  <h4><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Jeneponto Area' : 'Daerah Jeneponto' %></h4>
                   <ul>
                     <li>Jetty PLTU Bosowa Energi</li>
                   </ul>
@@ -57,10 +53,10 @@
               </div>
 
               <div class="ub-area" style="margin-top: 1.5rem;">
-                <h4>Daerah Makassar</h4>
+                <h4><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Makassar Area' : 'Daerah Makassar' %></h4>
                 <ul>
-                  <li>Dermaga BDE Lantebung</li>
-                  <li>Pelabuhan Soekarno Hatta</li>
+                  <li><%= typeof t !== 'undefined' && t.lang === 'en' ? 'BDE Lantebung Dock' : 'Dermaga BDE Lantebung' %></li>
+                  <li><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Soekarno Hatta Port' : 'Pelabuhan Soekarno Hatta' %></li>
                 </ul>
               </div>
             </div>

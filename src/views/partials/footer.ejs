@@ -4,21 +4,21 @@
       <!-- Left Column: Logo & Description -->
       <!-- Left Column: Logo & Description -->
       <div class="footer-brand">
-        <a href="/" class="footer-logo">
+        <a href="<%= typeof t !== 'undefined' ? t.urls.home : '/' %>" class="footer-logo">
           <img src="/images/logo/logo-dark.png" alt="Bosowa Bandar Group" class="footer-logo-light">
           <img src="/images/logo/logo-signin.png" alt="Bosowa Bandar Group" class="footer-logo-dark" style="display:none;">
         </a>
         <p class="footer-desc">
-          Perusahaan swasta nasional berdiri membawa sejarah lokal Indonesia Timur. Bosowa Bandar Indonesia merupakan Badan Usaha Pelabuhan (BUP) yang merupakan bagian dari Bosowa Corporindo. Kami memberikan pelayanan pengelolaan pelabuhan, keagenan kapal, jasa bongkar muat (PBM) dan layanan kapal tunda.
+          <%= typeof t !== 'undefined' && t.lang === 'en' ? 'A national private company established bringing the local history of Eastern Indonesia. Bosowa Bandar Indonesia is a Port Business Entity (BUP) which is part of Bosowa Corporindo. We provide port management services, ship agency, cargo handling (PBM) and tugboat services.' : 'Perusahaan swasta nasional berdiri membawa sejarah lokal Indonesia Timur. Bosowa Bandar Indonesia merupakan Badan Usaha Pelabuhan (BUP) yang merupakan bagian dari Bosowa Corporindo. Kami memberikan pelayanan pengelolaan pelabuhan, keagenan kapal, jasa bongkar muat (PBM) dan layanan kapal tunda.' %>
         </p>
       </div>
 
       <!-- Middle Column: Contact Info -->
       <div class="footer-contact">
-        <h3>Hubungi Kami</h3>
+        <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Contact Us' : 'Hubungi Kami' %></h3>
         <ul class="contact-list">
           <li class="contact-address">
-            <strong>Alamat:</strong> <%= settings.company_address || 'Menara Bosowa Lt. 8 Unit J Jl. Jend. Sudirman No.5 Kel. Pisang Utara, Kec. Ujung Pandang Kota Makassar, Sulawesi Selatan Indonesia 90115' %>
+            <strong><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Address:' : 'Alamat:' %></strong> <%= settings.company_address || 'Menara Bosowa Lt. 8 Unit J Jl. Jend. Sudirman No.5 Kel. Pisang Utara, Kec. Ujung Pandang Kota Makassar, Sulawesi Selatan Indonesia 90115' %>
           </li>
           <li>
             <strong>Email:</strong> <a href="mailto:<%= settings.company_email || 'bosowa.bandar@bosowa.co.id' %>"><%= settings.company_email || 'bosowa.bandar@bosowa.co.id' %></a>
@@ -31,7 +31,7 @@
           </li>
         </ul>
         <div class="footer-social">
-          <h3>Sosial Media</h3>
+          <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Social Media' : 'Sosial Media' %></h3>
           <div class="social-links">
             <a href="https://www.instagram.com/bosowabandarindonesia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <i class="fab fa-instagram"></i>
@@ -45,7 +45,7 @@
 
       <!-- Right Column: Location Map -->
       <div class="footer-location">
-        <h3>Lokasi Kami</h3>
+        <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Our Location' : 'Lokasi Kami' %></h3>
         <div class="map-container">
           <% if (settings.company_maps) { %>
             <%- settings.company_maps %>
@@ -62,7 +62,7 @@
           <% } %>
           <div class="map-overlay-info">
             <strong>PT. Bosowa Bandar Indonesia</strong>
-            <a href="https://maps.google.com/?q=PT.+Bosowa+Bandar+Indonesia" target="_blank">Lihat peta lebih besar</a>
+            <a href="https://maps.google.com/?q=PT.+Bosowa+Bandar+Indonesia" target="_blank"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'View larger map' : 'Lihat peta lebih besar' %></a>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
   <div class="footer-copyright">
     <div class="container">
       <div class="copyright-content">
-        <p>&copy; <%= new Date().getFullYear() %> Bosowa Bandar Indonesia. All rights reserved.</p>
+        <p>&copy; <%= new Date().getFullYear() %> Bosowa Bandar Indonesia. <%= typeof t !== 'undefined' && t.lang === 'en' ? 'All rights reserved.' : 'Hak cipta dilindungi.' %></p>
       </div>
     </div>
   </div>

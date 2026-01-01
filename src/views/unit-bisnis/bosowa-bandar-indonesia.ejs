@@ -1,6 +1,6 @@
 <% layout = false %>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= typeof t !== 'undefined' ? t.lang : 'id' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,15 +20,12 @@
           <div class="ub-main">
             <h1 class="ub-title">PT Bosowa Bandar Indonesia</h1>
             <p class="ub-subtitle">
-              PT Bosowa Bandar Indonesia (BBI) merupakan bagian dari <strong>Bosowa Group</strong> 
-              yang bergerak di bidang pengelolaan pelabuhan, bongkar muat, dan layanan logistik terpadu.
+              <%- typeof t !== 'undefined' && t.lang === 'en' ? 'PT Bosowa Bandar Indonesia (BBI) is part of <strong>Bosowa Group</strong> which operates in port management, cargo handling, and integrated logistics services.' : 'PT Bosowa Bandar Indonesia (BBI) merupakan bagian dari <strong>Bosowa Group</strong> yang bergerak di bidang pengelolaan pelabuhan, bongkar muat, dan layanan logistik terpadu.' %>
             </p>
 
             <div class="ub-content">
               <p>
-                Bosowa Bandar Indonesia hadir untuk meningkatkan efisiensi operasional pelabuhan 
-                melalui sistem manajemen modern dan infrastruktur pendukung yang lengkap. 
-                Kami berkomitmen menghadirkan solusi logistik berkelanjutan untuk industri maritim nasional.
+                <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Bosowa Bandar Indonesia is here to improve port operational efficiency through modern management systems and complete supporting infrastructure. We are committed to providing sustainable logistics solutions for the national maritime industry.' : 'Bosowa Bandar Indonesia hadir untuk meningkatkan efisiensi operasional pelabuhan melalui sistem manajemen modern dan infrastruktur pendukung yang lengkap. Kami berkomitmen menghadirkan solusi logistik berkelanjutan untuk industri maritim nasional.' %>
               </p>
             </div>
           </div>
@@ -36,10 +33,10 @@
           <!-- Sidebar -->
           <aside class="ub-sidebar">
             <div class="ub-sidebar-card">
-              <h3>Area Layanan Utama</h3>
+              <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Main Service Area' : 'Area Layanan Utama' %></h3>
               
               <div class="ub-area">
-                <h4>Area Jeneponto</h4>
+                <h4><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Jeneponto Area' : 'Area Jeneponto' %></h4>
                 <ul>
                   <li>PLTU Bosowa Energi</li>
                   <li>PLN Punagaya</li>
