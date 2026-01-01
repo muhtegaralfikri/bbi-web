@@ -12,11 +12,26 @@ const dbConfig = {
   port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  connectTimeout: 10000, // 10s
+  acquireTimeout: 10000  // 10s
 };
 
 // Create Connection Pool
 const pool = mysql.createPool(dbConfig);
+
+// Pool Events for Debugging
+pool.on('connection', (connection) => {
+  console.log('DB: New connection established');
+});
+
+pool.on('enqueue', () => {
+  console.log('DB: Waiting for available connection slot');
+});
+
+pool.on('release', (connection) => {
+  // console.log('DB: Connection released');
+});
 
 // Wrapper to mimic SQLite3 callback API
 const db = {
@@ -62,6 +77,19 @@ const db = {
 const initDatabase = () => {
     console.log('Initializing MySQL Database...');
     
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.error('CRITICAL: Database connection failed during initialization:', err.code, err.message);
+        return;
+      }
+      console.log('DB: Successfully connected to database for initialization.');
+      connection.release();
+      
+      createTables();
+    });
+};
+
+const createTables = () => {
     // Users table
     db.run(`
       CREATE TABLE IF NOT EXISTS users (
