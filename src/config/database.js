@@ -194,4 +194,4 @@ const initDatabase = () => {
     console.log('MySQL Database initialization commands sent.');
 };
 
-module.exports = { db, initDatabase };
+module.exports = { db, initDatabase, pool, dbConfig };

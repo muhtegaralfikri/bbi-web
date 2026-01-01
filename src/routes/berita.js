@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
   });
 });
 
-// Detail Berita (Public) using sqlite3
+// Detail Berita (Public)
 router.get('/:slug', (req, res) => {
   const slug = req.params.slug;
   db.get('SELECT * FROM berita WHERE slug = ? AND published = 1', [slug], (err, berita) => {
