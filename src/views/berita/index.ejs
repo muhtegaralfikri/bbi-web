@@ -15,13 +15,14 @@
   <main>
     <section class="page-header">
       <div class="container">
-        <h1><%= typeof t !== 'undefined' ? t.news.title : 'Berita & Artikel' %></h1>
+        <h1><%= typeof t !== 'undefined' ? t.news.title : 'Berita' %></h1>
+        <p class="page-subtitle"><%= typeof t !== 'undefined' ? t.news.subtitle : 'Ikuti perkembangan terbaru dari Bosowa Bandar Group melalui berita dan informasi terkini seputar aktivitas perusahaan.' %></p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="grid grid-3">
+        <div class="grid grid-1">
           <% if (berita && berita.length > 0) { %>
             <% berita.forEach(item => { 
               // Get language-specific content
@@ -52,13 +53,19 @@
         <% if (pagination && pagination.totalPages > 1) { %>
           <div class="pagination">
             <% if (pagination.page > 1) { %>
-              <a href="?page=<%= pagination.page - 1 %>" class="btn btn-outline">&laquo; <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Prev' : 'Sebelumnya' %></a>
+              <a href="?page=<%= pagination.page - 1 %>" class="btn btn-outline btn-arrow"><i class="fas fa-chevron-left"></i></a>
+            <% } else { %>
+              <span class="btn btn-outline btn-arrow" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-chevron-left"></i></span>
             <% } %>
+            
             <% for (let i = 1; i <= pagination.totalPages; i++) { %>
               <a href="?page=<%= i %>" class="btn <%= i === pagination.page ? 'btn-primary' : 'btn-outline' %>"><%= i %></a>
             <% } %>
+            
             <% if (pagination.page < pagination.totalPages) { %>
-              <a href="?page=<%= pagination.page + 1 %>" class="btn btn-outline"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Next' : 'Selanjutnya' %> &raquo;</a>
+              <a href="?page=<%= pagination.page + 1 %>" class="btn btn-outline btn-arrow"><i class="fas fa-chevron-right"></i></a>
+            <% } else { %>
+              <span class="btn btn-outline btn-arrow" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-chevron-right"></i></span>
             <% } %>
           </div>
         <% } %>

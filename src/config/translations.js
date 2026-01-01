@@ -98,15 +98,16 @@ const translations = {
       ]
     },
     
-    // News
     news: {
-      title: 'Berita & Artikel',
+      title: 'Berita',
+      subtitle: 'Ikuti perkembangan terbaru dari Bosowa Bandar Group melalui berita dan informasi terkini seputar aktivitas perusahaan.',
       noNews: 'Belum ada berita.'
     },
     
     // Branches
     branches: {
       title: 'Info Cabang',
+      subtitle: 'Temukan kantor cabang Bosowa Bandar Group terdekat di berbagai kota di Indonesia.',
       address: 'Alamat',
       phone: 'Telepon',
       email: 'Email',
@@ -227,13 +228,15 @@ const translations = {
     
     // News
     news: {
-      title: 'News & Articles',
+      title: 'News',
+      subtitle: 'Stay updated with the latest news and information about Bosowa Bandar Group activities.',
       noNews: 'No news available.'
     },
     
     // Branches
     branches: {
       title: 'Branch Information',
+      subtitle: 'Find the nearest Bosowa Bandar Group office in various cities across Indonesia.',
       address: 'Address',
       phone: 'Phone',
       email: 'Email',

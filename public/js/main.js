@@ -50,6 +50,7 @@ function closeMobileMenu() {
     navMenu.classList.remove('active');
     menuToggle.classList.remove('active');
     navOverlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
   }
 }
 
@@ -59,6 +60,7 @@ if (menuToggle && navMenu && navOverlay) {
     navMenu.classList.toggle('active');
     menuToggle.classList.toggle('active');
     navOverlay.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
   });
 }
 
