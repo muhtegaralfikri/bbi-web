@@ -1,6 +1,6 @@
 <% layout = false %>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= typeof t !== 'undefined' ? t.lang : 'id' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,16 +20,12 @@
           <div class="ub-main">
             <h1 class="ub-title">PT Bosowa Bandar Agensi</h1>
             <p class="ub-subtitle">
-              PT Bosowa Bandar Agensi adalah unit kapal bisnis yang bergerak di bidang keagenan, 
-              memberikan layanan profesional dan efisien untuk mendukung kelancaran aktivitas 
-              pelayaran di pelabuhan Bosowa dan sekitarnya.
+              <%= typeof t !== 'undefined' && t.lang === 'en' ? 'PT Bosowa Bandar Agensi is a ship agency business unit that provides professional and efficient services to support smooth shipping activities at Bosowa ports and surrounding areas.' : 'PT Bosowa Bandar Agensi adalah unit bisnis keagenan kapal yang memberikan layanan profesional dan efisien untuk mendukung kelancaran aktivitas pelayaran di pelabuhan Bosowa dan sekitarnya.' %>
             </p>
 
             <div class="ub-content">
               <p>
-                Sebagai bagian dari Bosowa Group, Bosowa kapal Bandar Agensi berperan dalam memfasilitasi 
-                operasional domestik maupun internasional yang berlabuh di wilayah kerja Bosowa. 
-                Kami memastikan pelayanan keagenan berjalan cepat, aman, dan sesuai regulasi.
+                <%= typeof t !== 'undefined' && t.lang === 'en' ? 'As part of Bosowa Group, Bosowa Bandar Agensi plays a role in facilitating domestic and international ship operations docking in Bosowa\'s working area. We ensure agency services run quickly, safely, and in compliance with regulations.' : 'Sebagai bagian dari Bosowa Group, Bosowa Bandar Agensi berperan dalam memfasilitasi operasional kapal domestik maupun internasional yang berlabuh di wilayah kerja Bosowa. Kami memastikan pelayanan keagenan berjalan cepat, aman, dan sesuai regulasi.' %>
               </p>
             </div>
           </div>
@@ -37,20 +33,20 @@
           <!-- Sidebar -->
           <aside class="ub-sidebar">
             <div class="ub-sidebar-card">
-              <h3>Daerah Jangkauan</h3>
+              <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Coverage Area' : 'Daerah Jangkauan' %></h3>
               
               <div class="ub-area-grid">
                 <div class="ub-area">
-                  <h4>Daerah Sulawesi Selatan</h4>
+                  <h4><%= typeof t !== 'undefined' && t.lang === 'en' ? 'South Sulawesi Region' : 'Daerah Sulawesi Selatan' %></h4>
                   <ul>
                     <li>Makassar</li>
                     <li>Jeneponto</li>
-                    <li>Baru</li>
+                    <li>Barru</li>
                   </ul>
                 </div>
 
                 <div class="ub-area">
-                  <h4>Wilayah Luar Sulawesi Selatan</h4>
+                  <h4><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Outside South Sulawesi' : 'Wilayah Luar Sulawesi Selatan' %></h4>
                   <ul>
                     <li>Palu</li>
                     <li>Konawe</li>

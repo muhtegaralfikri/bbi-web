@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { db } = require('../config/database');
 
+// Homepage
 router.get('/', (req, res) => {
+  const lang = req.lang || 'id';
+  const t = res.locals.t;
+  
   // Get published berita (limit 3)
   db.all('SELECT * FROM berita WHERE published = 1 ORDER BY created_at DESC LIMIT 3', [], (err, berita) => {
     if (err) {
@@ -18,7 +22,7 @@ router.get('/', (req, res) => {
       }
 
       res.render('index', {
-        title: 'Bosowa Bandar Group',
+        title: t.home.title,
         description: 'Bosowa Bandar Group - Company Profile',
         berita: berita || [],
         unitBisnis: unitBisnis || [],
@@ -28,20 +32,40 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/about', (req, res) => {
+// About page
+router.get('/tentang-kami', (req, res) => {
+  const t = res.locals.t;
   res.render('about', {
-    title: 'Tentang Kami'
+    title: t.about.title
   });
 });
 
+router.get('/about-us', (req, res) => {
+  const t = res.locals.t;
+  res.render('about', {
+    title: t.about.title
+  });
+});
+
+// Vision & Mission
 router.get('/visi-misi', (req, res) => {
+  const t = res.locals.t;
   res.render('visi-misi', {
-    title: 'Visi & Misi'
+    title: t.visionMission.title
   });
 });
 
+router.get('/vision-mission', (req, res) => {
+  const t = res.locals.t;
+  res.render('visi-misi', {
+    title: t.visionMission.title
+  });
+});
+
+// Contact form handler
 router.post('/contact', (req, res) => {
   const { name, email, subject, message } = req.body;
+  const lang = req.lang || 'id';
 
   // Insert message
   db.run(
@@ -50,10 +74,9 @@ router.post('/contact', (req, res) => {
     (err) => {
       if (err) {
         console.error('Error sending message:', err);
-        // Still redirect but maybe we should show error, for now success to not break flow
       }
       // Redirect back to home with success flag
-      res.redirect('/?contact=success');
+      res.redirect(`/${lang}?contact=success`);
     }
   );
 });

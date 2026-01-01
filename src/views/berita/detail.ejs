@@ -1,6 +1,6 @@
 <% layout = false %>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= typeof t !== 'undefined' ? t.lang : 'id' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,29 +13,35 @@
   <%- include('../partials/header') %>
 
   <main>
+    <%
+      // Get language-specific content
+      const isEn = typeof t !== 'undefined' && t.lang === 'en';
+      const displayTitle = isEn && berita.title_en ? berita.title_en : berita.title;
+      const displayContent = isEn && berita.content_en ? berita.content_en : berita.content;
+    %>
     <article class="article-detail">
       <div class="container">
         <% if (berita.image) { %>
-          <img src="<%= berita.image %>" alt="<%= berita.title %>" class="article-image">
+          <img src="<%= berita.image %>" alt="<%= displayTitle %>" class="article-image">
         <% } %>
         <div class="article-content">
 
-          <h1><%= berita.title %></h1>
+          <h1><%= displayTitle %></h1>
           <div class="article-meta">
-            <span><i class="far fa-calendar"></i> <%= new Date(berita.created_at).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+            <span><i class="far fa-calendar"></i> <%= new Date(berita.created_at).toLocaleDateString(typeof t !== 'undefined' && t.lang === 'en' ? 'en-US' : 'id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>
           </div>
           <div class="article-body">
-            <%- berita.content %>
+            <%- displayContent %>
           </div>
           <div class="article-footer">
-            <a href="/berita" class="btn btn-outline">&larr; Kembali ke Berita</a>
+            <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="btn btn-outline">&larr; <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Back to News' : 'Kembali ke Berita' %></a>
           </div>
         </div>
 
         <!-- Comments Section -->
         <div class="comments-section">
           <div class="comments-header">
-            <h3><i class="fas fa-comments"></i> Komentar (<%= comments ? comments.length : 0 %>)</h3>
+            <h3><i class="fas fa-comments"></i> <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Comments' : 'Komentar' %> (<%= comments ? comments.length : 0 %>)</h3>
           </div>
 
           <!-- Comment List -->
@@ -49,42 +55,42 @@
                   <div class="comment-content">
                     <div class="comment-meta">
                       <strong><%= c.name %></strong>
-                      <span><%= new Date(c.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
+                      <span><%= new Date(c.created_at).toLocaleDateString(typeof t !== 'undefined' && t.lang === 'en' ? 'en-US' : 'id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
                     </div>
                     <p><%= c.content %></p>
                   </div>
                 </div>
               <% }); %>
             <% } else { %>
-              <p class="no-comments">Belum ada komentar. Jadilah yang pertama berkomentar!</p>
+              <p class="no-comments"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'No comments yet. Be the first to comment!' : 'Belum ada komentar. Jadilah yang pertama berkomentar!' %></p>
             <% } %>
           </div>
 
           <!-- Comment Form -->
           <div class="comment-form-wrapper">
-            <h3>Tinggalkan Komentar</h3>
-            <p class="text-muted">Alamat email Anda tidak akan dipublikasikan.</p>
+            <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Leave a Comment' : 'Tinggalkan Komentar' %></h3>
+            <p class="text-muted"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Your email address will not be published.' : 'Alamat email Anda tidak akan dipublikasikan.' %></p>
             
             <div id="comment-alert" style="display: none;" class="alert alert-success">
-              Komentar berhasil dikirim dan menunggu moderasi admin.
+              <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Comment submitted successfully and awaiting admin moderation.' : 'Komentar berhasil dikirim dan menunggu moderasi admin.' %>
             </div>
 
-            <form action="/berita/<%= berita.id %>/comment" method="POST" class="comment-form">
+            <form action="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>/<%= berita.id %>/comment" method="POST" class="comment-form">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="name">Nama *</label>
-                  <input type="text" id="name" name="name" required placeholder="Nama Lengkap">
+                  <label for="name"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Name' : 'Nama' %> *</label>
+                  <input type="text" id="name" name="name" required placeholder="<%= typeof t !== 'undefined' && t.lang === 'en' ? 'Full Name' : 'Nama Lengkap' %>">
                 </div>
                 <div class="form-group">
                   <label for="email">Email *</label>
-                  <input type="email" id="email" name="email" required placeholder="Email Anda">
+                  <input type="email" id="email" name="email" required placeholder="<%= typeof t !== 'undefined' && t.lang === 'en' ? 'Your Email' : 'Email Anda' %>">
                 </div>
               </div>
               <div class="form-group">
-                <label for="content">Komentar *</label>
-                <textarea id="content" name="content" rows="4" required placeholder="Tulis komentar Anda di sini..."></textarea>
+                <label for="content"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Comment' : 'Komentar' %> *</label>
+                <textarea id="content" name="content" rows="4" required placeholder="<%= typeof t !== 'undefined' && t.lang === 'en' ? 'Write your comment here...' : 'Tulis komentar Anda di sini...' %>"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Kirim Komentar</button>
+              <button type="submit" class="btn btn-primary"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Submit Comment' : 'Kirim Komentar' %></button>
             </form>
           </div>
         </div>
@@ -97,7 +103,7 @@
             // Clean URL
             window.history.replaceState({}, document.title, window.location.pathname);
           }
-        </script
+        </script>
       </div>
     </article>
   </main>

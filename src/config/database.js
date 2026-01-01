@@ -79,9 +79,12 @@ const initDatabase = () => {
       CREATE TABLE IF NOT EXISTS berita (
         id INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
+        title_en VARCHAR(255),
         slug VARCHAR(255) UNIQUE NOT NULL,
         summary TEXT,
+        summary_en TEXT,
         content LONGTEXT NOT NULL,
+        content_en LONGTEXT,
         image VARCHAR(255),
         category VARCHAR(50) DEFAULT 'umum',
         published BOOLEAN DEFAULT 0,
@@ -89,6 +92,22 @@ const initDatabase = () => {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
+    
+    // Robust Migration: Try to add columns, ignore if they already exist
+    const addColumnSafe = (table, colName, colDef) => {
+      db.run(`ALTER TABLE ${table} ADD COLUMN ${colName} ${colDef}`, [], (err) => {
+        // Ignore error 1060 (Duplicate column name)
+        if (err && err.errno !== 1060) {
+          // console.log(`Note: Column ${colName} might already exist or could not be added: ${err.message}`);
+        } else if (!err) {
+          console.log(`Migration: Successfully added column ${colName} to ${table}`);
+        }
+      });
+    };
+
+    addColumnSafe('berita', 'title_en', 'VARCHAR(255)');
+    addColumnSafe('berita', 'summary_en', 'TEXT');
+    addColumnSafe('berita', 'content_en', 'LONGTEXT');
 
     // Cabang table
     db.run(`
