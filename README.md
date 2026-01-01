@@ -1,205 +1,129 @@
-# BBI Web - Company Profile
+# Bosowa Bandar Group Web Profile
 
-Website company profile Bosowa Bandar Group yang ringan dan cepat menggunakan Express.js + EJS + SQLite.
+A lightweight, high-performance company profile website for **Bosowa Bandar Group** (BBI) and its business units. Built with Node.js, Express, and EJS, optimized for speed and security on aaPanel/VPS environments.
 
-## Fitur
+## 🚀 Key Features
 
-- **Frontend Publik:**
-  - Home page dengan hero, unit bisnis, berita terbaru
-  - Halaman About (Visi & Misi)
-  - Halaman Unit Bisnis
-  - Halaman Berita/Artikel dengan pagination
-  - Halaman Info Cabang
-  - Form Kontak
+*   **Multi-Language Support**: Full bilingual support (Indonesian/English) for all pages including dynamic content.
+*   **Business Unit Structure**: Dedicated pages for PT Bosowa Bandar Indonesia, Bosowa Bandar Agensi, and Jasa Pelabuhan Indonesia.
+*   **Admin Panel**:
+    *   Secure Login/Logout with `bcrypt`.
+    *   News Management (CRUD) with Rich Text Editor (Quill.js).
+    *   Office Branch Management (CRUD) with Google Maps embedding.
+    *   Comment Moderation System.
+    *   Site Settings Management.
+*   **Performance Optimized**:
+    *   **Gzip Compression**: Reduces file sizes by up to 70%.
+    *   **Browser Caching**: Static assets cached for 1 day.
+    *   **SQL Optimization**: efficient queries fetching only required columns.
+    *   **Production Mode**: Pre-configured scripts for optimized runtime.
+*   **Security Enhanced**:
+    *   **Helmet**: Sets secure HTTP headers.
+    *   **Rate Limiting**: Protects against brute-force/DDoS (100 req/15min).
+    *   **Trust Proxy**: Configured for Nginx/Reverse Proxies (aaPanel).
+*   **Responsive Design**: Mobile-friendly navigation, sticky header, and touch-swipe capablities.
 
-- **Admin Panel:**
-  - Dashboard dengan statistik
-  - Manajemen Berita (CRUD)
-  - Manajemen Cabang (CRUD)
-  - Manajemen Unit Bisnis (CRUD)
-  - Manajemen Pesan dari form kontak
-  - Pengaturan website
+## 🛠️ Technology Stack
 
-## Teknologi
+*   **Runtime**: Node.js (Express.js)
+*   **View Engine**: EJS (Embedded JavaScript)
+*   **Database**: MySQL (via `mysql2` library)
+*   **Session Store**: MySQL Session Store (`express-mysql-session`)
+*   **Styling**: Custom CSS (No heavy frameworks like Bootstrap/Tailwind runtime overhead)
+*   **Dependencies**: `compression`, `helmet`, `morgan`, `express-rate-limit`, `dotenv`, `multer`.
 
-- **Backend:** Express.js
-- **Frontend:** EJS (Server-Side Rendering)
-- **Database:** SQLite (better-sqlite3)
-- **Upload:** Multer
-- **Session:** express-session
-- **Authentication:** bcryptjs
+## 📦 Installation (Local Development)
 
-## Instalasi
+1.  **Clone Repository**
+    ```bash
+    git clone https://github.com/your-repo/bbi-web.git
+    cd bbi-web
+    ```
 
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment**
+    Create a `.env` file in the root directory:
+    ```env
+    PORT=
+    DB_HOST=
+    DB_USER=
+    DB_PASS=
+    DB_NAME=
+    SESSION_SECRET=
+    NODE_ENV=
+    ```
+
+4.  **Setup Database**
+    Create a MySQL database named `bbi_db`. The application will **automatically** create necessary tables on the first run.
+
+5.  **Run Application**
+    ```bash
+    npm run dev
+    # Runs with nodemon for auto-reload
+    # Access at http://localhost:3000
+    ```
+
+## 🌐 Deployment Logic (aaPanel / VPS)
+
+This project is optimized for deployment on Linux servers (Ubuntu/CentOS) using process managers like **PM2**.
+
+### 1. Environment Setup
+On your server (e.g., in `.env` file), ensure you set:
+```env
+NODE_ENV=production
+```
+This enables view caching, disables verbose error messages, and optimizes Express performance.
+
+### 2. Startup Command
+Use the production-ready script:
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Start production server
-npm start
+npm run start:prod
+# OR direct PM2 command:
+pm2 start src/server.js --name "bbi-web" --env production
 ```
 
-## Default Admin
+### 3. Nginx Configuration (Reverse Proxy)
+If using Nginx (default in aaPanel), add this to your configuration to handle static files and proxy correctly:
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+```
+*Note: The app is already configured with `app.set('trust proxy', 1)` to handle IP addresses correctly behind Nginx.*
 
-- **URL:** http://localhost:3000/admin
-- **Email:** admin@bbi.com
-- **Password:** admin123
-
-**PENTING:** Ubah password default setelah login pertama!
-
-## Struktur Folder
+## 📂 Project Structure
 
 ```
 bbi-web/
+├── public/             # Static assets (css, js, images, uploads)
+│   ├── css/            # Global styles
+│   ├── images/         # Site assets
+│   ├── js/             # Client-side logic (main.js)
+│   └── uploads/        # User uploaded content (news images)
 ├── src/
-│   ├── config/
-│   │   └── database.js       # Database config & init
-│   ├── views/
-│   │   ├── partials/         # Reusable components
-│   │   ├── admin/            # Admin panel views
-│   │   ├── berita/           # Berita views
-│   │   ├── cabang/           # Cabang views
-│   │   └── unit-bisnis/      # Unit bisnis views
-│   ├── routes/
-│   │   ├── admin/            # Admin routes
-│   │   ├── public.js         # Public routes
-│   │   ├── berita.js         # Berita routes
-│   │   ├── cabang.js         # Cabang routes
-│   │   ├── unit-bisnis.js    # Unit bisnis routes
-│   │   ├── messages.js       # Messages routes
-│   │   ├── settings.js       # Settings routes
-│   │   └── api.js            # API routes
-│   └── server.js             # Main server file
-├── public/
-│   ├── css/
-│   │   ├── style.css         # Frontend styles
-│   │   └── admin.css         # Admin styles
-│   ├── js/
-│   │   └── main.js           # Frontend scripts
-│   ├── images/               # Static images
-│   └── uploads/              # Uploaded files
-├── data/
-│   └── bbi.db                # SQLite database
-├── .env                      # Environment variables
-├── .env.example              # Environment example
-└── package.json
+│   ├── config/         # Database configuration
+│   ├── routes/         # Express routes (admin, public, news)
+│   ├── views/          # EJS Templates
+│   │   ├── admin/      # Back-office views
+│   │   ├── partials/   # Reusable components (header, footer)
+│   │   └── ...         # Public pages
+│   └── server.js       # App entry point
+├── .env                # Environment variables
+└── package.json        # Dependencies & Scripts
 ```
 
-## Deploy ke aaPanel (Ubuntu VPS)
+## 📝 Recent Updates (Changelog)
 
-### 1. Upload Files
+*   **Fixed Comment Redirect**: Solved issue where submitting comments redirected to `undefined` or Home. Now correctly redirects back to the specific article slug.
+*   **Favicon**: Added consistent favicon support across all pages including Admin and stand-alone Business Unit pages.
+*   **Security & Performance**: Integrated `helmet` for headers, `compression` for Gzip, and `express-rate-limit` for API protection.
+*   **Mobile UX**: Improved mobile navbar interaction and carousel touch support.
 
-Upload semua file ke VPS menggunakan FTP atau Git:
-
-```bash
-git clone <repo-url> /www/wwwroot/bbi-web
-cd /www/wwwroot/bbi-web
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install --production
-```
-
-### 3. Setup PM2
-
-```bash
-# Install PM2 globally (jika belum)
-npm install -g pm2
-
-# Start aplikasi
-pm2 start src/server.js --name bbi-web
-
-# Save PM2 config
-pm2 save
-
-# Setup PM2 startup
-pm2 startup
-```
-
-### 4. Setup Nginx Reverse Proxy
-
-Di aaPanel, buat website baru dan tambahkan konfigurasi Nginx:
-
-```nginx
-location / {
-    proxy_pass http://localhost:3000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_cache_bypass $http_upgrade;
-}
-
-# Static files
-location /css/ {
-    alias /www/wwwroot/bbi-web/public/css/;
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-}
-
-location /js/ {
-    alias /www/wwwroot/bbi-web/public/js/;
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-}
-
-location /images/ {
-    alias /www/wwwroot/bbi-web/public/images/;
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-}
-
-location /uploads/ {
-    alias /www/wwwroot/bbi-web/public/uploads/;
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-}
-```
-
-### 5. Commands PM2
-
-```bash
-# Restart aplikasi
-pm2 restart bbi-web
-
-# Stop aplikasi
-pm2 stop bbi-web
-
-# View logs
-pm2 logs bbi-web
-
-# Monitor
-pm2 monit
-```
-
-## Environment Variables
-
-Edit `.env` file:
-
-```env
-PORT=3000
-NODE_ENV=production
-SESSION_SECRET=your-secret-key-change-this
-
-# Admin credentials
-ADMIN_EMAIL=admin@bbi.com
-ADMIN_PASSWORD=admin123
-```
-
-## Resource Usage
-
-Dengan Express + EJS + SQLite:
-- **RAM:** ~50-100 MB (vs Next.js + NestJS ~300-500MB)
-- **Storage:** ~100 MB (vs Next.js ~500MB+)
-- **Startup time:** ~1-2 detik
-
-## License
-
-ISC
+---
+© 2024 Bosowa Bandar Group. All Rights Reserved.
