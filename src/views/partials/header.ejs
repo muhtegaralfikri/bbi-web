@@ -37,6 +37,41 @@
         <% if (user) { %>
           <li><a href="/admin" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.admin : 'Admin' %></a></li>
         <% } %>
+
+        <!-- Mobile Actions (Visible only on mobile sidebar) -->
+        <li class="nav-mobile-actions">
+            <!-- Mobile Language Switcher -->
+            <% if (typeof lang !== 'undefined') { %>
+            <div class="mobile-lang-group">
+              <span class="mobile-action-label"><%= typeof t !== 'undefined' ? (t.lang === 'id' ? 'Bahasa' : 'Language') : 'Bahasa' %></span>
+              <div class="mobile-lang-switcher">
+                <a href="/id<%= typeof currentPath !== 'undefined' ? currentPath : '' %>" 
+                   class="mobile-lang-btn <%= lang === 'id' ? 'active' : '' %>">
+                   <img src="/images/flags/id.svg" alt="ID"> Indonesia
+                </a>
+                <a href="<%= typeof getAltLangUrl === 'function' && lang === 'id' ? getAltLangUrl() : '/en' + (typeof currentPath !== 'undefined' ? currentPath : '') %>" 
+                   class="mobile-lang-btn <%= lang === 'en' ? 'active' : '' %>">
+                   <img src="/images/flags/en.svg" alt="EN"> English
+                </a>
+              </div>
+            </div>
+            <% } %>
+
+            <!-- Mobile Signin -->
+            <div class="mobile-auth-group">
+            <% if (user) { %>
+              <a href="/admin/logout" class="mobile-btn-auth btn-signout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span><%= typeof t !== 'undefined' ? t.nav.logout : 'Keluar' %></span>
+              </a>
+            <% } else { %>
+              <a href="/admin/login" class="mobile-btn-auth">
+                <i class="fas fa-sign-in-alt"></i>
+                <span><%= typeof t !== 'undefined' ? t.nav.login : 'Masuk' %></span>
+              </a>
+            <% } %>
+            </div>
+        </li>
       </ul>
 
       <!-- Right Section: Language Switcher, Theme Toggle & Signin -->
