@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const { initDatabase } = require('./config/database');
+const { initDatabase, pool } = require('./config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,15 +18,21 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Settings middleware
 app.use(require('./middleware/settings'));
 
-const SQLiteStore = require('connect-sqlite3')(session);
+const MySQLStore = require('express-mysql-session')(session);
 
 // Session middleware
+const sessionStore = new MySQLStore(
+  {
+    clearExpired: true,
+    checkExpirationInterval: 15 * 60 * 1000, // 15 minutes
+    expiration: 7 * 24 * 60 * 60 * 1000, // 1 week
+    createDatabaseTable: true
+  },
+  pool
+);
+
 app.use(session({
-  store: new SQLiteStore({
-    db: 'sessions.db',
-    dir: path.join(__dirname, '../data'),
-    table: 'sessions'
-  }),
+  store: sessionStore,
   secret: process.env.SESSION_SECRET || 'secret-key',
   resave: false,
   saveUninitialized: false,
