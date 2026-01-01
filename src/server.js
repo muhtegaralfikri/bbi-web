@@ -18,6 +18,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Settings middleware
 app.use(require('./middleware/settings'));
 
+// Health check endpoint (bypasses DB and session)
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 const MySQLStore = require('express-mysql-session')(session);
 
 // Session middleware
