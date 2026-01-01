@@ -89,16 +89,18 @@ router.post('/:id/comment', (req, res) => {
     (err) => {
       if (err) console.error(err);
       
-      // Get referer or default to back
-      const referer = req.get('referer') || 'back';
-      
-      // If it's a URL, append query param safely
-      if (referer !== 'back') {
-        const separator = referer.includes('?') ? '&' : '?';
-        res.redirect(referer + separator + 'comment_submitted=true');
-      } else {
-        res.redirect('back');
-      }
+      // Fetch slug to redirect properly
+      db.get('SELECT slug FROM berita WHERE id = ?', [beritaId], (err, row) => {
+        if (!err && row) {
+           // Redirect to specific article with correct lang prefix
+           const isEnglish = req.headers.referer && req.headers.referer.includes('/en/');
+           const prefix = isEnglish ? '/en/news/' : '/id/berita/';
+           res.redirect(prefix + row.slug + '?comment_submitted=true');
+        } else {
+           // Fallback if db error
+           res.redirect('back');
+        }
+      });
     }
   );
 });
