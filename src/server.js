@@ -2,6 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const compression = require('compression');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 const { initDatabase, pool } = require('./config/database');
 
 const app = express();
@@ -10,10 +14,42 @@ const PORT = process.env.PORT || 3000;
 // Initialize database
 initDatabase();
 
+// Rate Limiters
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Middleware
+app.use(morgan('dev')); // Logger
+app.use(limiter); // Apply rate limiting
+app.use(compression()); // Compress all responses
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://www.youtube.com", "https://www.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://www.google.com"],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  },
+  crossOriginEmbedderPolicy: false
+}));
+app.disable('x-powered-by'); // Hide Express signature
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public'), {
+  maxAge: '1d', // Cache static assets for 1 day
+  etag: true
+}));
 
 // Settings middleware
 app.use(require('./middleware/settings'));

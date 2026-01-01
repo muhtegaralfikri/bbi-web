@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 
     // Get berita
     db.all(`
-      SELECT * FROM berita
+      SELECT id, title, title_en, slug, summary, summary_en, image, category, created_at FROM berita
       WHERE published = 1
       ORDER BY created_at DESC
       LIMIT ? OFFSET ?
