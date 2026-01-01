@@ -88,8 +88,17 @@ router.post('/:id/comment', (req, res) => {
     [beritaId, name, email, content], 
     (err) => {
       if (err) console.error(err);
-      // Redirect back with query param for success message
-      res.redirect(req.get('referer') + '?comment_submitted=true');
+      
+      // Get referer or default to back
+      const referer = req.get('referer') || 'back';
+      
+      // If it's a URL, append query param safely
+      if (referer !== 'back') {
+        const separator = referer.includes('?') ? '&' : '?';
+        res.redirect(referer + separator + 'comment_submitted=true');
+      } else {
+        res.redirect('back');
+      }
     }
   );
 });
