@@ -16,18 +16,16 @@
     <section class="page-header">
       <div class="container">
         <h1><%= typeof t !== 'undefined' ? t.branches.title : 'Info Cabang' %></h1>
+        <p class="page-subtitle"><%= typeof t !== 'undefined' ? t.branches.subtitle : 'Temukan kantor cabang Bosowa Bandar Group terdekat di berbagai kota di Indonesia.' %></p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="grid grid-1">
+        <div class="grid-cabang">
           <% if (cabang && cabang.length > 0) { %>
             <% cabang.forEach(cab => { %>
               <div class="card cabang-public-card">
-                <% if (cab.image) { %>
-                  <img src="<%= cab.image %>" alt="<%= cab.name %>" class="card-image">
-                <% } %>
                 <div class="card-content">
                   <h3><%= cab.name %></h3>
                   <p><i class="fas fa-map-marker-alt"></i> <%= cab.address || (typeof t !== 'undefined' && t.lang === 'en' ? 'Address not available' : 'Alamat belum tersedia') %></p>
@@ -37,22 +35,79 @@
                   <% if (cab.email) { %>
                     <p><i class="fas fa-envelope"></i> <%= cab.email %></p>
                   <% } %>
-                  <% if (cab.map_embed) { %>
-                    <div class="cabang-map-embed">
-                      <%- cab.map_embed %>
+                  
+                  <% if (cab.map_link && !cab.map_embed) { %>
+                    <div style="margin-top: 1rem;">
+                      <a href="<%= cab.map_link %>" target="_blank" class="btn btn-outline btn-sm">
+                        <i class="fas fa-map-marker-alt"></i> <%= typeof t !== 'undefined' ? t.branches.viewMap : 'Lihat Peta di Google Maps' %>
+                      </a>
                     </div>
-                  <% } else if (cab.map_link) { %>
-                    <a href="<%= cab.map_link %>" target="_blank" class="btn-link">
-                      <i class="fas fa-map-marker-alt"></i> <%= typeof t !== 'undefined' ? t.branches.viewMap : 'Lihat Peta' %>
-                    </a>
                   <% } %>
                 </div>
+                
+                <% if (cab.map_embed) { %>
+                  <div class="cabang-map-embed">
+                    <%- cab.map_embed %>
+                  </div>
+                <% } else if (cab.image) { %>
+                  <div class="cabang-map-embed">
+                     <img src="<%= cab.image %>" alt="<%= cab.name %>" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                <% } else { %>
+                  <!-- Placeholder if no map or image -->
+                  <div class="cabang-map-embed" style="display: flex; align-items: center; justify-content: center; background: var(--bg-secondary); color: var(--text-muted);">
+                    <div style="text-align: center;">
+                      <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+                    </div>
+                  </div>
+                <% } %>
               </div>
             <% }) %>
           <% } else { %>
             <p><%= typeof t !== 'undefined' && t.lang === 'en' ? 'No branch data available.' : 'Belum ada data cabang.' %></p>
           <% } %>
         </div>
+        
+        <!-- Pagination -->
+        <% if (typeof pagination !== 'undefined' && pagination.totalPages > 1) { %>
+          <div class="pagination" style="display: flex; justify-content: center; margin-top: 3rem; gap: 0.5rem;">
+            <!-- Previous Button -->
+            <% if (pagination.page > 1) { %>
+              <a href="?page=<%= pagination.page - 1 %>" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+            <% } else { %>
+              <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            <% } %>
+            
+            <!-- Page Numbers -->
+            <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+              <% 
+                // Show pages around current page
+                if (i === 1 || i === pagination.totalPages || (i >= pagination.page - 1 && i <= pagination.page + 1)) { 
+              %>
+                <a href="?page=<%= i %>" class="btn btn-sm <%= i === pagination.page ? 'btn-primary' : 'btn-outline' %>">
+                  <%= i %>
+                </a>
+              <% } else if (i === pagination.page - 2 || i === pagination.page + 2) { %>
+                <span style="display: flex; align-items: center; padding: 0 0.5rem;">...</span>
+              <% } %>
+            <% } %>
+            
+            <!-- Next Button -->
+            <% if (pagination.page < pagination.totalPages) { %>
+              <a href="?page=<%= pagination.page + 1 %>" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            <% } else { %>
+              <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            <% } %>
+          </div>
+        <% } %>
       </div>
     </section>
   </main>

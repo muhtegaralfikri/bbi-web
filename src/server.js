@@ -27,7 +27,12 @@ const limiter = rateLimit({
 
 // Middleware
 app.use(morgan('dev')); // Logger
-app.use(limiter); // Apply rate limiting
+
+// Apply rate limiting only in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(limiter);
+}
+
 app.use(compression()); // Compress all responses
 app.use(helmet({
   contentSecurityPolicy: {

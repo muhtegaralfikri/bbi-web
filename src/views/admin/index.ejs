@@ -166,6 +166,47 @@
             </tbody>
           </table>
         </div>
+        
+        <!-- Pagination -->
+        <% if (typeof beritaPagination !== 'undefined' && beritaPagination && beritaPagination.totalPages > 1) { %>
+          <div class="pagination" style="display: flex; justify-content: center; margin-top: 1.5rem; gap: 0.5rem;">
+            <!-- Previous Button -->
+            <% if (beritaPagination.page > 1) { %>
+              <a href="?tab=berita&berita_page=<%= beritaPagination.page - 1 %>" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+            <% } else { %>
+              <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            <% } %>
+            
+            <!-- Page Numbers -->
+            <% for (let i = 1; i <= beritaPagination.totalPages; i++) { %>
+              <% 
+                // Show pages around current page
+                if (i === 1 || i === beritaPagination.totalPages || (i >= beritaPagination.page - 1 && i <= beritaPagination.page + 1)) { 
+              %>
+                <a href="?tab=berita&berita_page=<%= i %>" class="btn btn-sm <%= i === beritaPagination.page ? 'btn-primary' : 'btn-outline' %>">
+                  <%= i %>
+                </a>
+              <% } else if (i === beritaPagination.page - 2 || i === beritaPagination.page + 2) { %>
+                <span style="display: flex; align-items: center; padding: 0 0.5rem;">...</span>
+              <% } %>
+            <% } %>
+            
+            <!-- Next Button -->
+            <% if (beritaPagination.page < beritaPagination.totalPages) { %>
+              <a href="?tab=berita&berita_page=<%= beritaPagination.page + 1 %>" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            <% } else { %>
+              <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            <% } %>
+          </div>
+        <% } %>
       </div>
 
       <!-- ========== CABANG TAB ========== -->
@@ -226,52 +267,96 @@
           <div class="cabang-grid">
             <% cabang.forEach(c => { %>
               <div class="cabang-card">
-                <div class="cabang-card-header">
-                  <h3><i class="fas fa-building"></i> <%= c.name %></h3>
+                <!-- Info Section (Left) -->
+                <!-- Info Section (Left) -->
+                <div class="cabang-info">
+                  <h3 style="display: flex; align-items: flex-start; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">
+                    <i class="fas fa-building" style="width: 18px; text-align: center; margin-right: 0.75rem; margin-top: 0.25rem; color: var(--primary);"></i>
+                    <%= c.name %>
+                  </h3>
+                  
+                  <div class="cabang-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><%= c.address || 'Alamat belum diisi' %></span>
+                  </div>
+                  <div class="cabang-info-item">
+                    <i class="fas fa-phone"></i>
+                    <span><%= c.phone || 'Telepon belum diisi' %></span>
+                  </div>
+                  <% if (c.email) { %>
+                    <div class="cabang-info-item">
+                      <i class="fas fa-envelope"></i>
+                      <span><%= c.email %></span>
+                    </div>
+                  <% } %>
+
                   <div class="cabang-actions">
                     <a href="/admin?tab=cabang&edit=<%= c.id %>&type=cabang" class="btn btn-sm btn-outline" title="Edit">
-                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-edit"></i> Edit
                     </a>
                     <form action="/admin/cabang/<%= c.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Hapus cabang ini?')">
                       <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                        <i class="fas fa-trash"></i>
+                        <i class="fas fa-trash"></i> Hapus
                       </button>
                     </form>
                   </div>
                 </div>
                 
-                <div class="cabang-card-body">
-                  <div class="cabang-info">
-                    <div class="cabang-info-item">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <span><%= c.address || 'Alamat belum diisi' %></span>
-                    </div>
-                    <div class="cabang-info-item">
-                      <i class="fas fa-phone"></i>
-                      <span><%= c.phone || 'Telepon belum diisi' %></span>
-                    </div>
-                    <% if (c.email) { %>
-                      <div class="cabang-info-item">
-                        <i class="fas fa-envelope"></i>
-                        <span><%= c.email %></span>
-                      </div>
-                    <% } %>
+                <!-- Map Section (Right) -->
+                <% if (c.map_embed) { %>
+                  <div class="cabang-map">
+                    <%- c.map_embed %>
                   </div>
-                  
-                  <% if (c.map_embed) { %>
-                    <div class="cabang-map">
-                      <%- c.map_embed %>
-                    </div>
-                  <% } else { %>
-                    <div class="cabang-map-placeholder">
-                      <i class="fas fa-map"></i>
-                      <span>Peta belum ditambahkan</span>
-                    </div>
-                  <% } %>
-                </div>
+                <% } else { %>
+                  <div class="cabang-map-placeholder">
+                    <i class="fas fa-map"></i>
+                    <span>Peta belum ditambahkan</span>
+                  </div>
+                <% } %>
               </div>
             <% }); %>
           </div>
+          
+          <!-- Pagination for Cabang -->
+          <% if (typeof cabangPagination !== 'undefined' && cabangPagination && cabangPagination.totalPages > 1) { %>
+            <div class="pagination" style="display: flex; justify-content: center; margin-top: 1.5rem; gap: 0.5rem;">
+              <!-- Previous Button -->
+              <% if (cabangPagination.page > 1) { %>
+                <a href="?tab=cabang&cabang_page=<%= cabangPagination.page - 1 %>" class="btn btn-outline btn-sm">
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+              <% } else { %>
+                <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+              <% } %>
+              
+              <!-- Page Numbers -->
+              <% for (let i = 1; i <= cabangPagination.totalPages; i++) { %>
+                <% 
+                  // Show pages around current page
+                  if (i === 1 || i === cabangPagination.totalPages || (i >= cabangPagination.page - 1 && i <= cabangPagination.page + 1)) { 
+                %>
+                  <a href="?tab=cabang&cabang_page=<%= i %>" class="btn btn-sm <%= i === cabangPagination.page ? 'btn-primary' : 'btn-outline' %>">
+                    <%= i %>
+                  </a>
+                <% } else if (i === cabangPagination.page - 2 || i === cabangPagination.page + 2) { %>
+                  <span style="display: flex; align-items: center; padding: 0 0.5rem;">...</span>
+                <% } %>
+              <% } %>
+              
+              <!-- Next Button -->
+              <% if (cabangPagination.page < cabangPagination.totalPages) { %>
+                <a href="?tab=cabang&cabang_page=<%= cabangPagination.page + 1 %>" class="btn btn-outline btn-sm">
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+              <% } else { %>
+                <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              <% } %>
+            </div>
+          <% } %>
         <% } else { %>
           <div class="empty-state">
             <i class="fas fa-building"></i>
@@ -343,6 +428,47 @@
             </tbody>
           </table>
         </div>
+        
+        <!-- Pagination -->
+        <% if (typeof commentPagination !== 'undefined' && commentPagination && commentPagination.totalPages > 1) { %>
+          <div class="pagination" style="display: flex; justify-content: center; margin-top: 1.5rem; gap: 0.5rem;">
+            <!-- Previous Button -->
+            <% if (commentPagination.page > 1) { %>
+              <a href="?tab=comments&comment_page=<%= commentPagination.page - 1 %>" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+            <% } else { %>
+              <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            <% } %>
+            
+            <!-- Page Numbers -->
+            <% for (let i = 1; i <= commentPagination.totalPages; i++) { %>
+              <% 
+                // Show pages around current page (1, last, and current +/- 1)
+                if (i === 1 || i === commentPagination.totalPages || (i >= commentPagination.page - 1 && i <= commentPagination.page + 1)) { 
+              %>
+                <a href="?tab=comments&comment_page=<%= i %>" class="btn btn-sm <%= i === commentPagination.page ? 'btn-primary' : 'btn-outline' %>">
+                  <%= i %>
+                </a>
+              <% } else if (i === commentPagination.page - 2 || i === commentPagination.page + 2) { %>
+                <span style="display: flex; align-items: center; padding: 0 0.5rem;">...</span>
+              <% } %>
+            <% } %>
+            
+            <!-- Next Button -->
+            <% if (commentPagination.page < commentPagination.totalPages) { %>
+              <a href="?tab=comments&comment_page=<%= commentPagination.page + 1 %>" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            <% } else { %>
+              <button class="btn btn-outline btn-sm" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            <% } %>
+          </div>
+        <% } %>
       </div>
 
       <!-- ========== SETTINGS TAB ========== -->
