@@ -11,6 +11,9 @@ const { initDatabase, pool } = require('./config/database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy (Required for rate limiting behind Nginx/aaPanel/Load Balancer)
+app.set('trust proxy', 1);
+
 // Initialize database
 initDatabase();
 
