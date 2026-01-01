@@ -93,10 +93,21 @@ const initDatabase = () => {
       )
     `);
     
-    // Add English columns if they don't exist (migration for existing tables)
-    db.run(`ALTER TABLE berita ADD COLUMN IF NOT EXISTS title_en VARCHAR(255)`, [], () => {});
-    db.run(`ALTER TABLE berita ADD COLUMN IF NOT EXISTS summary_en TEXT`, [], () => {});
-    db.run(`ALTER TABLE berita ADD COLUMN IF NOT EXISTS content_en LONGTEXT`, [], () => {});
+    // Robust Migration: Try to add columns, ignore if they already exist
+    const addColumnSafe = (table, colName, colDef) => {
+      db.run(`ALTER TABLE ${table} ADD COLUMN ${colName} ${colDef}`, [], (err) => {
+        // Ignore error 1060 (Duplicate column name)
+        if (err && err.errno !== 1060) {
+          // console.log(`Note: Column ${colName} might already exist or could not be added: ${err.message}`);
+        } else if (!err) {
+          console.log(`Migration: Successfully added column ${colName} to ${table}`);
+        }
+      });
+    };
+
+    addColumnSafe('berita', 'title_en', 'VARCHAR(255)');
+    addColumnSafe('berita', 'summary_en', 'TEXT');
+    addColumnSafe('berita', 'content_en', 'LONGTEXT');
 
     // Cabang table
     db.run(`
