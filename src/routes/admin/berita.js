@@ -37,6 +37,8 @@ const generateSlug = (text) => {
     .trim();
 };
 
+const { optimizeImage } = require('../../middleware/imageOptimizer');
+
 // List all berita
 router.get('/', isAuthenticated, (req, res) => {
   db.all('SELECT * FROM berita ORDER BY created_at DESC', (err, rows) => {
@@ -62,7 +64,7 @@ router.get('/create', isAuthenticated, (req, res) => {
 });
 
 // Store new berita
-router.post('/', isAuthenticated, upload.single('image'), (req, res) => {
+router.post('/', isAuthenticated, upload.single('image'), optimizeImage, (req, res) => {
   const { title, content, category, published } = req.body;
   const slug = generateSlug(title);
 
@@ -90,7 +92,7 @@ router.get('/:id/edit', isAuthenticated, (req, res) => {
 });
 
 // Update berita
-router.post('/:id', isAuthenticated, upload.single('image'), (req, res) => {
+router.post('/:id', isAuthenticated, upload.single('image'), optimizeImage, (req, res) => {
   const { title, content, category, published } = req.body;
   const slug = generateSlug(title);
 
