@@ -13,19 +13,25 @@
   <%- include('../partials/header') %>
 
   <main>
+    <%
+      // Get language-specific content
+      const isEn = typeof t !== 'undefined' && t.lang === 'en';
+      const displayTitle = isEn && berita.title_en ? berita.title_en : berita.title;
+      const displayContent = isEn && berita.content_en ? berita.content_en : berita.content;
+    %>
     <article class="article-detail">
       <div class="container">
         <% if (berita.image) { %>
-          <img src="<%= berita.image %>" alt="<%= berita.title %>" class="article-image">
+          <img src="<%= berita.image %>" alt="<%= displayTitle %>" class="article-image">
         <% } %>
         <div class="article-content">
 
-          <h1><%= berita.title %></h1>
+          <h1><%= displayTitle %></h1>
           <div class="article-meta">
             <span><i class="far fa-calendar"></i> <%= new Date(berita.created_at).toLocaleDateString(typeof t !== 'undefined' && t.lang === 'en' ? 'en-US' : 'id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>
           </div>
           <div class="article-body">
-            <%- berita.content %>
+            <%- displayContent %>
           </div>
           <div class="article-footer">
             <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="btn btn-outline">&larr; <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Back to News' : 'Kembali ke Berita' %></a>

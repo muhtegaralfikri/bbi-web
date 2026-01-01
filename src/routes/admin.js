@@ -133,14 +133,14 @@ router.get('/', isAuthenticated, (req, res) => {
 // ========== BERITA CRUD ==========
 // Create berita
 router.post('/berita/create', isAuthenticated, upload.single('image'), (req, res) => {
-  const { title, summary, content, status } = req.body;
+  const { title, title_en, summary, summary_en, content, content_en, status } = req.body;
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const image = req.file ? '/uploads/berita/' + req.file.filename : null;
   const published = status === 'published' ? 1 : 0;
   
   db.run(
-    'INSERT INTO berita (title, slug, summary, content, image, category, published) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [title, slug, summary, content, image, 'umum', published],
+    'INSERT INTO berita (title, title_en, slug, summary, summary_en, content, content_en, image, category, published) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [title, title_en || null, slug, summary, summary_en || null, content, content_en || null, image, 'umum', published],
     (err) => {
       if (err) console.error('Error creating berita:', err);
       res.redirect('/admin?tab=berita');
@@ -150,13 +150,13 @@ router.post('/berita/create', isAuthenticated, upload.single('image'), (req, res
 
 // Update berita
 router.post('/berita/:id/update', isAuthenticated, upload.single('image'), (req, res) => {
-  const { title, summary, content, status } = req.body;
+  const { title, title_en, summary, summary_en, content, content_en, status } = req.body;
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const published = status === 'published' ? 1 : 0;
   
   // Dynamic query construction based on whether image is uploaded
-  let query = 'UPDATE berita SET title = ?, slug = ?, summary = ?, content = ?, published = ?, updated_at = CURRENT_TIMESTAMP';
-  let params = [title, slug, summary, content, published];
+  let query = 'UPDATE berita SET title = ?, title_en = ?, slug = ?, summary = ?, summary_en = ?, content = ?, content_en = ?, published = ?, updated_at = CURRENT_TIMESTAMP';
+  let params = [title, title_en || null, slug, summary, summary_en || null, content, content_en || null, published];
   
   if (req.file) {
     query += ', image = ?';

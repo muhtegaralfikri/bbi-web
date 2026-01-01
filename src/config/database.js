@@ -79,9 +79,12 @@ const initDatabase = () => {
       CREATE TABLE IF NOT EXISTS berita (
         id INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
+        title_en VARCHAR(255),
         slug VARCHAR(255) UNIQUE NOT NULL,
         summary TEXT,
+        summary_en TEXT,
         content LONGTEXT NOT NULL,
+        content_en LONGTEXT,
         image VARCHAR(255),
         category VARCHAR(50) DEFAULT 'umum',
         published BOOLEAN DEFAULT 0,
@@ -89,6 +92,11 @@ const initDatabase = () => {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
+    
+    // Add English columns if they don't exist (migration for existing tables)
+    db.run(`ALTER TABLE berita ADD COLUMN IF NOT EXISTS title_en VARCHAR(255)`, [], () => {});
+    db.run(`ALTER TABLE berita ADD COLUMN IF NOT EXISTS summary_en TEXT`, [], () => {});
+    db.run(`ALTER TABLE berita ADD COLUMN IF NOT EXISTS content_en LONGTEXT`, [], () => {});
 
     // Cabang table
     db.run(`

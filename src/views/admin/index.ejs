@@ -44,20 +44,52 @@
           <form action="<%= editData && editType === 'berita' ? '/admin/berita/' + editData.id + '/update' : '/admin/berita/create' %>" method="POST" class="inline-form" enctype="multipart/form-data">
             <h3><%= editData && editType === 'berita' ? 'Edit Berita' : 'Tambah Berita Baru' %></h3>
             
-            <div class="form-group">
-              <label for="berita_title">Judul Berita</label>
-              <input type="text" id="berita_title" name="title" value="<%= editData && editType === 'berita' ? editData.title : '' %>" required placeholder="Masukkan judul berita">
+            <!-- Language Tabs -->
+            <div class="lang-tabs" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+              <button type="button" class="lang-tab active" data-lang="id" onclick="switchLangTab('id')">
+                🇮🇩 Indonesia
+              </button>
+              <button type="button" class="lang-tab" data-lang="en" onclick="switchLangTab('en')">
+                🇬🇧 English
+              </button>
             </div>
             
-            <div class="form-group">
-              <label for="berita_summary">Ringkasan</label>
-              <textarea id="berita_summary" name="summary" rows="3" placeholder="Ringkasan singkat berita..."><%= editData && editType === 'berita' ? editData.summary : '' %></textarea>
+            <!-- Indonesian Content -->
+            <div class="lang-content active" id="lang-content-id">
+              <div class="form-group">
+                <label for="berita_title">Judul Berita (ID) <span style="color: red;">*</span></label>
+                <input type="text" id="berita_title" name="title" value="<%= editData && editType === 'berita' ? editData.title : '' %>" required placeholder="Masukkan judul berita dalam Bahasa Indonesia">
+              </div>
+              
+              <div class="form-group">
+                <label for="berita_summary">Ringkasan (ID)</label>
+                <textarea id="berita_summary" name="summary" rows="3" placeholder="Ringkasan singkat berita dalam Bahasa Indonesia..."><%= editData && editType === 'berita' ? editData.summary : '' %></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label for="berita_content">Isi Konten (ID) <span style="color: red;">*</span></label>
+                <input type="hidden" name="content" id="hidden_content" value="<%= editData && editType === 'berita' ? editData.content : '' %>">
+                <div id="editor-container" style="height: 300px;"></div>
+              </div>
             </div>
             
-            <div class="form-group">
-              <label for="berita_content">Isi Konten</label>
-              <input type="hidden" name="content" id="hidden_content" value="<%= editData && editType === 'berita' ? editData.content : '' %>">
-              <div id="editor-container" style="height: 300px;"></div>
+            <!-- English Content -->
+            <div class="lang-content" id="lang-content-en" style="display: none;">
+              <div class="form-group">
+                <label for="berita_title_en">News Title (EN)</label>
+                <input type="text" id="berita_title_en" name="title_en" value="<%= editData && editType === 'berita' ? (editData.title_en || '') : '' %>" placeholder="Enter news title in English">
+              </div>
+              
+              <div class="form-group">
+                <label for="berita_summary_en">Summary (EN)</label>
+                <textarea id="berita_summary_en" name="summary_en" rows="3" placeholder="Brief summary in English..."><%= editData && editType === 'berita' ? (editData.summary_en || '') : '' %></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label for="berita_content_en">Content (EN)</label>
+                <input type="hidden" name="content_en" id="hidden_content_en" value="<%= editData && editType === 'berita' ? (editData.content_en || '') : '' %>">
+                <div id="editor-container-en" style="height: 300px;"></div>
+              </div>
             </div>
             
             <div class="form-row">
@@ -404,33 +436,87 @@
   body.dark .ql-picker-options {
     background-color: var(--admin-card);
   }
+  
+  /* Language Tab Styling */
+  .lang-tab {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--admin-border);
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+  }
+  .lang-tab:hover {
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
+  }
+  .lang-tab.active {
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
+  }
+  .lang-content {
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 </style>
 
 <script>
   let quill;
+  let quillEn;
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Quill editor
+    // Quill toolbar config
+    const toolbarOptions = [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['link', 'image', 'clean']
+    ];
+    
+    // Initialize Quill editor (Indonesian)
     quill = new Quill('#editor-container', {
       theme: 'snow',
-      modules: {
-        toolbar: [
-          [{ 'header': [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike'],
-          [{ 'color': [] }, { 'background': [] }],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          [{ 'align': [] }],
-          ['link', 'image', 'clean']
-        ]
-      }
+      modules: { toolbar: toolbarOptions }
     });
 
-    // Populate editor if editing
+    // Initialize Quill editor (English)
+    quillEn = new Quill('#editor-container-en', {
+      theme: 'snow',
+      modules: { toolbar: toolbarOptions }
+    });
+
+    // Populate editor if editing (Indonesian)
     var existingContent = document.getElementById('hidden_content').value;
     if (existingContent) {
       quill.clipboard.dangerouslyPasteHTML(existingContent);
     }
+    
+    // Populate editor if editing (English)
+    var existingContentEn = document.getElementById('hidden_content_en').value;
+    if (existingContentEn) {
+      quillEn.clipboard.dangerouslyPasteHTML(existingContentEn);
+    }
   });
+
+  // Language tab switching for berita form
+  function switchLangTab(lang) {
+    // Update tab buttons
+    document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.lang-tab[data-lang="' + lang + '"]').classList.add('active');
+    
+    // Update content visibility
+    document.getElementById('lang-content-id').style.display = lang === 'id' ? 'block' : 'none';
+    document.getElementById('lang-content-en').style.display = lang === 'en' ? 'block' : 'none';
+  }
 
   // Toggle form visibility
   function toggleForm(type) {
@@ -444,10 +530,15 @@
     }
   }
 
-  // Update hidden input before submit
+  // Update hidden inputs before submit
   document.querySelector('#form-berita form').onsubmit = function() {
+    // Indonesian content
     var content = document.querySelector('input[name=content]');
     content.value = quill.root.innerHTML;
+    
+    // English content
+    var contentEn = document.querySelector('input[name=content_en]');
+    contentEn.value = quillEn.root.innerHTML;
   };
 
   // Tab switching

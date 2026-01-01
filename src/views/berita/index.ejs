@@ -22,15 +22,20 @@
       <div class="container">
         <div class="grid grid-3">
           <% if (berita && berita.length > 0) { %>
-            <% berita.forEach(item => { %>
+            <% berita.forEach(item => { 
+              // Get language-specific content
+              const isEn = typeof t !== 'undefined' && t.lang === 'en';
+              const displayTitle = isEn && item.title_en ? item.title_en : item.title;
+              const displaySummary = isEn && item.summary_en ? item.summary_en : (item.summary || item.content.replace(/<[^>]*>?/gm, '').substring(0, 120));
+            %>
               <article class="card card-news">
                 <% if (item.image) { %>
-                  <img src="<%= item.image %>" alt="<%= item.title %>" class="card-image">
+                  <img src="<%= item.image %>" alt="<%= displayTitle %>" class="card-image">
                 <% } %>
                 <div class="card-content">
 
-                  <h3><%= item.title %></h3>
-                  <p class="card-excerpt"><%= item.summary || item.content.replace(/<[^>]*>?/gm, '').substring(0, 120) %>...</p>
+                  <h3><%= displayTitle %></h3>
+                  <p class="card-excerpt"><%= displaySummary %>...</p>
                   <div class="card-meta">
                     <span><i class="far fa-calendar"></i> <%= new Date(item.created_at).toLocaleDateString(typeof t !== 'undefined' && t.lang === 'en' ? 'en-US' : 'id-ID') %></span>
                   </div>
