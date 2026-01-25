@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= typeof t !== 'undefined' ? t.branches.title : 'Info Cabang' %> - Bosowa Bandar Group</title>
   <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="stylesheet" href="/css/style.css?v=2.2">
+  <link rel="stylesheet" href="/css/style.css?v=2.4">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -36,10 +36,10 @@
                     <p><i class="fas fa-envelope"></i> <%= cab.email %></p>
                   <% } %>
                   
-                  <% if (cab.map_link && !cab.map_embed) { %>
+                  <% if (cab.map_link) { %>
                     <div style="margin-top: 1rem;">
                       <a href="<%= cab.map_link %>" target="_blank" class="btn btn-outline btn-sm">
-                        <i class="fas fa-map-marker-alt"></i> <%= typeof t !== 'undefined' ? t.branches.viewMap : 'Lihat Peta di Google Maps' %>
+                        <i class="fas fa-map-marker-alt"></i> <%= typeof t !== 'undefined' ? t.branches.viewMap : 'Lihat Peta' %>
                       </a>
                     </div>
                   <% } %>
@@ -64,7 +64,9 @@
               </div>
             <% }) %>
           <% } else { %>
-            <p><%= typeof t !== 'undefined' && t.lang === 'en' ? 'No branch data available.' : 'Belum ada data cabang.' %></p>
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+              <h3>Belum ada data cabang</h3>
+            </div>
           <% } %>
         </div>
         

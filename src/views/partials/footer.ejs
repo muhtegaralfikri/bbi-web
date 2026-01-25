@@ -47,19 +47,15 @@
       <div class="footer-location">
         <h3><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Our Location' : 'Lokasi Kami' %></h3>
         <div class="map-container">
-          <% if (settings.company_maps) { %>
-            <%- settings.company_maps %>
-          <% } else { %>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.8071451177057!2d119.41418780000001!3d-5.1347348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf030020151c7f%3A0x91f6cbbf1acbc877!2sPT.%20Bosowa%20Bandar%20Indonesia!5e0!3m2!1sid!2sid!4v1762738404067!5m2!1sid!2sid"
-              width="100%"
-              height="200"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          <% } %>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.8071451177057!2d119.41418780000001!3d-5.1347348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf030020151c7f%3A0x91f6cbbf1acbc877!2sPT.%20Bosowa%20Bandar%20Indonesia!5e0!3m2!1sid!2sid!4v1762738404067!5m2!1sid!2sid"
+            width="100%"
+            height="200"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
           <div class="map-overlay-info">
             <strong>PT. Bosowa Bandar Indonesia</strong>
             <a href="https://maps.google.com/?q=PT.+Bosowa+Bandar+Indonesia" target="_blank"><%= typeof t !== 'undefined' && t.lang === 'en' ? 'View larger map' : 'Lihat peta lebih besar' %></a>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= berita.title %> - Bosowa Bandar Group</title>
   <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="stylesheet" href="/css/style.css?v=2.2">
+  <link rel="stylesheet" href="/css/style.css?v=2.4">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <meta name="description" content="<%= berita.content.substring(0, 160) %>">
 </head>
@@ -35,7 +35,10 @@
             <%- displayContent %>
           </div>
           <div class="article-footer">
-            <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="btn btn-outline">&larr; <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Back to News' : 'Kembali ke Berita' %></a>
+            <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="btn-back-news">
+              <i class="fas fa-arrow-left"></i>
+              <span><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Back to News' : 'Kembali ke Berita' %></span>
+            </a>
           </div>
         </div>
 
