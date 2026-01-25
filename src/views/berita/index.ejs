@@ -46,7 +46,9 @@
               </article>
             <% }) %>
           <% } else { %>
-            <p><%= typeof t !== 'undefined' ? t.news.noNews : 'Belum ada berita yang dipublikasikan.' %></p>
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+              <h3>Belum ada berita</h3>
+            </div>
           <% } %>
         </div>
 

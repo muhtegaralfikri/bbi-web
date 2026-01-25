@@ -158,8 +158,9 @@
               <% } else { %>
                 <tr>
                   <td colspan="5" class="text-center">
-                    <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 0.5rem; display: block; opacity: 0.5;"></i>
-                    Belum ada berita
+                    <div style="padding: 2rem; text-align: center;">
+                       <h3>Belum ada berita</h3>
+                    </div>
                   </td>
                 </tr>
               <% } %>
@@ -358,10 +359,8 @@
             </div>
           <% } %>
         <% } else { %>
-          <div class="empty-state">
-            <i class="fas fa-building"></i>
+          <div class="empty-state" style="text-align: center; padding: 3rem;">
             <h3>Belum ada data cabang</h3>
-            <p>Klik tombol "Tambah Cabang" untuk menambahkan informasi kantor cabang</p>
           </div>
         <% } %>
       </div>

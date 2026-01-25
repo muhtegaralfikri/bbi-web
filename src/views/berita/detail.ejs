@@ -35,7 +35,10 @@
             <%- displayContent %>
           </div>
           <div class="article-footer">
-            <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="btn btn-outline">&larr; <%= typeof t !== 'undefined' && t.lang === 'en' ? 'Back to News' : 'Kembali ke Berita' %></a>
+            <a href="<%= typeof t !== 'undefined' ? t.urls.news : '/berita' %>" class="btn-back-news">
+              <i class="fas fa-arrow-left"></i>
+              <span><%= typeof t !== 'undefined' && t.lang === 'en' ? 'Back to News' : 'Kembali ke Berita' %></span>
+            </a>
           </div>
         </div>
 
